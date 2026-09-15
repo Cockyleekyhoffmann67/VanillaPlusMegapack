@@ -9,17 +9,18 @@ from build import ARCHIVE, BUILD, GUID, MODULE, REVISION, ROOT, resource_hash, s
 
 
 def resources(data):
-    assert struct.unpack_from('<III', data) == (0xF0000011, 1, 8)
+    count = struct.unpack_from('<I', data, 8)[0]
+    assert struct.unpack_from('<III', data) == (0xF0000011, 1, count)
     assert struct.unpack_from('<Q', data, 32)[0] == len(data)
-    assert struct.unpack_from('<I', data, 88)[0] == 8
+    assert struct.unpack_from('<I', data, 88)[0] == count
     result = {}
     occupied = set()
-    for index in range(8):
+    for index in range(count):
         entry = struct.unpack_from('<7Q6I', data, 104 + 80 * index)
         key, kind, offset = entry[:3]
         size = entry[7]
         assert kind == 0xA14E8DFA2CD117E2 and key not in result and entry[-1] == index
-        assert offset % 16 == 0 and 104 + 80 * 8 <= offset < offset + size <= len(data)
+        assert offset % 16 == 0 and 104 + 80 * count <= offset < offset + size <= len(data)
         assert not occupied.intersection(range(offset, offset + size))
         occupied.update(range(offset, offset + size))
         payload = data[offset:offset + size]
@@ -47,7 +48,7 @@ def main():
         assert report['revision'] == REVISION and report['runtime_verified'] is False
         assert report['requires'][0]['revision'] == 'loader-v9'
         assert report['loader_bundled'] is False and report['boot_replaced'] is False
-        assert len(report['components']) == 7
+        assert len(report['components']) == len(components)
         for name, digest in report['files'].items():
             assert sha(package.read(name)) == digest
         payloads = resources(package.read('data/' + ARCHIVE))
@@ -62,7 +63,7 @@ def main():
         for name in package.namelist():
             data = package.read(name).lower()
             assert b'users\\' not in data and b'users/' not in data
-    print('PASS: one Arsenal entry, square icon, eight resources, exact seven-release payloads, no boot or shared loader')
+    print('PASS: one Arsenal entry, square icon, exact pinned resource payloads, no boot or shared loader')
 
 
 if __name__ == '__main__':

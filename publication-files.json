@@ -79,6 +79,7 @@
   "scripts/privacy_audit.py",
   "src/megapack.lua",
   "tests/test_components.py",
+  "tests/test_duplicates.lua",
   "tests/test_loader.lua",
   "tests/test_package.py"
 ]

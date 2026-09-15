@@ -1,4 +1,4 @@
-"""Build all seven pinned gameplay resources into one independently installable ZIP."""
+"""Build all pinned gameplay resources into one independently installable ZIP."""
 import json
 import os
 from pathlib import Path
@@ -63,20 +63,22 @@ def build_component(component):
 
 def main():
     components = json.loads((ROOT / 'components.lock.json').read_text(encoding='utf-8'))
-    if len(components) != 7 or len({c['module'] for c in components}) != 7:
-        raise ValueError('Expected seven distinct gameplay components')
+    if not components or len({c['module'] for c in components}) != len(components):
+        raise ValueError('Expected distinct gameplay components')
     resources = {resource_hash(c['module']): build_component(c) for c in components}
     resources[resource_hash(MODULE)] = compile_resource(
         (ROOT / 'src/megapack.lua').read_text(encoding='utf-8'), BUILD)
     tests = run([sys.executable, ROOT / 'tests/test_components.py'])
     loader_build = Path(os.environ.get('HD2_SHARED_LOADER_BUILD', ROOT.parent / 'BingusSharedLoader/build'))
     tests += run([LUA, ROOT / 'tests/test_loader.lua', BUILD, loader_build])
+    duplicate_args = [value for c in components for value in (c['module'], c['slug'])]
+    tests += run([LUA, ROOT / 'tests/test_duplicates.lua', ROOT, BUILD, loader_build, *duplicate_args])
     for suffix, data in [('', make_archive(resources)), ('.stream', b''), ('.gpu_resources', b'')]:
         (BUILD / (ARCHIVE + suffix)).write_bytes(data)
     files = {f'data/{ARCHIVE}{s}': f'build/{ARCHIVE}{s}' for s in ('', '.stream', '.gpu_resources')}
     report = {
         'name': 'Vanilla Plus Megapack', 'slug': 'VanillaPlusMegapack', 'revision': REVISION, 'guid': GUID,
-        'description': 'All seven CowboyBingus gameplay mods in one package: Better Stratagem Bounce, Hellpod Steering Unlocked, Reinforcement Beacons Fixed, Consistent Vaulting, Shallow Water Diving, Sentry Aim Retention and Enemy Collision Synchronized. Requires the separate Bingus Shared Loader v9 or newer. Disable the individual copies, enable this pack and the loader, then Purge / Deploy. With default Arsenal priority put the loader last.',
+        'description': 'All CowboyBingus gameplay mods in one package: Better Stratagem Bounce, Hellpod Steering Unlocked, Reinforcement Beacons Fixed, Consistent Vaulting, Shallow Water Diving, Sentry Aim Retention and Enemy Collision Synchronized. Requires the separate Bingus Shared Loader v9 or newer. Current individual copies can remain installed; give the pack winning priority over them to use its bundled versions. Enable the pack and loader, then Purge / Deploy. With default Arsenal priority put the loader last.',
         'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v9'}],
         'game_exe_sha256': EXE_SHA, 'game_dll_sha256': GAME_DLL_SHA,
         'deployment_files': files, 'files': {p: sha((ROOT / p).read_bytes()) for p in files.values()},
@@ -91,7 +93,7 @@ def main():
     (BUILD / 'build-report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     (BUILD / 'offline-tests.txt').write_text(tests, encoding='utf-8')
     print(tests.strip())
-    print('Built ' + str(release) + '; gameplay resources match all seven pinned releases. Live validation pending.')
+    print('Built ' + str(release) + '; gameplay resources match all pinned releases. Live validation pending.')
 
 
 if __name__ == '__main__':

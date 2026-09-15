@@ -3,31 +3,33 @@ Vanilla Plus Megapack - v2
 Install Vanilla-Plus-Megapack-v2.zip AND the separate Bingus-Shared-Loader-v9.zip
 (v9 or newer / API 1). The loader is not included and mod managers do
 not download it automatically.
-The release download includes the matching v9 loader as a separate ZIP.
+Download the loader from its own repository:
+https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
 1. Close Helldivers 2. Use Arsenal or HD2MM, not both.
-2. Disable or remove individual copies of Better Stratagem Bounce, Hellpod
-   Steering Unlocked, Reinforcement Beacons Fixed, Consistent Vaulting,
-   Shallow Water Diving, Sentry Aim Retention and Enemy Collision Synchronized.
-   Remove older-name copies too, including Corpse Collision Repair.
+2. Current standalone gameplay packages may remain installed. Give the pack
+   winning priority over them to use its bundled versions.
 3. Replace any old loader entry with Bingus Shared Loader v9 or newer.
 4. Import Vanilla-Plus-Megapack-v2.zip and Bingus-Shared-Loader-v9.zip and enable both.
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
    If first-mod priority is enabled, put it FIRST instead.
 6. Purge, then Deploy. Start the game normally.
 
-All seven gameplay features are enabled together. To select individual features,
+All gameplay features are enabled together. To select individual features,
 disable this pack and install the desired standalone mods with the loader.
-Do not mix the pack and individual copies: their gameplay resources overlap.
+Forgotten current standalone copies do not run a second copy of the mod.
+The manager selects one resource version; existing startup guards also prevent
+duplicate callback installation. Older packages that replace the startup loader
+must still be removed when migrating to the shared loader.
 
 Included revisions: Better Stratagem Bounce v15; Hellpod Steering
 Unlocked v7; Reinforcement Beacons Fixed v4; Consistent Vaulting
 v8; Shallow Water Diving v3; Sentry Aim Retention v1.0.0; Enemy Collision Synchronized v2.6.
 
-Steam build 24826606 / EXE 1.8.45317.0. Experimental prerelease.
+Steam build 24826606 / EXE 1.8.45317.0.
 Offline verification is not live gameplay or multiplayer validation.
 
-Check %LOCALAPPDATA%/BingusSharedLoader.log for the megapack and seven module
+Check %LOCALAPPDATA%/BingusSharedLoader.log for the megapack and gameplay module
 entries. The individual mods retain their existing log files and behavior.
 
 To update, replace the pack ZIP, then Purge / Deploy. To uninstall, disable

@@ -1,4 +1,4 @@
--- Bundle identity only. Bingus Shared Loader starts the seven gameplay resources
+-- Bundle identity only. Bingus Shared Loader starts the gameplay resources
 -- through its normal registry, exactly once, preserving their existing order.
 -- Do not require them here: that would duplicate startup and failure handling.
 local loader = assert(rawget(_G, 'CowboyBingusModLoader'), 'Bingus Shared Loader is required')

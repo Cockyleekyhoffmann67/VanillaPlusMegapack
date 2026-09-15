@@ -9,7 +9,7 @@ python -B scripts/build.py
 
 The output is the workspace root `releases/Vanilla-Plus-Megapack-v2.zip` (or local `releases/` when built standalone). Generated wrappers, component bytecode, checksums and test reports stay in ignored `build/`. The build does not install mods, access a live game process, or launch the game. Gameplay sources are vendored. Build Bingus Shared Loader first; its compiled fixtures are used by the startup integration gate. For standalone checkouts, set `HD2_SHARED_LOADER_BUILD` to the loader build directory. The compiled modules retain their existing runtime game-fingerprint checks.
 
-`components/` contains the seven reviewed Lua source and test snapshots. `components.lock.json` pins their revisions, source hashes and original standalone resource hashes. The builder recreates the original wrappers and requires every compiled gameplay resource to match its original release byte for byte. A changed source or mismatched compiler fails the build. The pack adds only `src/megapack.lua`, its bundle identity resource.
+`components/` contains the reviewed Lua source and test snapshots. `components.lock.json` pins their revisions, source hashes and original standalone resource hashes. The builder recreates the original wrappers and requires every compiled gameplay resource to match its original release byte for byte. A changed source or mismatched compiler fails the build. The pack adds only `src/megapack.lua`, its bundle identity resource.
 
 Git attributes preserve component snapshot bytes, including upstream line endings, so the source hashes remain stable after cloning on Windows or Linux.
 

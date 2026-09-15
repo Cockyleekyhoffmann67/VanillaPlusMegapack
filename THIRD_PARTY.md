@@ -1,6 +1,6 @@
 # Third-party inputs
 
-The seven gameplay implementations are CowboyBingus source snapshots. Their original notices are retained under `components/<mod>/THIRD_PARTY.md`; their source and resource provenance is recorded in `components.lock.json`. Enemy Collision Synchronized is included from its public source snapshot with synthetic tests.
+The gameplay implementations are CowboyBingus source snapshots. Their original notices are retained under `components/<mod>/THIRD_PARTY.md`; their source and resource provenance is recorded in `components.lock.json`. Enemy Collision Synchronized is included from its public source snapshot with synthetic tests.
 
 The LuaJIT compiler is a build dependency pinned in `dependencies.json`, under the MIT license. The compiler is not distributed inside the mod. The runtime uses the game's existing LuaJIT/FFI interfaces and Windows APIs.
 
