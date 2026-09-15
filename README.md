@@ -6,7 +6,7 @@ All CowboyBingus Helldivers 2 gameplay mods in one install. Better stratagem pla
 
 **Requires the separately built Bingus Shared Loader v9 or newer.** Install two ZIPs: `Vanilla-Plus-Megapack-v2.zip` and `Bingus-Shared-Loader-v9.zip`. Mod managers do not install the dependency automatically.
 
-[Download v2](https://github.com/CowboyBingus/VanillaPlusMegapack/releases/tag/v2). Download [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader/releases/latest) from its own repository.
+[Download v2](https://github.com/CowboyBingus/VanillaPlusMegapack/releases/tag/v2-release). Download [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader/releases/latest) from its own repository.
 
 ## Install with Arsenal or HD2MM
 
@@ -27,7 +27,7 @@ The pack enables all mods together. To choose individual features, disable the p
 | [Reinforcement Beacons Fixed](https://github.com/CowboyBingus/ReinforcementBeaconsFixed) | v4 | Centers queued reinforcements over their beacon or solo anchor. |
 | [Consistent Vaulting](https://github.com/CowboyBingus/ConsistentVaulting) | v8 | Adds fresh obstacle checks, higher ledge detection and bounded steep-surface support. |
 | [Shallow Water Diving](https://github.com/CowboyBingus/ShallowWaterDiving) | v3 | Preserves the standing water reference during a local airborne dive. |
-| [Sentry Aim Retention](components/SentryAimRetention/src) | v1.0.0 | Retains sentry aim through target loss and pauses broad Gatling/machine-gun firing sweeps. |
+| [Sentry Aim Retention](components/SentryAimRetention/src) | v1.0.1 | Retains sentry aim through target loss and pauses broad Gatling/machine-gun firing sweeps. |
 | [Enemy Collision Synchronized](components/EnemyCollisionSynchronized/src) | v2.6 | Aligns displaced corpse collision and curbs renewed movement after large remote corpses settle. |
 
 All gameplay components are pinned to the source and compiled-resource hashes in `components.lock.json`. Third-party HUD mods and the reserved, unreleased Wide Angle Stratagems module are not included. The shared loader remains a separate dependency with its own repository and updates.

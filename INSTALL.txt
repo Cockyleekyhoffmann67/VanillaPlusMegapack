@@ -24,7 +24,7 @@ must still be removed when migrating to the shared loader.
 
 Included revisions: Better Stratagem Bounce v15; Hellpod Steering
 Unlocked v7; Reinforcement Beacons Fixed v4; Consistent Vaulting
-v8; Shallow Water Diving v3; Sentry Aim Retention v1.0.0; Enemy Collision Synchronized v2.6.
+v8; Shallow Water Diving v3; Sentry Aim Retention v1.0.1; Enemy Collision Synchronized v2.6.
 
 Steam build 24826606 / EXE 1.8.45317.0.
 Offline verification is not live gameplay or multiplayer validation.
