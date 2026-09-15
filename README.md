@@ -4,21 +4,21 @@
 
 All CowboyBingus Helldivers 2 gameplay mods in one install. Better stratagem placement, hellpod steering, reinforcement placement, vaulting, shallow-water diving, sentry aim retention and synchronized enemy corpse collision.
 
-**Requires the separately built Bingus Shared Loader v9 or newer.** Install two ZIPs: `Vanilla-Plus-Megapack-v2.zip` and `Bingus-Shared-Loader-v9.zip`. Mod managers do not install the dependency automatically.
+**Requires the separately built Bingus Shared Loader v9 or newer.** Install two ZIPs: `Vanilla-Plus-Megapack-v3.zip` and `Bingus-Shared-Loader-v9.zip`. Mod managers do not install the dependency automatically.
 
-[Download v2](https://github.com/CowboyBingus/VanillaPlusMegapack/releases/tag/v2-release). Download [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader/releases/latest) from its own repository.
+[Download v3](https://github.com/CowboyBingus/VanillaPlusMegapack/releases/tag/v3). Download [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader/releases/latest) from its own repository.
 
 ## Install with Arsenal or HD2MM
 
 1. Close Helldivers 2. Use one mod manager.
 2. Replace any previous loader entry with v9 or newer. You can leave current standalone gameplay packages installed.
-3. Import `Vanilla-Plus-Megapack-v2.zip` and `Bingus-Shared-Loader-v9.zip`, then enable both.
+3. Import `Vanilla-Plus-Megapack-v3.zip` and `Bingus-Shared-Loader-v9.zip`, then enable both.
 4. With Arsenal's default priority, put **Bingus Shared Loader last**, at the bottom. If first-mod priority is enabled, put the loader first.
-5. **Purge → Deploy**, then launch the game normally.
+5. **Purge â†’ Deploy**, then launch the game normally.
 
 The pack enables all mods together. To choose individual features, disable the pack and use the standalone packages with the loader instead. Current standalone copies can remain enabled: overlapping gameplay resources run once, and their callbacks do not stack. If the versions differ, your mod manager selects the winning version. Give the pack winning priority over standalone copies to use its bundled versions.
 
-## Included in v2
+## Included in v3
 
 | Mod | Version | Effect |
 | --- | --- | --- |
@@ -27,7 +27,7 @@ The pack enables all mods together. To choose individual features, disable the p
 | [Reinforcement Beacons Fixed](https://github.com/CowboyBingus/ReinforcementBeaconsFixed) | v4 | Centers queued reinforcements over their beacon or solo anchor. |
 | [Consistent Vaulting](https://github.com/CowboyBingus/ConsistentVaulting) | v8 | Adds fresh obstacle checks, higher ledge detection and bounded steep-surface support. |
 | [Shallow Water Diving](https://github.com/CowboyBingus/ShallowWaterDiving) | v3 | Preserves the standing water reference during a local airborne dive. |
-| [Sentry Aim Retention](components/SentryAimRetention/src) | v1.0.1 | Retains sentry aim through target loss and pauses broad Gatling/machine-gun firing sweeps. |
+| [Sentry Aim Retention](components/SentryAimRetention/src) | v1.0.7 | Retains sentry aim, improves nearby target handoffs, and pauses broad sweeps, stale-target shots and terrain-obstructed fire. |
 | [Enemy Collision Synchronized](components/EnemyCollisionSynchronized/src) | v2.6 | Aligns displaced corpse collision and curbs renewed movement after large remote corpses settle. |
 
 All gameplay components are pinned to the source and compiled-resource hashes in `components.lock.json`. Third-party HUD mods and the reserved, unreleased Wide Angle Stratagems module are not included. The shared loader remains a separate dependency with its own repository and updates.
@@ -42,6 +42,6 @@ Replace the megapack ZIP to update its bundled gameplay versions. Updating an in
 
 Check `%LOCALAPPDATA%/BingusSharedLoader.log` for `mods/cowboybingus/vanilla_plus_megapack: loaded` and the gameplay module entries. Each gameplay mod retains its own existing logs. For removal, disable the pack and Purge / Deploy; keep the loader enabled if other dependent mods remain.
 
-[Build from source](CONTRIBUTING.md) · [Technical details](docs/TECHNICAL.md) · [Release notes](docs/RELEASE_NOTES.md) · [Third-party notices](THIRD_PARTY.md) · [Artwork and prompts](assets/ARTWORK.md)
+[Build from source](CONTRIBUTING.md) Â· [Technical details](docs/TECHNICAL.md) Â· [Release notes](docs/RELEASE_NOTES.md) Â· [Third-party notices](THIRD_PARTY.md) Â· [Artwork and prompts](assets/ARTWORK.md)
 
 **AI disclosure:** GPT-6 Astra assisted with implementation, tests, documentation and artwork.

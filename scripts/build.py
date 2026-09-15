@@ -13,7 +13,7 @@ from package import package_release
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-REVISION = 'megapack-v2'
+REVISION = 'megapack-v3'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 
 

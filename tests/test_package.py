@@ -37,7 +37,7 @@ def main():
         expected |= {'manifest.json', 'thumbnail.png', 'VanillaPlusMegapack-manifest.json', 'VanillaPlusMegapack-README.txt'}
         assert len(package.namelist()) == len(expected) and set(package.namelist()) == expected
         manager = json.loads(package.read('manifest.json'))
-        assert manager['Version'] == 1 and manager['Name'] == 'Vanilla Plus Megapack - v2' and manager['Guid'] == GUID
+        assert manager['Version'] == 1 and manager['Name'] == 'Vanilla Plus Megapack - v3' and manager['Guid'] == GUID
         assert len(manager['Options']) == 1 and manager['Options'][0]['Include'] == ['data']
         assert manager['IconPath'] == manager['Options'][0]['Image'] == 'thumbnail.png'
         png = package.read('thumbnail.png')
