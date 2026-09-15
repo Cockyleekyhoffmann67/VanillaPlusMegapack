@@ -1,0 +1,131 @@
+[
+  {
+    "slug": "BetterStratagemBounce",
+    "name": "Better Stratagem Bounce",
+    "revision": "archive-v15",
+    "repository": "https://github.com/CowboyBingus/BetterStratagemBounce",
+    "module": "mods/cowboybingus/better_stratagem_bounce",
+    "patch": "navigation_patch.lua",
+    "resource_sha256": "37D2204EE7FCFF143D5C7D9419DCC0F816140D3446BA8D732E6C7E1B96BC53A5",
+    "source_sha256": {
+      "src/archive_loader.lua": "FF01F6B3C5CF59925701C40E0C7931D47A106E5D271EF79B6A84D720B14BF8C9",
+      "src/navigation_patch.lua": "89C51A95073F57CE09EBFDB05856F8182E740594CD6E10F7DCC7498648DC5595",
+      "src/windows_api.lua": "F20D2EA461B0546F49C4D29F0E65FB756297A3A077335B3469992CBA0178E9C1",
+      "tests/test_archive.lua": "0AF101FDAB88B06175FC4B3E056D247195840F250FADD4304710EA6136DC988A",
+      "tests/test_windows_interop.lua": "66EF3BB6238BA8BD1119913993019F3F83594F51B493ECA3D29D31E839F8A957"
+    }
+  },
+  {
+    "slug": "HellpodSteeringUnlocked",
+    "name": "Hellpod Steering Unlocked",
+    "revision": "data-v7",
+    "repository": "https://github.com/CowboyBingus/HellpodSteeringUnlocked",
+    "module": "mods/cowboybingus/hellpod_steering_unlocked",
+    "patch": "steering_patch.lua",
+    "resource_sha256": "050072E02D633F54349052E1201F1A8D3CE469B9553E7B994BD379D08DA1B4F5",
+    "source_sha256": {
+      "src/archive_loader.lua": "5B9D192735FE1F45B30D69C8EA98CCC45BCBE4CA1A76B5F7753D83E9E25A48FD",
+      "src/steering_patch.lua": "39B9A1F93A5FDC36366A4806AED1C27E345C4C1446ECE7295E42BB33BE19754E",
+      "src/windows_api.lua": "0A250A590227136A90C4461B767D4B866E68DED8EA2E22DDD3C9C66D2B2084A7",
+      "tests/test_api_coexistence.lua": "DE16024385E8DBE7A44684D4704FF44AE88411012DF43CB6551FCDBEE3B22401",
+      "tests/test_data.lua": "546AE51449F9E61C67E84AAA3132BC562019BD6D0DB7705B31C20A96940202B3"
+    }
+  },
+  {
+    "slug": "ReinforcementBeaconsFixed",
+    "name": "Reinforcement Beacons Fixed",
+    "revision": "data-v4",
+    "repository": "https://github.com/CowboyBingus/ReinforcementBeaconsFixed",
+    "module": "mods/cowboybingus/reinforcement_beacon_fix_data",
+    "patch": "spawn_data.lua",
+    "resource_sha256": "AA30DDB820F2103DABD5BD165674416DEECBC6D45B38879563C4B6D7F91FE4F2",
+    "source_sha256": {
+      "src/archive_loader.lua": "B0C47D523212C866790B74378E96BD2C490BA0790AA688B32F33CC6F2F03581C",
+      "src/spawn_data.lua": "526A4B2F5A3F65C8450C88F6959E0D95F75DA5E64D5E88C4AA66E1697ED7ACE4",
+      "src/windows_api.lua": "CBE52048AC2CE4EA550CA240F90C2882D9F4EF8A5451EA7CD86584CD32EE4EE1",
+      "tests/solo_scenarios.lua": "EBC55908DF59B37F81CB3B0079B768858CF97CCE018F036A68E7BCB018C7FDAF",
+      "tests/test_data.lua": "1BD5F29CC1B68ADEDADFDFBD9F130774EDBFAFD45A5023F9DC935E534B894E90",
+      "tests/test_startup.lua": "48A4726497A265BAD3350294A42E70F618DDDFBDB460F2198F4DD66C1E140C4A"
+    }
+  },
+  {
+    "slug": "ConsistentVaulting",
+    "name": "Consistent Vaulting",
+    "revision": "data-v8",
+    "repository": "https://github.com/CowboyBingus/ConsistentVaulting",
+    "module": "mods/cowboybingus/consistent_vaulting",
+    "patch": "vault_data.lua",
+    "resource_sha256": "B56C4DAD8149086AE659C0AD9E032B0ABC90A5976D209550E0CA71E2120C0087",
+    "source_sha256": {
+      "src/archive_loader.lua": "3E12D36F956AD592D8F59C98A6BA549FC96B99FFF48C88F6B8D536E2C3F1A7F6",
+      "src/slope_assist.lua": "1C2DFEEE4E9F083FEB2A2F2E548B942A4A98C1C231D864EED8F58B411782E212",
+      "src/vault_data.lua": "6B162AC9BC28D59955DE27AFF0B5FCF5270F25F9E66F7F11CE01FFD44C929030",
+      "src/windows_api.lua": "DC05BE7D1F7C0B7B7937ED571DD8984BE003C10FE9EC31EE0381D0BAFDCF369D",
+      "tests/test_geometry.lua": "40AA769EF81BA1EDEBA48DE231D27655D9F4171A00754AA686F346294ED6A193",
+      "tests/test_loader.lua": "E19A6192493FB5D5D11BABDB534EEBD21E674D720831EC19EFF77F50F6F0641D",
+      "tests/test_slope.lua": "67CFB894AED1C774542890C00F2F420DA95ED67E9DA740ABE17B4B8C967302C3",
+      "tests/test_vault.lua": "5F9B28419BAF0D0DB4A25C97E57943D9C286739B691676AEA59A32700029E443"
+    }
+  },
+  {
+    "slug": "ShallowWaterDiving",
+    "name": "Shallow Water Diving",
+    "revision": "data-v3",
+    "repository": "https://github.com/CowboyBingus/ShallowWaterDiving",
+    "module": "mods/cowboybingus/shallow_water_dive",
+    "patch": "dive_data.lua",
+    "resource_sha256": "73B6C40E9448AFFDA7FF29A26B985B3CA9CC039E94F54651332D5DB47FD67B5B",
+    "source_sha256": {
+      "src/archive_loader.lua": "C2BDB091A2005B24A376B01F8A924033DB1AD2DCA193952A79E0AD493656238D",
+      "src/dive_data.lua": "EEC7F29842FF0BB7C03FFECF6F92B9DD6B7426A775B1A057D0817A8DD9C3B124",
+      "src/windows_api.lua": "CB354AC6E9834CC73A00E01DD78BA33EB4319791F8A0EF7804B4579E508B68C8",
+      "tests/test_dive.lua": "C3C29F9651EE68A23904BD76D0D60F224EFD2E92B99C4F236388C5ED91227884",
+      "tests/test_loader.lua": "A6C1EAEB0DF6055A693CF8B1EB818EB699AA7AF4C3170D74340547345BF7F440"
+    }
+  },
+  {
+    "slug": "SentryAimRetention",
+    "name": "Sentry Aim Retention",
+    "revision": "data-v2",
+    "repository": null,
+    "module": "mods/cowboybingus/sentry_aim_retention",
+    "patch": "aim_data.lua",
+    "resource_sha256": "131579EC03D98DEEF7DE6DD07F4D4C627E1458E99AB3A427654815FCE662CD49",
+    "source_sha256": {
+      "src/aim_data.lua": "2971CFB5CF2AF5F793C7805E0E28B42A87978B9328B1E92ED7BDB1093CB1D8DA",
+      "src/archive_loader.lua": "94B96C088822ED31BE806B49A9C501F30BBDFDB60DF64A92F62648BFDB4CEDC2",
+      "src/windows_api.lua": "6EBC2E75D93E8A67B04CA020CE036D63D6C550F4D60A38AC2868767A00E6EFE1",
+      "tests/firing_sweeps.lua": "73123D11A52F24577F7956F81BCB001DAEBBB8E918B739DEE54761F45F46507F",
+      "tests/gatling_target_loss.lua": "622DCBFD922AD86F3CCF9D9E61A1FD03DA99CEE96605E12E3F8C3E5094EB20AA",
+      "tests/test_aim.lua": "3F1D3849A9C3D883D0276F47FF5B9E2DD3603E27AB2C480F6D6FBC89BADE26A8",
+      "tests/test_firing.lua": "8CBDE79DF4448F531B2E7EDC29811231B8161C4618EA5DF842E39F04938AFE85",
+      "tests/test_loader.lua": "C8DB99C8B811781CCEB6E172F1C209D71F9E94E45B4EB4115BE3B685372444AF",
+      "tests/test_snapshot.lua": "67B8C47D0A284F644FA1834E519D7AEC66CA2B5A7C67E1B259462E4121D63D8E",
+      "tests/test_windows_api.lua": "D345676B1F495DB66E5487CC02C224C54F64D95C85803DF0FAFE118C90BC2D41"
+    },
+    "source_origin": "Maintainer local Sentry Aim Retention data-v2 source release"
+  },
+  {
+    "slug": "EnemyCollisionSynchronized",
+    "name": "Enemy Collision Synchronized",
+    "revision": "v2.6",
+    "repository": "https://github.com/CowboyBingus/EnemyCollisionSynchronized",
+    "module": "mods/cowboybingus/corpse_collision_repair",
+    "patch": "corpse_data.lua",
+    "resource_sha256": "12C5408F78C63A2C4D5E7662D5109C4DFE36CC9FE4A8106924F2609B6673F8ED",
+    "source_sha256": {
+      "profiles/catalog.json": "48B06BB206D6C4E6578A8278FCD6FB014210C932C9E743EA7169426E2CA238B8",
+      "scripts/generate_profiles.py": "1783AFB1D739A8D82F4D64AAD39755A5BBA245D57888C5D21B5203EEA28A0FF0",
+      "src/archive_loader.lua": "4F2814D5B0ADDB56120FE0DE31AEB14CB7C66F94CA70DA6D03E597CCC7472EB8",
+      "src/corpse_data.lua": "EE77EE3338834141A7567BB75F764E89BFB572593EC739622B9282276022A35E",
+      "src/windows_api.lua": "D83D4D25AFCD36E5E106B5E0B9990C60F54BBF6A91865C9E1A6B3EAA6FE6B3EC",
+      "tests/test_completion.lua": "6D365565F8B753CB31655A3FA36712786B83BF8E12B2F635ACFF0A0EC4DB306D",
+      "tests/test_fling.lua": "82F5B987027B2A1ADB6A8637330597D91B6007A8F21B4584DD02C00E9B814B1B",
+      "tests/test_loader.lua": "FA5E6DDCDD2122065003D3BC9067C26E0C2DB4F73AA2C324294B44F9CE387F49",
+      "tests/test_profiles.py": "51AB6076D42E9A03FF8F2F7E7AD1EA19C3AF8A2A3E3F10DF4F3098EE33FF9596",
+      "tests/test_repair.lua": "3CE11FA43C8F56E9C9C51B550BBE10EE6FB2A3E541EFBB3EB2C656108AA2428A",
+      "tests/test_settlement.lua": "957C3543713950160FD03A2B5D8AB16F94CADDFCF0DAA2174432888F00908B23",
+      "tests/test_snapshot.lua": "985A82294C5A575BEBD40657C1F18A36757AEBA58514774A6C2DB617241C83AD"
+    }
+  }
+]

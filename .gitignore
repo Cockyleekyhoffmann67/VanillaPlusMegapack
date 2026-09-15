@@ -1,0 +1,10 @@
+/build/
+/releases/
+/tools/
+__pycache__/
+*.py[cod]
+*.log
+*.zip
+.env
+.env.*
+.venv/
