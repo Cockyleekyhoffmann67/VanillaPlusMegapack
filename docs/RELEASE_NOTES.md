@@ -1,3 +1,11 @@
+# v7
+
+- Adds Know Your Constellation v3.12 for local enemy forecasts on mission previews and briefing.
+- Requires the separate Bingus Shared Loader v12 or newer.
+- Preserves the eight existing component payloads byte for byte.
+- Keeps one-copy startup when standalone packages are also installed.
+- Individual component behavior is unchanged. The combined bundle has offline validation, with full in-game bundle validation pending.
+
 # v6
 
 - Adds Controllable Hover Pack v1 with native landing assistance.

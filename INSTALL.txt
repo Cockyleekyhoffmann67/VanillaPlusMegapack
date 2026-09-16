@@ -1,7 +1,7 @@
-Vanilla Plus Megapack - v4
+Vanilla Plus Megapack - v7
 
-Install Vanilla-Plus-Megapack-v6.zip AND the separate Bingus-Shared-Loader-v11.zip
-(v11 or newer / API 1). The loader is not included and mod managers do
+Install Vanilla-Plus-Megapack-v7.zip AND the separate Bingus-Shared-Loader-v12.zip
+(v12 or newer / API 1). The loader is not included and mod managers do
 not download it automatically.
 Download the loader from its own repository:
 https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
@@ -9,8 +9,8 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 1. Close Helldivers 2. Use Arsenal or HD2MM, not both.
 2. Current standalone gameplay packages may remain installed. Give the pack
    winning priority over them to use its bundled versions.
-3. Replace any old loader entry with Bingus Shared Loader v11 or newer.
-4. Import Vanilla-Plus-Megapack-v6.zip and Bingus-Shared-Loader-v11.zip and enable both.
+3. Replace any old loader entry with Bingus Shared Loader v12 or newer.
+4. Import Vanilla-Plus-Megapack-v7.zip and Bingus-Shared-Loader-v12.zip and enable both.
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
    If first-mod priority is enabled, put it FIRST instead.
 6. Purge, then Deploy. Start the game normally.
@@ -22,9 +22,16 @@ The manager selects one resource version; existing startup guards also prevent
 duplicate callback installation. Older packages that replace the startup loader
 must still be removed when migrating to the shared loader.
 
-Included revisions: Better Stratagem Bounce v15; Hellpod Steering
-Unlocked v7; Reinforcement Beacons Fixed v4; Consistent Vaulting
-v8; Shallow Water Diving v3; Sentry Aim Retention v1.0.7; Enemy Collision Synchronized v2.7.
+Included revisions:
+- Better Stratagem Bounce v15
+- Hellpod Steering Unlocked v7
+- Reinforcement Beacons Fixed v4
+- Consistent Vaulting v8
+- Shallow Water Diving v3
+- Sentry Aim Retention v1.0.7
+- Enemy Collision Synchronized v2.7
+- Controllable Hover Pack v1
+- Know Your Constellation v3.12
 
 Steam build 24826606 / EXE 1.8.45317.0.
 Offline verification is not live gameplay or multiplayer validation.

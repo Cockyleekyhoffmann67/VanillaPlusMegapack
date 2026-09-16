@@ -5,9 +5,9 @@ local wwise = 'core/wwise/lua/wwise_flow_callbacks'
 local names = {pack, 'mods/cowboybingus/better_stratagem_bounce',
     'mods/cowboybingus/hellpod_steering_unlocked', 'mods/cowboybingus/reinforcement_beacon_fix_data',
     'mods/cowboybingus/consistent_vaulting', 'mods/cowboybingus/shallow_water_dive',
-    'mods/cowboybingus/sentry_aim_retention', 'mods/cowboybingus/corpse_collision_repair', 'mods/cowboybingus/hover_pack_cancel'}
+    'mods/cowboybingus/sentry_aim_retention', 'mods/cowboybingus/corpse_collision_repair', 'mods/cowboybingus/hover_pack_cancel', 'mods/cowboybingus/enemy_intelligence'}
 local folders = {'', 'BetterStratagemBounce', 'HellpodSteeringUnlocked', 'ReinforcementBeaconsFixed',
-    'ConsistentVaulting', 'ShallowWaterDiving', 'SentryAimRetention', 'EnemyCollisionSynchronized', 'ControllableHoverPack'}
+    'ConsistentVaulting', 'ShallowWaterDiving', 'SentryAimRetention', 'EnemyCollisionSynchronized', 'ControllableHoverPack', 'KnowYourConstellation'}
 local function read(path)
     local file = assert(io.open(path, 'rb'))
     local bytes = file:read('*a'); file:close(); return bytes
@@ -53,7 +53,7 @@ for _, installed_loader in ipairs({false, true}) do
         env.shutdown = function() return 'shutdown', nil, 7 end
         env.init()
         if installed_loader then
-            assert(env.CowboyBingusModLoader.version >= 12 and env.CowboyBingusModLoader.api == 1)
+            assert(env.CowboyBingusModLoader.version >= 13 and env.CowboyBingusModLoader.api == 1)
             execute(read(loader .. '/callbacks.ljbc'))
             for i, name in ipairs(names) do
                 assert((count[name] or 0) == (available[name] and 1 or 0), name)
@@ -64,7 +64,7 @@ for _, installed_loader in ipairs({false, true}) do
             end
             local identity = env.CowboyBingusModLoader.megapack
             if installed_pack and failure ~= 1 and failure ~= #names + 1 then
-                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v6')
+                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v7')
                 assert(#identity.modules == #names - 1)
                 for i = 2, #names do assert(identity.modules[i-1] == names[i]) end
             else assert(identity == nil) end
