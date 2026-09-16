@@ -18,7 +18,7 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 All gameplay features are enabled together. To select individual features,
 disable this pack and install the desired standalone mods with the loader.
 Forgotten current standalone copies do not run a second copy of the mod.
-The manager selects one resource version; existing startup guards also prevent
+The manager selects one resource version. existing startup guards also prevent
 duplicate callback installation. Older packages that replace the startup loader
 must still be removed when migrating to the shared loader.
 

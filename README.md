@@ -14,7 +14,7 @@ All CowboyBingus Helldivers 2 gameplay mods in one install. Better stratagem pla
 2. Replace any previous loader entry with v12 or newer. You can leave current standalone gameplay packages installed.
 3. Import `Vanilla-Plus-Megapack-v7.zip` and `Bingus-Shared-Loader-v12.zip`, then enable both.
 4. With Arsenal's default priority, put **Bingus Shared Loader last**, at the bottom. If first-mod priority is enabled, put the loader first.
-5. **Purge â†’ Deploy**, then launch the game normally.
+5. **Purge / Deploy**, then launch the game normally.
 
 The pack enables all mods together. To choose individual features, disable the pack and use the standalone packages with the loader instead. Current standalone copies can remain enabled: overlapping gameplay resources run once, and their callbacks do not stack. If the versions differ, your mod manager selects the winning version. Give the pack winning priority over standalone copies to use its bundled versions.
 
@@ -42,8 +42,8 @@ The pack preserves all gameplay resource names and bytecode exactly. It contains
 
 Replace the megapack ZIP to update its bundled gameplay versions. Updating an individual mod repository does not silently change this pinned pack. The loader can be updated separately.
 
-Check `%LOCALAPPDATA%/BingusSharedLoader.log` for `mods/cowboybingus/vanilla_plus_megapack: loaded` and the gameplay module entries. Each gameplay mod retains its own existing logs. For removal, disable the pack and Purge / Deploy; keep the loader enabled if other dependent mods remain.
+Check `%LOCALAPPDATA%/BingusSharedLoader.log` for `mods/cowboybingus/vanilla_plus_megapack: loaded` and the gameplay module entries. Each gameplay mod retains its own existing logs. For removal, disable the pack and Purge / Deploy. keep the loader enabled if other dependent mods remain.
 
-[Build from source](CONTRIBUTING.md) Â| [Technical details](docs/TECHNICAL.md) Â| [Release notes](docs/RELEASE_NOTES.md) Â| [Third-party notices](THIRD_PARTY.md) Â| [Artwork and prompts](assets/ARTWORK.md)
+[Build from source](CONTRIBUTING.md) | [Technical details](docs/TECHNICAL.md) | [Release notes](docs/RELEASE_NOTES.md) | [Third-party notices](THIRD_PARTY.md) | [Artwork and prompts](assets/ARTWORK.md)
 
 **AI disclosure:** GPT-6 Astra assisted with implementation, tests, documentation and artwork.
