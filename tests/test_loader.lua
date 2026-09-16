@@ -64,7 +64,7 @@ for _, installed_loader in ipairs({false, true}) do
             end
             local identity = env.CowboyBingusModLoader.megapack
             if installed_pack and failure ~= 1 and failure ~= #names + 1 then
-                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v7')
+                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v8')
                 assert(#identity.modules == #names - 1)
                 for i = 2, #names do assert(identity.modules[i-1] == names[i]) end
             else assert(identity == nil) end

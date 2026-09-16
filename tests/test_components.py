@@ -6,21 +6,22 @@ from build import ROOT, BUILD, LUA, run, sha
 
 
 def main():
+    build = Path(sys.argv[1]) if len(sys.argv)>1 else BUILD
     mods = ROOT / 'components'
     bounce = mods / 'BetterStratagemBounce'
     steering = mods / 'HellpodSteeringUnlocked'
     digest = sha(LUA.read_bytes())
     commands = [
-        [bounce / 'tests/test_archive.lua', bounce / 'src', BUILD / 'BetterStratagemBounce/mod.ljbc', digest],
-        [steering / 'tests/test_data.lua', steering / 'src', BUILD / 'HellpodSteeringUnlocked', digest, bounce / 'src'],
+        [bounce / 'tests/test_archive.lua', bounce / 'src', build / 'BetterStratagemBounce/mod.ljbc', digest],
+        [steering / 'tests/test_data.lua', steering / 'src', build / 'HellpodSteeringUnlocked', digest, bounce / 'src'],
     ]
     for order in ('hellpod-ball', 'ball-hellpod'):
         commands.append([bounce / 'tests/test_windows_interop.lua', bounce / 'src', steering / 'src', order,
-                         BUILD / 'BetterStratagemBounce/mod.ljbc', digest])
+                         build / 'BetterStratagemBounce/mod.ljbc', digest])
     for order in ('hellpod-first', 'bounce-first'):
         commands.append([steering / 'tests/test_api_coexistence.lua', steering / 'src', bounce / 'src', order])
     suites = {
-        'KnowYourConstellation': [(n,None) for n in ('test_resolve','test_panel','test_install','test_mission','test_heavy','test_presentation')],
+        'KnowYourConstellation': [(n,None) for n in ('test_resolve','test_panel','test_install','test_mission','test_heavy','test_presentation','test_rows')],
         'ControllableHoverPack': [(n,None) for n in ('test_cancel','test_snapshot','test_settings','test_loader','test_replay')],
         'ReinforcementBeaconsFixed': [('test_data', 'solo_scenarios'), ('test_startup', None)],
         'ConsistentVaulting': [(n, None) for n in ('test_vault', 'test_geometry', 'test_slope', 'test_loader')],
@@ -41,6 +42,9 @@ def main():
         commands.append([corpse / 'tests' / ('test_' + name + '.lua'), corpse / 'src'])
     commands.append([corpse / 'tests/test_performance.lua', corpse / 'src', corpse / 'tests'])
     commands.append([corpse / 'tests/test_profiler.lua', corpse / 'src'])
+    commands.append([corpse / 'tests/test_profiler_detail.lua', corpse / 'src'])
+    commands.append([corpse / 'tests/test_profiler_behavior.lua', corpse / 'src', corpse / 'tests'])
+    commands.append([corpse / 'tests/test_metadata_cache.lua', corpse / 'src', corpse / 'tests'])
     for command in commands:
         result = run([LUA, *command])
         print(result.strip())

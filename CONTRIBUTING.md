@@ -7,13 +7,15 @@ $env:HD2_LUAJIT = 'D:\tools\LuaJIT\src\luajit.exe'
 python -B scripts/build.py
 ```
 
-The output is the workspace root `releases/Vanilla-Plus-Megapack-v7.zip` (or local `releases/` when built standalone). Generated wrappers, component bytecode, checksums and test reports stay in ignored `build/`. The build does not install mods, access a live game process, or launch the game. Gameplay sources are vendored. Build Bingus Shared Loader first. its compiled fixtures are used by the startup integration gate. For standalone checkouts, set `HD2_SHARED_LOADER_BUILD` to the loader build directory. The compiled modules retain their existing runtime game-fingerprint checks.
+The output is the workspace root `releases/Vanilla-Plus-Megapack-v8.zip` (or local `releases/` when built standalone). Generated wrappers, component bytecode, checksums and test reports stay in ignored `build/`. The build does not install mods, access a live game process, or launch the game. Gameplay sources are vendored. Build Bingus Shared Loader first. its compiled fixtures are used by the startup integration gate. For standalone checkouts, set `HD2_SHARED_LOADER_BUILD` to the loader build directory. The compiled modules retain their existing runtime game-fingerprint checks.
 
 `components/` contains the reviewed Lua source and test snapshots. `components.lock.json` pins their revisions, source hashes and original standalone resource hashes. The builder recreates the original wrappers and requires every compiled gameplay resource to match its original release byte for byte. A changed source or mismatched compiler fails the build. The pack adds only `src/megapack.lua`, its bundle identity resource.
 
 Git attributes preserve component snapshot bytes, including upstream line endings, so the source hashes remain stable after cloning on Windows or Linux.
 
-The normal build runs all 38 upstream gameplay/interoperability test processes and package checks. Those tests use synthetic data in the test process. They do not test live gameplay.
+The normal build runs the vendored gameplay and interoperability tests and package checks. Those tests use synthetic data in the test process. They do not test live gameplay.
+
+Run `python scripts/build.py --rows` after building or downloading the standard v8 ZIP to create the alternate static forecast layout. The [Rows build notes](docs/ROWS.md) describe the pinned payload and comparison checks.
 
 To test the actual compiled loader with the pack, first build Bingus Shared Loader v12, then run:
 

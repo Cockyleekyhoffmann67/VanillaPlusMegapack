@@ -1,3 +1,11 @@
+# v8
+
+- Adds an optional Rows package with the verified static constellation forecast. All other bundled payloads match the standard v8 package exactly.
+- Updates Enemy Collision Synchronized to v2.9 with lower inspection overhead and expanded performance diagnostics.
+- Preserves corpse-check frequency, repair guards, enemy coverage and stabilization behavior.
+- Retains all other bundled gameplay payloads and compatibility with the separate Bingus Shared Loader v12 or newer.
+- Keeps duplicate-install protection when standalone packages are also enabled.
+
 # v7
 
 - Adds Know Your Constellation v3.12 for local enemy forecasts on mission previews and briefing.
