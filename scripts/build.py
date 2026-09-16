@@ -13,7 +13,7 @@ from package import package_release
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-REVISION = 'megapack-v3'
+REVISION = 'megapack-v4'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 
 
@@ -47,12 +47,17 @@ def build_component(component):
     vaulting = component['slug'] == 'ConsistentVaulting'
     if vaulting:
         parts.append(('assistance', 'slope_assist.lua'))
+    collision = component['slug'] == 'EnemyCollisionSynchronized'
+    if collision:
+        parts.append(('profiler', 'profiler.lua'))
     parts.append(('install_loader', 'archive_loader.lua'))
     source = ''
     for variable, filename in parts:
         source += f'local {variable} = (function()\n{(root / "src" / filename).read_text(encoding="utf-8")}\nend)()\n'
     if vaulting:
         source += 'patch.assistance = assistance\nassistance.candidate = patch.assist_candidate\n'
+    if collision:
+        source += 'patch.profiler = profiler\n'
     source += f"install_loader(create_api, patch, {{revision = '{component['revision']}', "
     source += f"exe_sha256 = '{EXE_SHA}', game_sha256 = '{GAME_DLL_SHA}'" + '})\n'
     payload = compile_resource(source, BUILD / component['slug'])

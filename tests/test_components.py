@@ -37,6 +37,8 @@ def main():
     print(run([sys.executable, corpse / 'tests/test_profiles.py']).strip())
     for name in ('repair', 'snapshot', 'fling', 'settlement', 'completion', 'loader'):
         commands.append([corpse / 'tests' / ('test_' + name + '.lua'), corpse / 'src'])
+    commands.append([corpse / 'tests/test_performance.lua', corpse / 'src', corpse / 'tests'])
+    commands.append([corpse / 'tests/test_profiler.lua', corpse / 'src'])
     for command in commands:
         result = run([LUA, *command])
         print(result.strip())
