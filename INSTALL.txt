@@ -1,7 +1,7 @@
 Vanilla Plus Megapack - v4
 
-Install Vanilla-Plus-Megapack-v4.zip AND the separate Bingus-Shared-Loader-v9.zip
-(v9 or newer / API 1). The loader is not included and mod managers do
+Install Vanilla-Plus-Megapack-v6.zip AND the separate Bingus-Shared-Loader-v11.zip
+(v11 or newer / API 1). The loader is not included and mod managers do
 not download it automatically.
 Download the loader from its own repository:
 https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
@@ -9,8 +9,8 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 1. Close Helldivers 2. Use Arsenal or HD2MM, not both.
 2. Current standalone gameplay packages may remain installed. Give the pack
    winning priority over them to use its bundled versions.
-3. Replace any old loader entry with Bingus Shared Loader v9 or newer.
-4. Import Vanilla-Plus-Megapack-v4.zip and Bingus-Shared-Loader-v9.zip and enable both.
+3. Replace any old loader entry with Bingus Shared Loader v11 or newer.
+4. Import Vanilla-Plus-Megapack-v6.zip and Bingus-Shared-Loader-v11.zip and enable both.
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
    If first-mod priority is enabled, put it FIRST instead.
 6. Purge, then Deploy. Start the game normally.

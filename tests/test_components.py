@@ -20,6 +20,7 @@ def main():
     for order in ('hellpod-first', 'bounce-first'):
         commands.append([steering / 'tests/test_api_coexistence.lua', steering / 'src', bounce / 'src', order])
     suites = {
+        'ControllableHoverPack': [(n,None) for n in ('test_cancel','test_snapshot','test_settings','test_loader','test_replay')],
         'ReinforcementBeaconsFixed': [('test_data', 'solo_scenarios'), ('test_startup', None)],
         'ConsistentVaulting': [(n, None) for n in ('test_vault', 'test_geometry', 'test_slope', 'test_loader')],
         'ShallowWaterDiving': [('test_dive', None), ('test_loader', None)],

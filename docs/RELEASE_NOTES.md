@@ -1,3 +1,10 @@
+# v6
+
+- Adds Controllable Hover Pack v1 with native landing assistance.
+- Requires Bingus Shared Loader v11 or newer.
+- Retains published Enemy Collision Synchronized v2.7 and the other seven-component release payloads unchanged.
+- Preserves one-copy startup when standalone mods are also installed.
+
 # v4
 
 - Updated Enemy Collision Synchronized to v2.7.

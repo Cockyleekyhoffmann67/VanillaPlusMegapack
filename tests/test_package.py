@@ -37,7 +37,7 @@ def main():
         expected |= {'manifest.json', 'thumbnail.png', 'VanillaPlusMegapack-manifest.json', 'VanillaPlusMegapack-README.txt'}
         assert len(package.namelist()) == len(expected) and set(package.namelist()) == expected
         manager = json.loads(package.read('manifest.json'))
-        assert manager['Version'] == 1 and manager['Name'] == 'Vanilla Plus Megapack - v4' and manager['Guid'] == GUID
+        assert manager['Version'] == 1 and manager['Name'] == 'Vanilla Plus Megapack - v6' and manager['Guid'] == GUID
         assert len(manager['Options']) == 1 and manager['Options'][0]['Include'] == ['data']
         assert manager['IconPath'] == manager['Options'][0]['Image'] == 'thumbnail.png'
         png = package.read('thumbnail.png')
@@ -46,7 +46,7 @@ def main():
         assert width == height and width >= 512
         report = json.loads(package.read('VanillaPlusMegapack-manifest.json'))
         assert report['revision'] == REVISION and report['runtime_verified'] is False
-        assert report['requires'][0]['revision'] == 'loader-v9'
+        assert report['requires'][0]['revision'] == 'loader-v11'
         assert report['loader_bundled'] is False and report['boot_replaced'] is False
         assert len(report['components']) == len(components)
         for name, digest in report['files'].items():

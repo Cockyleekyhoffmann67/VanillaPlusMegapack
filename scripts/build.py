@@ -13,7 +13,7 @@ from package import package_release
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-REVISION = 'megapack-v4'
+REVISION = 'megapack-v6'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 
 
@@ -43,6 +43,16 @@ def build_component(component):
     for relative, expected in component['source_sha256'].items():
         if sha((root / relative).read_bytes()) != expected:
             raise ValueError('Pinned source changed: ' + component['slug'] + '/' + relative)
+    if component['slug'] == 'ControllableHoverPack':
+        source = ''
+        for variable, filename in [('create_api','windows_api.lua'),('policy','cancel.lua'),('settings','settings.lua'),('patch','hover_data.lua'),('install','archive_loader.lua')]:
+            source += f'local {variable}=(function()\n{(root / "src" / filename).read_text()}\nend)()\n'
+        source += 'patch.policy=policy;patch.settings=settings\n'
+        source += f"install(create_api,patch,{{revision='v1',game_sha256='{GAME_DLL_SHA}',exe_sha256='{EXE_SHA}'}})\n"
+        payload = compile_resource(source, BUILD / component['slug'])
+        if sha(payload) != component['resource_sha256']:
+            raise ValueError('Hover resource differs from verified standalone release')
+        return payload
     parts = [('create_api', 'windows_api.lua'), ('patch', component['patch'])]
     vaulting = component['slug'] == 'ConsistentVaulting'
     if vaulting:
@@ -83,8 +93,8 @@ def main():
     files = {f'data/{ARCHIVE}{s}': f'build/{ARCHIVE}{s}' for s in ('', '.stream', '.gpu_resources')}
     report = {
         'name': 'Vanilla Plus Megapack', 'slug': 'VanillaPlusMegapack', 'revision': REVISION, 'guid': GUID,
-        'description': 'All CowboyBingus gameplay mods in one package: Better Stratagem Bounce, Hellpod Steering Unlocked, Reinforcement Beacons Fixed, Consistent Vaulting, Shallow Water Diving, Sentry Aim Retention and Enemy Collision Synchronized. Requires the separate Bingus Shared Loader v9 or newer. Current individual copies can remain installed; give the pack winning priority over them to use its bundled versions. Enable the pack and loader, then Purge / Deploy. With default Arsenal priority put the loader last.',
-        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v9'}],
+        'description': 'All CowboyBingus gameplay mods in one package: Better Stratagem Bounce, Hellpod Steering Unlocked, Reinforcement Beacons Fixed, Consistent Vaulting, Shallow Water Diving, Sentry Aim Retention, Enemy Collision Synchronized and Controllable Hover Pack. Requires the separate Bingus Shared Loader v11 or newer. Current individual copies can remain installed; give the pack winning priority over them to use its bundled versions. Enable the pack and loader, then Purge / Deploy. With default Arsenal priority put the loader last.',
+        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v11'}],
         'game_exe_sha256': EXE_SHA, 'game_dll_sha256': GAME_DLL_SHA,
         'deployment_files': files, 'files': {p: sha((ROOT / p).read_bytes()) for p in files.values()},
         'runtime_verified': False, 'boot_replaced': False, 'loader_bundled': False,
