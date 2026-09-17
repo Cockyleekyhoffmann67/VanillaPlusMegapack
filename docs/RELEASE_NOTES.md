@@ -1,3 +1,11 @@
+# v10
+
+- Adds Armory Preview Cache v16 as the tenth independent option.
+- Preserves the user-confirmed standalone runtime exactly.
+- Requires Bingus Shared Loader v13 or newer.
+- Standard and Rows packages preserve all nine existing component payloads.
+- All 1,024 selections are checked; full-pack gameplay validation is separate from standalone validation.
+
 # v9
 
 - Adds nine independent mod checkboxes in Arsenal and HD2MM using their shared Version 1 manifest format.

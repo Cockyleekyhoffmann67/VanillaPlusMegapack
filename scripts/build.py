@@ -14,13 +14,14 @@ from package import package_release, release_directory
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-VERSION = 9
+VERSION = 10
 REVISION = f'megapack-v{VERSION}'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 ROWS_GUID = 'fb497df5-080b-48a5-b31d-103ccb060e1c'
 ROWS_REVISION = REVISION + '-rows-v1'
 
 OPTION_DESCRIPTIONS = {
+    'ArmoryPreviewCache': 'Caches equipment thumbnails and preloads assets in Armory and mission briefing.',
     'BetterStratagemBounce': 'Allows stratagem balls to stick on more usable surfaces.',
     'HellpodSteeringUnlocked': 'Removes the hellpod steering restriction near high ground.',
     'ReinforcementBeaconsFixed': 'Centers queued reinforcements over their beacon or solo anchor.',
@@ -68,6 +69,14 @@ def build_component(component, build=BUILD, rows=False):
     for relative, expected in component['source_sha256'].items():
         if sha((root / relative).read_bytes()) != expected:
             raise ValueError('Pinned source changed: ' + component['slug'] + '/' + relative)
+    if component['slug'] == 'ArmoryPreviewCache':
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('armory_module', root / 'scripts/module.py')
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        payload = compile_resource(module.wrapper(root, GAME_DLL_SHA, EXE_SHA), build / component['slug'])
+        if sha(payload) != component['resource_sha256']:
+            raise ValueError('Armory resource differs from tested standalone v16')
+        return payload
     if component['slug'] == 'KnowYourConstellation':
         import importlib.util
         spec = importlib.util.spec_from_file_location('constellation_module', root / 'scripts/module.py')
@@ -147,8 +156,8 @@ def main():
                         'Include': [folder]})
     report = {
         'name': 'Vanilla Plus Megapack', 'slug': 'VanillaPlusMegapack', 'revision': REVISION, 'guid': GUID,
-        'description': 'Choose any of the nine bundled gameplay mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v12 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
-        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v12'}],
+        'description': 'Choose any of the ten bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v13 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
+        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v13'}],
         'game_exe_sha256': EXE_SHA, 'game_dll_sha256': GAME_DLL_SHA,
         'deployment_files': files, 'options': options,
         'files': {p: sha((ROOT / p).read_bytes()) for p in files.values()},

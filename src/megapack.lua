@@ -3,10 +3,10 @@
 -- Do not require them here: that would duplicate startup and failure handling.
 local loader = assert(rawget(_G, 'CowboyBingusModLoader'), 'Bingus Shared Loader is required')
 assert(type(loader.api) == 'number' and loader.api >= 1, 'Shared loader API 1 is required')
-assert(type(loader.version) == 'number' and loader.version >= 13, 'Bingus Shared Loader loader-v12 is required')
+assert(type(loader.version) == 'number' and loader.version >= 14, 'Bingus Shared Loader loader-v13 is required')
 local pack = {
     name = 'Vanilla Plus Megapack',
-    revision = 'megapack-v9',
+    revision = 'megapack-v10',
     -- Available component inventory; installed choices are in loader.modules.
     modules = {
         'mods/cowboybingus/better_stratagem_bounce',
@@ -18,6 +18,7 @@ local pack = {
         'mods/cowboybingus/corpse_collision_repair',
         'mods/cowboybingus/hover_pack_cancel',
         'mods/cowboybingus/enemy_intelligence',
+        'mods/cowboybingus/armory_preview_cache',
     },
 }
 loader.megapack = pack

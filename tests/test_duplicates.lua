@@ -8,7 +8,7 @@ end
 local components = {}
 for i = 4, #arg, 2 do
     local module, slug = arg[i], assert(arg[i + 1])
-    local entry = slug == 'KnowYourConstellation' and 'install.lua' or 'archive_loader.lua'
+    local entry = (slug == 'KnowYourConstellation' or slug == 'ArmoryPreviewCache') and 'install.lua' or 'archive_loader.lua'
     local source = read(root .. '/components/' .. slug .. '/src/' .. entry)
     local guard = source:match("rawget%(_G,%s*'(%w+)'%)") or source:match('_G%.(%w+) then return end')
     components[#components + 1] = {module = module, guard = assert(guard),

@@ -5,9 +5,9 @@ local wwise = 'core/wwise/lua/wwise_flow_callbacks'
 local names = {pack, 'mods/cowboybingus/better_stratagem_bounce',
     'mods/cowboybingus/hellpod_steering_unlocked', 'mods/cowboybingus/reinforcement_beacon_fix_data',
     'mods/cowboybingus/consistent_vaulting', 'mods/cowboybingus/shallow_water_dive',
-    'mods/cowboybingus/sentry_aim_retention', 'mods/cowboybingus/corpse_collision_repair', 'mods/cowboybingus/hover_pack_cancel', 'mods/cowboybingus/enemy_intelligence'}
+    'mods/cowboybingus/sentry_aim_retention', 'mods/cowboybingus/corpse_collision_repair', 'mods/cowboybingus/hover_pack_cancel', 'mods/cowboybingus/enemy_intelligence', 'mods/cowboybingus/armory_preview_cache'}
 local folders = {'', 'BetterStratagemBounce', 'HellpodSteeringUnlocked', 'ReinforcementBeaconsFixed',
-    'ConsistentVaulting', 'ShallowWaterDiving', 'SentryAimRetention', 'EnemyCollisionSynchronized', 'ControllableHoverPack', 'KnowYourConstellation'}
+    'ConsistentVaulting', 'ShallowWaterDiving', 'SentryAimRetention', 'EnemyCollisionSynchronized', 'ControllableHoverPack', 'KnowYourConstellation', 'ArmoryPreviewCache'}
 local function read(path)
     local file = assert(io.open(path, 'rb'))
     local bytes = file:read('*a'); file:close(); return bytes
@@ -68,7 +68,7 @@ for _, scenario in ipairs(scenarios) do
         env.shutdown = function() return 'shutdown', nil, 7 end
         env.init()
         if installed_loader then
-            assert(env.CowboyBingusModLoader.version >= 13 and env.CowboyBingusModLoader.api == 1)
+            assert(env.CowboyBingusModLoader.version >= 14 and env.CowboyBingusModLoader.api == 1)
             execute(read(loader .. '/callbacks.ljbc'))
             for i, name in ipairs(names) do
                 assert((count[name] or 0) == (available[name] and 1 or 0), name)
@@ -79,7 +79,7 @@ for _, scenario in ipairs(scenarios) do
             end
             local identity = env.CowboyBingusModLoader.megapack
             if installed_pack and failure ~= 1 and failure ~= #names + 1 then
-                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v9')
+                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v10')
                 assert(#identity.modules == #names - 1)
                 for i = 2, #names do assert(identity.modules[i-1] == names[i]) end
             else assert(identity == nil) end
@@ -93,4 +93,4 @@ for _, scenario in ipairs(scenarios) do
         assert(x == 'shutdown' and y == nil and z == 7)
         cases = cases + 1
 end
-print('PASS: ' .. cases .. ' compiled bundle/loader scenarios; all 512 option subsets with/without loader, failures isolated, one startup, callbacks preserved')
+print('PASS: ' .. cases .. ' compiled bundle/loader scenarios; all 1024 option subsets with/without loader, failures isolated, one startup, callbacks preserved')

@@ -1,7 +1,7 @@
-Vanilla Plus Megapack Rows - v9
+Vanilla Plus Megapack Rows - v10
 
-Install Vanilla-Plus-Megapack-Rows-v9.zip AND the separate Bingus-Shared-Loader-v12.zip
-(v12 or newer / API 1). The loader is not included and mod managers do
+Install Vanilla-Plus-Megapack-Rows-v10.zip AND the separate Bingus-Shared-Loader-v13.zip
+(v13 or newer / API 1). The loader is not included and mod managers do
 not download it automatically.
 Download the loader from its own repository:
 https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
@@ -10,8 +10,8 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
    Disable the standard megapack before enabling this alternate package.
 2. Disable old megapacks and standalone copies of features you want turned off.
    An unchecked pack option cannot disable a separately enabled copy.
-3. Replace any old loader entry with Bingus Shared Loader v12 or newer.
-4. Import Vanilla-Plus-Megapack-Rows-v9.zip and Bingus-Shared-Loader-v12.zip and enable both.
+3. Replace any old loader entry with Bingus Shared Loader v13 or newer.
+4. Import Vanilla-Plus-Megapack-Rows-v10.zip and Bingus-Shared-Loader-v13.zip and enable both.
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
    If first-mod priority is enabled, put it FIRST instead.
 6. Open the pack's Options (sliders) in Arsenal, or its mod options in HD2MM.
@@ -19,7 +19,7 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 7. Purge, then Deploy. Start the game normally. Close the game before changing
    options again, and Purge / Deploy after every change.
 
-All nine gameplay features have independent checkboxes in both managers.
+All ten gameplay features have independent checkboxes in both managers.
 Select all for the full pack, any subset, or none for no pack gameplay mods.
 Review the options after importing/updating; defaults depend on your manager.
 Forgotten current standalone copies do not run a second copy of the mod.
@@ -41,6 +41,7 @@ Included revisions:
 - Enemy Collision Synchronized v2.9
 - Controllable Hover Pack v1
 - Know Your Constellation v3.12 with the verified Rows v1 layout
+- Armory Preview Cache v16
 
 Steam build 24826606 / EXE 1.8.45317.0.
 Offline verification is not live gameplay or multiplayer validation.

@@ -43,7 +43,7 @@ def main():
         assert len(package.namelist()) == len(expected) and set(package.namelist()) == expected
         manager = json.loads(package.read('manifest.json'))
         assert manager['Version'] == 1 and manager['Name'] == name+f' - v{VERSION}' and manager['Guid'] == (ROWS_GUID if rows else GUID)
-        assert len(manager['Options']) == len(components) == 9
+        assert len(manager['Options']) == len(components) == 10
         assert manager['IconPath'] == 'thumbnail.png'
         png = package.read('thumbnail.png')
         assert png[:8] == b'\x89PNG\r\n\x1a\n'
@@ -51,7 +51,7 @@ def main():
         assert width == height and width >= 512
         report = json.loads(package.read(slug+'-manifest.json'))
         assert report['revision'] == (ROWS_REVISION if rows else REVISION) and report['runtime_verified'] is False
-        assert report['requires'][0]['revision'] == 'loader-v12'
+        assert report['requires'][0]['revision'] == 'loader-v13'
         assert report['loader_bundled'] is False and report['boot_replaced'] is False
         assert len(report['components']) == len(components)
         for name, digest in report['files'].items():
@@ -101,7 +101,7 @@ def main():
         for name in package.namelist():
             data = package.read(name).lower()
             assert b'users\\' not in data and b'users/' not in data
-    print('PASS: nine independent options, all 512 selections, exact pinned payloads, no boot or shared loader')
+    print('PASS: ten independent options, all 1024 selections, exact pinned payloads, no boot or shared loader')
 
 
 if __name__ == '__main__':
