@@ -14,10 +14,23 @@ from package import package_release, release_directory
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-REVISION = 'megapack-v8'
+VERSION = 9
+REVISION = f'megapack-v{VERSION}'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 ROWS_GUID = 'fb497df5-080b-48a5-b31d-103ccb060e1c'
 ROWS_REVISION = REVISION + '-rows-v1'
+
+OPTION_DESCRIPTIONS = {
+    'BetterStratagemBounce': 'Allows stratagem balls to stick on more usable surfaces.',
+    'HellpodSteeringUnlocked': 'Removes the hellpod steering restriction near high ground.',
+    'ReinforcementBeaconsFixed': 'Centers queued reinforcements over their beacon or solo anchor.',
+    'ConsistentVaulting': 'Adds fresh obstacle checks, higher ledge detection and bounded steep-surface support.',
+    'ShallowWaterDiving': 'Preserves the standing water reference during a local airborne dive.',
+    'SentryAimRetention': 'Retains sentry aim and improves target handoffs and firing checks.',
+    'EnemyCollisionSynchronized': 'Aligns displaced corpse collision and curbs renewed movement after large remote corpses settle.',
+    'ControllableHoverPack': 'Press the Jump Pack action again to descend early with native landing assistance.',
+    'KnowYourConstellation': 'Shows local enemy forecasts on mission previews and briefing.',
+}
 
 
 def load_components(rows=False):
@@ -113,29 +126,45 @@ def main():
     tests += run([LUA, ROOT / 'tests/test_loader.lua', build, loader_build])
     duplicate_args = [value for c in components for value in (c['module'], c['slug'])]
     tests += run([LUA, ROOT / 'tests/test_duplicates.lua', ROOT, build, loader_build, *duplicate_args])
-    for suffix, data in [('', make_archive(resources)), ('.stream', b''), ('.gpu_resources', b'')]:
-        (build / (ARCHIVE + suffix)).write_bytes(data)
-    files = {f'data/{ARCHIVE}{s}': (build / (ARCHIVE+s)).relative_to(ROOT).as_posix()
-             for s in ('', '.stream', '.gpu_resources')}
+    files, options = {}, []
+    for component in components:
+        folder = 'options/' + component['slug']
+        directory = build / folder
+        directory.mkdir(parents=True, exist_ok=True)
+        # Both managers deploy only enabled Include folders. Carry the identical
+        # identity in each option so any nonempty selection reports the pack.
+        # The loader resolves this stable resource ID once, as with standalones.
+        keys = (resource_hash(MODULE), resource_hash(component['module']))
+        archive = make_archive({key: resources[key] for key in keys})
+        for suffix, data in [('', archive), ('.stream', b''), ('.gpu_resources', b'')]:
+            path = directory / (ARCHIVE + suffix)
+            path.write_bytes(data)
+            files[folder + '/' + path.name] = path.relative_to(ROOT).as_posix()
+        description = OPTION_DESCRIPTIONS[component['slug']]
+        if args.rows and component['slug'] == 'KnowYourConstellation':
+            description += ' Uses the static Rows layout.'
+        options.append({'Name': component['name'], 'Description': description,
+                        'Include': [folder]})
     report = {
         'name': 'Vanilla Plus Megapack', 'slug': 'VanillaPlusMegapack', 'revision': REVISION, 'guid': GUID,
-        'description': 'All CowboyBingus gameplay mods in one package: Better Stratagem Bounce, Hellpod Steering Unlocked, Reinforcement Beacons Fixed, Consistent Vaulting, Shallow Water Diving, Sentry Aim Retention, Enemy Collision Synchronized, Controllable Hover Pack and Know Your Constellation. Requires the separate Bingus Shared Loader v12 or newer. Current individual copies can remain installed; give the pack winning priority over them to use its bundled versions. Enable the pack and loader, then Purge / Deploy. With default Arsenal priority put the loader last.',
+        'description': 'Choose any of the nine bundled gameplay mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v12 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
         'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v12'}],
         'game_exe_sha256': EXE_SHA, 'game_dll_sha256': GAME_DLL_SHA,
-        'deployment_files': files, 'files': {p: sha((ROOT / p).read_bytes()) for p in files.values()},
+        'deployment_files': files, 'options': options,
+        'files': {p: sha((ROOT / p).read_bytes()) for p in files.values()},
         'runtime_verified': False, 'boot_replaced': False, 'loader_bundled': False,
         'components': [{k: c[k] for k in ('name', 'slug', 'revision', 'module', 'resource_sha256')} for c in components],
         'resource_sha256': {f'{key:016x}': sha(value) for key, value in sorted(resources.items())},
     }
     if args.rows:
         report.update(name='Vanilla Plus Megapack Rows', slug='VanillaPlusMegapackRows',
-                      revision=ROWS_REVISION, version=8, guid=ROWS_GUID,
+                      revision=ROWS_REVISION, version=VERSION, guid=ROWS_GUID,
                       install_instructions='INSTALL-ROWS.txt')
         report['description'] = report['description'].replace(';', '.') + ' Alternate with the verified static constellation rows. Enable only one megapack variant.'
     release = package_release(ROOT, build, report)
     check = [sys.executable, ROOT / 'tests/test_package.py', release, build]
     if args.rows:
-        check += ['--rows', release_directory(ROOT) / 'Vanilla-Plus-Megapack-v8.zip']
+        check += ['--rows', release_directory(ROOT) / f'Vanilla-Plus-Megapack-v{VERSION}.zip']
     tests += run(check)
     report['offline_tests'] = tests.strip()
     report['release_sha256'] = sha(release.read_bytes())

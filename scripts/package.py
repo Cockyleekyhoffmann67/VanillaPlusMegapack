@@ -42,11 +42,13 @@ def package_release(root: Path, build: Path, report: dict) -> Path:
         if key in report:
             provenance[key] = report[key]
     files[slug + '-manifest.json'] = (json.dumps(provenance, indent=2) + '\n').encode()
-    option = {'Name': display_name, 'Description': report['description'], 'Include': ['data']}
+    options = [dict(option) for option in report['options']]
     manager = {'Version': 1, 'Guid': report['guid'], 'Name': display_name,
-               'Description': report['description'], 'Options': [option]}
+               'Description': report['description'], 'Options': options}
     if thumbnail.is_file():
-        manager['IconPath'] = option['Image'] = 'thumbnail.png'
+        manager['IconPath'] = 'thumbnail.png'
+        for option in options:
+            option['Image'] = 'thumbnail.png'
     files['manifest.json'] = (json.dumps(manager, indent=2) + '\n').encode()
     release = release_directory(root) / (release_stem + '.zip')
     release.parent.mkdir(exist_ok=True)

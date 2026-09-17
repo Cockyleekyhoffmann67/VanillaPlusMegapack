@@ -1,3 +1,12 @@
+# v9
+
+- Adds nine independent mod checkboxes in Arsenal and HD2MM using their shared Version 1 manifest format.
+- Applies selection to both standard and Rows packages. Select all, any subset, or none.
+- Splits deployment into per-mod archive folders while retaining all v8 gameplay payloads byte for byte and both existing manager GUIDs.
+- Retains the separate Bingus Shared Loader v12+ dependency and once-only startup.
+- Disable old megapacks and standalone copies of unwanted features, review your selections after import/update, then Purge / Deploy with the game closed.
+- Offline checks cover every selection; in-game validation of this packaging change remains pending.
+
 # v8
 
 - Adds an optional Rows package with the verified static constellation forecast. All other bundled payloads match the standard v8 package exactly.

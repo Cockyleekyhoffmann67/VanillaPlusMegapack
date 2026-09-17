@@ -15,15 +15,30 @@ end
 local sources = {}
 for i, name in ipairs(names) do sources[name] = read(build .. '/' .. folders[i] .. '/mod.lua.main'):sub(9) end
 local cases = 0
+local scenarios = {}
 for _, installed_loader in ipairs({false, true}) do
   for _, installed_pack in ipairs({false, true}) do
     for failure = 0, #names * 2 do
+        scenarios[#scenarios + 1] = {installed_loader, installed_pack, failure}
+    end
+  end
+  for mask = 0, 2 ^ (#names - 1) - 1 do
+    scenarios[#scenarios + 1] = {installed_loader, mask ~= 0, 0, mask}
+  end
+end
+for _, scenario in ipairs(scenarios) do
+        local installed_loader, installed_pack, failure, mask = unpack(scenario)
         local env = {}; for key, value in pairs(_G) do env[key] = value end
         env._G, env.print = env, function() end
         env.os = {getenv = function() end, clock = os.clock}
         env.io = {open = function() return nil end}
         local available, count, loaded = {}, {}, {}
-        for i, name in ipairs(names) do available[name] = installed_pack and failure ~= i end
+        for i, name in ipairs(names) do
+            available[name] = installed_pack and failure ~= i
+            if mask and i > 1 then
+                available[name] = math.floor(mask / 2 ^ (i - 2)) % 2 == 1
+            end
+        end
         env.stingray = {Application = {build = function() return 'release' end,
             can_get = function(kind, name) assert(kind == 'lua'); return available[name] or false end}}
         local function execute(bytes)
@@ -64,7 +79,7 @@ for _, installed_loader in ipairs({false, true}) do
             end
             local identity = env.CowboyBingusModLoader.megapack
             if installed_pack and failure ~= 1 and failure ~= #names + 1 then
-                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v8')
+                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v9')
                 assert(#identity.modules == #names - 1)
                 for i = 2, #names do assert(identity.modules[i-1] == names[i]) end
             else assert(identity == nil) end
@@ -77,7 +92,5 @@ for _, installed_loader in ipairs({false, true}) do
         local x, y, z = env.shutdown()
         assert(x == 'shutdown' and y == nil and z == 7)
         cases = cases + 1
-    end
-  end
 end
-print('PASS: ' .. cases .. ' compiled bundle/loader scenarios; missing/failing components isolated, one startup, callbacks preserved, no activation without loader')
+print('PASS: ' .. cases .. ' compiled bundle/loader scenarios; all 512 option subsets with/without loader, failures isolated, one startup, callbacks preserved')

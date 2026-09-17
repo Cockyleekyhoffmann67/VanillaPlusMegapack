@@ -2,25 +2,28 @@
 
 # Vanilla Plus Megapack
 
-All CowboyBingus Helldivers 2 gameplay mods in one install. Better stratagem placement, hellpod steering, reinforcement placement, vaulting, shallow-water diving, sentry aim retention, synchronized enemy corpse collision, controllable hover-pack descent, and mission constellation forecasts.
+Choose which of the nine bundled CowboyBingus Helldivers 2 gameplay mods to enable in one install. Better stratagem placement, hellpod steering, reinforcement placement, vaulting, shallow-water diving, sentry aim retention, synchronized enemy corpse collision, controllable hover-pack descent, and mission constellation forecasts.
 
-**Requires the separately built Bingus Shared Loader v12 or newer.** Install two ZIPs: `Vanilla-Plus-Megapack-v8.zip` and `Bingus-Shared-Loader-v12.zip`. Mod managers do not install the dependency automatically.
+**Requires the separately built Bingus Shared Loader v12 or newer.** Install two ZIPs: `Vanilla-Plus-Megapack-v9.zip` and `Bingus-Shared-Loader-v12.zip`. Mod managers do not install the dependency automatically.
 
-Current release: **[v8](https://github.com/CowboyBingus/VanillaPlusMegapack/releases/tag/v8)** with Enemy Collision Synchronized v2.9. Download [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader/releases/latest) from its own repository.
+Current release: **[v9](https://github.com/CowboyBingus/VanillaPlusMegapack/releases/tag/v9)**, adding individual mod selection in Arsenal and HD2MM. Includes Enemy Collision Synchronized v2.9. Download [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader/releases/latest) from its own repository.
 
-The same release includes an optional [Rows package](docs/ROWS.md), `Vanilla-Plus-Megapack-Rows-v8.zip`. It displays every constellation section at once with the same native styling. Enable either the standard pack or Rows with the shared loader. All other bundled resources are identical.
+The same release includes an optional [Rows package](docs/ROWS.md), `Vanilla-Plus-Megapack-Rows-v9.zip`. It displays every constellation section at once with the same native styling. Enable either the standard pack or Rows with the shared loader. All other bundled resources are identical.
 
 ## Install with Arsenal or HD2MM
 
 1. Close Helldivers 2. Use one mod manager.
-2. Replace any previous loader entry with v12 or newer. You can leave current standalone gameplay packages installed.
-3. Import `Vanilla-Plus-Megapack-v8.zip` and `Bingus-Shared-Loader-v12.zip`, then enable both.
+2. Replace any previous loader entry with v12 or newer. Disable old megapacks and standalone copies of features you want turned off.
+3. Import `Vanilla-Plus-Megapack-v9.zip` and `Bingus-Shared-Loader-v12.zip`, then enable both.
 4. With Arsenal's default priority, put **Bingus Shared Loader last**, at the bottom. If first-mod priority is enabled, put the loader first.
-5. **Purge / Deploy**, then launch the game normally.
+5. Open the Megapack's **Options** (sliders button) in Arsenal, or its mod options in HD2MM. Check each mod you want and uncheck each mod you do not want. Confirm/save the selection.
+6. **Purge / Deploy**, then launch the game normally. Close the game and repeat these steps whenever you change options.
 
-The pack enables all mods together. To choose individual features, disable the pack and use the standalone packages with the loader instead. Current standalone copies can remain enabled: overlapping gameplay resources run once, and their callbacks do not stack. If the versions differ, your mod manager selects the winning version. Give the pack winning priority over standalone copies to use its bundled versions.
+Each of the nine options is independent. Select all for the complete pack, any subset for a custom pack, or none to deploy no gameplay features from the pack. Review your choices after importing or updating: initial selections depend on the manager's settings. Both standard and Rows ZIPs offer the same nine toggles; Rows changes the Know Your Constellation layout.
 
-## Included in v8
+An unchecked option removes only the pack's copy. An enabled standalone package or another megapack can still activate that feature, so disable those copies as well. Identical overlapping gameplay resources run once and their callbacks do not stack. If versions differ, manager priority selects the winner.
+
+## Included in v9
 
 | Mod | Version | Effect |
 | --- | --- | --- |
@@ -44,7 +47,7 @@ The pack preserves all gameplay resource names and bytecode exactly. It contains
 
 Replace the megapack ZIP to update its bundled gameplay versions. Updating an individual mod repository does not silently change this pinned pack. The loader can be updated separately.
 
-Check `%LOCALAPPDATA%/BingusSharedLoader.log` for `mods/cowboybingus/vanilla_plus_megapack: loaded` and the gameplay module entries. Each gameplay mod retains its own existing logs. For removal, disable the pack and Purge / Deploy. keep the loader enabled if other dependent mods remain.
+With at least one pack option selected, check `%LOCALAPPDATA%/BingusSharedLoader.log` for `mods/cowboybingus/vanilla_plus_megapack: loaded` and the gameplay module entries. Each gameplay mod retains its own existing logs. For removal, disable the pack and Purge / Deploy. Keep the loader enabled if other dependent mods remain.
 
 [Build from source](CONTRIBUTING.md) | [Technical details](docs/TECHNICAL.md) | [Release notes](docs/RELEASE_NOTES.md) | [Third-party notices](THIRD_PARTY.md) | [Artwork and prompts](assets/ARTWORK.md)
 

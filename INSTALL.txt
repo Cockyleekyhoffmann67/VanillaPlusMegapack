@@ -1,22 +1,26 @@
-Vanilla Plus Megapack - v8
+Vanilla Plus Megapack - v9
 
-Install Vanilla-Plus-Megapack-v8.zip AND the separate Bingus-Shared-Loader-v12.zip
+Install Vanilla-Plus-Megapack-v9.zip AND the separate Bingus-Shared-Loader-v12.zip
 (v12 or newer / API 1). The loader is not included and mod managers do
 not download it automatically.
 Download the loader from its own repository:
 https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
 1. Close Helldivers 2. Use Arsenal or HD2MM, not both.
-2. Current standalone gameplay packages may remain installed. Give the pack
-   winning priority over them to use its bundled versions.
+2. Disable old megapacks and standalone copies of features you want turned off.
+   An unchecked pack option cannot disable a separately enabled copy.
 3. Replace any old loader entry with Bingus Shared Loader v12 or newer.
-4. Import Vanilla-Plus-Megapack-v8.zip and Bingus-Shared-Loader-v12.zip and enable both.
+4. Import Vanilla-Plus-Megapack-v9.zip and Bingus-Shared-Loader-v12.zip and enable both.
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
    If first-mod priority is enabled, put it FIRST instead.
-6. Purge, then Deploy. Start the game normally.
+6. Open the pack's Options (sliders) in Arsenal, or its mod options in HD2MM.
+   Check the mods you want and uncheck the rest. Confirm/save the selection.
+7. Purge, then Deploy. Start the game normally. Close the game before changing
+   options again, and Purge / Deploy after every change.
 
-All gameplay features are enabled together. To select individual features,
-disable this pack and install the desired standalone mods with the loader.
+All nine gameplay features have independent checkboxes in both managers.
+Select all for the full pack, any subset, or none for no pack gameplay mods.
+Review the options after importing/updating; defaults depend on your manager.
 Forgotten current standalone copies do not run a second copy of the mod.
 The manager selects one resource version. existing startup guards also prevent
 duplicate callback installation. Older packages that replace the startup loader

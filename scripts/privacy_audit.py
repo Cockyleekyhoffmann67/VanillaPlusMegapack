@@ -107,7 +107,16 @@ def audit(packages=(), history=False):
             provenance_name = next(n for n in names if n.endswith('-manifest.json'))
             slug = provenance_name.removesuffix('-manifest.json')
             expected = {'manifest.json', 'thumbnail.png', provenance_name, slug + '-README.txt'}
-            expected |= {'data/9ba626afa44a3aa3.patch_0' + s for s in ('', '.stream', '.gpu_resources')}
+            components = json.loads((ROOT / 'components.lock.json').read_text(encoding='utf-8'))
+            manager = json.loads(archive.read('manifest.json'))
+            assert manager['Version'] == 1 and len(manager['Options']) == len(components)
+            for component, option in zip(components, manager['Options']):
+                folder = 'options/' + component['slug']
+                variant = component.get('rows', {}) if slug == 'VanillaPlusMegapackRows' else {}
+                assert option['Name'] == variant.get('name', component['name'])
+                assert option['Include'] == [folder]
+                expected |= {folder + '/9ba626afa44a3aa3.patch_0' + s
+                             for s in ('', '.stream', '.gpu_resources')}
             assert set(names) == expected
             provenance = json.loads(archive.read(provenance_name))
             for name, digest in provenance['files'].items(): assert sha(archive.read(name)) == digest

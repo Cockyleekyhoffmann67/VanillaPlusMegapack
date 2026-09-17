@@ -8,3 +8,5 @@ __pycache__/
 .env
 .env.*
 .venv/
+tests/hd2mm/bin/
+tests/hd2mm/obj/
