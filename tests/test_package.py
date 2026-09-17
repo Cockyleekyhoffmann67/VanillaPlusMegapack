@@ -51,7 +51,7 @@ def main():
         assert width == height and width >= 512
         report = json.loads(package.read(slug+'-manifest.json'))
         assert report['revision'] == (ROWS_REVISION if rows else REVISION) and report['runtime_verified'] is False
-        assert report['requires'][0]['revision'] == 'loader-v13'
+        assert report['requires'][0]['revision'] == 'loader-v14'
         assert report['loader_bundled'] is False and report['boot_replaced'] is False
         assert len(report['components']) == len(components)
         for name, digest in report['files'].items():

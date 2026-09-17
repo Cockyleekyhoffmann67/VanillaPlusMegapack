@@ -212,8 +212,8 @@ function P.new(api,revision)
         if not force and now-(p.last_output or p.started)<10 then return end
         p.last_output=now
         local ok,written=pcall(function()
-            local directory=os.getenv('LOCALAPPDATA');if not directory then return false end
-            local file=io.open(directory..'/EnemyCollisionSynchronized-Performance.log','w');if not file then return false end
+            local logger=rawget(_G,'CowboyBingusModLoader')
+            local file=logger and logger.open_log and logger.open_log('EnemyCollisionSynchronized-Performance.log');if not file then return false end
             local success,result=pcall(function()return file:write(p.text(state))end)
             local closed=file:close();return success and result~=nil and closed~=nil
         end)

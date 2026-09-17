@@ -1,54 +1,118 @@
-Vanilla Plus Megapack - v10
+TEST BUILD: mission-mode and centralized-log corrections. In-game validation pending.
 
-Install Vanilla-Plus-Megapack-v10.zip AND the separate Bingus-Shared-Loader-v13.zip
-(v13 or newer / API 1). The loader is not included and mod managers do
+Requires Bingus Shared Loader v14 for the shared log folder.
+
+Logs: %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs
+
+
+
+Vanilla Plus Megapack - v10.1
+
+
+
+Install Vanilla-Plus-Megapack-v10.1.zip AND the separate Bingus-Shared-Loader-v14.zip
+
+(v14 or newer / API 1). The loader is not included and mod managers do
+
 not download it automatically.
+
 Download the loader from its own repository:
+
 https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
+
+
 1. Close Helldivers 2. Use Arsenal or HD2MM, not both.
+
 2. Disable old megapacks and standalone copies of features you want turned off.
+
    An unchecked pack option cannot disable a separately enabled copy.
-3. Replace any old loader entry with Bingus Shared Loader v13 or newer.
-4. Import Vanilla-Plus-Megapack-v10.zip and Bingus-Shared-Loader-v13.zip and enable both.
+
+3. Replace any old loader entry with Bingus Shared Loader v14 or newer.
+
+4. Import Vanilla-Plus-Megapack-v10.1.zip and Bingus-Shared-Loader-v14.zip and enable both.
+
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
+
    If first-mod priority is enabled, put it FIRST instead.
+
 6. Open the pack's Options (sliders) in Arsenal, or its mod options in HD2MM.
+
    Check the mods you want and uncheck the rest. Confirm/save the selection.
+
 7. Purge, then Deploy. Start the game normally. Close the game before changing
+
    options again, and Purge / Deploy after every change.
 
+
+
 All ten gameplay features have independent checkboxes in both managers.
+
 Select all for the full pack, any subset, or none for no pack gameplay mods.
+
 Review the options after importing/updating; defaults depend on your manager.
+
 Forgotten current standalone copies do not run a second copy of the mod.
+
 The manager selects one resource version. existing startup guards also prevent
+
 duplicate callback installation. Older packages that replace the startup loader
+
 must still be removed when migrating to the shared loader.
 
+
+
 Included revisions:
-- Better Stratagem Bounce v15
-- Hellpod Steering Unlocked v7
-- Reinforcement Beacons Fixed v4
-- Consistent Vaulting v8
-- Shallow Water Diving v3
-- Sentry Aim Retention v1.0.7
-- Enemy Collision Synchronized v2.9
-- Controllable Hover Pack v1
-- Know Your Constellation v3.12
-- Armory Preview Cache v16
+
+- Better Stratagem Bounce v15.1
+
+- Hellpod Steering Unlocked v7.1
+
+- Reinforcement Beacons Fixed v4.1
+
+- Consistent Vaulting v8.1
+
+- Shallow Water Diving v3.1
+
+- Sentry Aim Retention v1.0.8
+
+- Enemy Collision Synchronized v2.9.1
+
+- Controllable Hover Pack v1.2
+
+- Know Your Constellation v3.13
+
+- Armory Preview Cache v16.1
+
+
 
 Steam build 24826606 / EXE 1.8.45317.0.
+
 Offline verification is not live gameplay or multiplayer validation.
 
-Check %LOCALAPPDATA%/BingusSharedLoader.log for the megapack and gameplay module
+
+
+Check %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs/BingusSharedLoader.log for the megapack and gameplay module
+
 entries. The individual mods retain their existing log files. Enemy Collision Synchronized
-also writes %LOCALAPPDATA%/EnemyCollisionSynchronized-Performance.log every ten
+
+also writes %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs/EnemyCollisionSynchronized-Performance.log every ten
+
 seconds. Save a copy after a busy client mission, before launching another
+
 session. Check its companion CorpseCollisionRepair.log starts with v2.9.
 
+
+
 To update, replace the pack ZIP, then Purge / Deploy. To uninstall, disable
+
 the pack, then Purge / Deploy. Keep the loader if other dependent mods remain.
+
 No DLLs or manual game-file copying are needed.
 
+
+
 Developed with assistance from GPT-6 Astra.
+
+Logs: %LOCALAPPDATA%\CowboyBingus\Helldivers2\Logs
+Requires Bingus Shared Loader v14 or newer for this log folder.

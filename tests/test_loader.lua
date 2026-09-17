@@ -68,7 +68,7 @@ for _, scenario in ipairs(scenarios) do
         env.shutdown = function() return 'shutdown', nil, 7 end
         env.init()
         if installed_loader then
-            assert(env.CowboyBingusModLoader.version >= 14 and env.CowboyBingusModLoader.api == 1)
+            assert(env.CowboyBingusModLoader.version >= 15 and env.CowboyBingusModLoader.api == 1)
             execute(read(loader .. '/callbacks.ljbc'))
             for i, name in ipairs(names) do
                 assert((count[name] or 0) == (available[name] and 1 or 0), name)
@@ -79,7 +79,7 @@ for _, scenario in ipairs(scenarios) do
             end
             local identity = env.CowboyBingusModLoader.megapack
             if installed_pack and failure ~= 1 and failure ~= #names + 1 then
-                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v10')
+                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v10.1')
                 assert(#identity.modules == #names - 1)
                 for i = 2, #names do assert(identity.modules[i-1] == names[i]) end
             else assert(identity == nil) end

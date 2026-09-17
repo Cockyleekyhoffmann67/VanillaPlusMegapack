@@ -11,8 +11,8 @@ return function(create_api,patch,build)
         last_log=now
         if force then print('[CorpseCollisionRepair] '..build.revision..': '..status) end
         pcall(function()
-            local directory=os.getenv('LOCALAPPDATA');if not directory then return end
-            local file=io.open(directory..'/CorpseCollisionRepair.log','w');if not file then return end
+            local logger=rawget(_G,'CowboyBingusModLoader')
+            local file=logger and logger.open_log and logger.open_log('CorpseCollisionRepair.log');if not file then return end
             file:write(build.revision..'\n'..status..'\n')
             for _,key in ipairs({'updates','polls','observed','realignments','claws_disabled','skipped','retries',
                 'accepted_units','preflight_getter','getter_checks','getter_failures','last_getter_failure',

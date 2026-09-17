@@ -14,7 +14,7 @@ from package import package_release, release_directory
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-VERSION = 10
+VERSION = '10.1'
 REVISION = f'megapack-v{VERSION}'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 ROWS_GUID = 'fb497df5-080b-48a5-b31d-103ccb060e1c'
@@ -91,7 +91,7 @@ def build_component(component, build=BUILD, rows=False):
         for variable, filename in [('create_api','windows_api.lua'),('policy','cancel.lua'),('settings','settings.lua'),('patch','hover_data.lua'),('install','archive_loader.lua')]:
             source += f'local {variable}=(function()\n{(root / "src" / filename).read_text()}\nend)()\n'
         source += 'patch.policy=policy;patch.settings=settings\n'
-        source += f"install(create_api,patch,{{revision='v1',game_sha256='{GAME_DLL_SHA}',exe_sha256='{EXE_SHA}'}})\n"
+        source += f"install(create_api,patch,{{revision='{component['revision']}',game_sha256='{GAME_DLL_SHA}',exe_sha256='{EXE_SHA}'}})\n"
         payload = compile_resource(source, build / component['slug'])
         if sha(payload) != component['resource_sha256']:
             raise ValueError('Hover resource differs from verified standalone release')
@@ -156,8 +156,8 @@ def main():
                         'Include': [folder]})
     report = {
         'name': 'Vanilla Plus Megapack', 'slug': 'VanillaPlusMegapack', 'revision': REVISION, 'guid': GUID,
-        'description': 'Choose any of the ten bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v13 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
-        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v13'}],
+        'description': 'Choose any of the ten bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v14 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
+        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v14'}],
         'game_exe_sha256': EXE_SHA, 'game_dll_sha256': GAME_DLL_SHA,
         'deployment_files': files, 'options': options,
         'files': {p: sha((ROOT / p).read_bytes()) for p in files.values()},

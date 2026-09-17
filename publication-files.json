@@ -2,6 +2,7 @@
   ".editorconfig",
   ".gitattributes",
   ".gitignore",
+  "CHANGELOG.md",
   "CONTRIBUTING.md",
   "INSTALL-ROWS.txt",
   "INSTALL.txt",

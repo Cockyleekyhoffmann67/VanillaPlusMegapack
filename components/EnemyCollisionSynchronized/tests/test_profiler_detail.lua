@@ -4,6 +4,11 @@ local output
 local env=setmetatable({collectgarbage=function(mode)assert(mode=='count');return heap end,
     os={getenv=function()return 'test'end},io={open=function()return {
         write=function(_,text)writes=writes+1;output=text;return true end,close=function()return true end}end}},{__index=_G})
+env._G=env
+env.CowboyBingusModLoader={open_log=function(name)
+    assert(name=='EnemyCollisionSynchronized-Performance.log')
+    return env.io.open('test/CowboyBingus/Helldivers2/Logs/'..name,'w')
+end}
 local P=setfenv(assert(loadfile(source..'/profiler.lua')),env)()
 local api={clock=function()return now end,time=function()return now end,
     thread_cycles=function()return cycles end,read=function(_,size)return string.rep('a',size)end}
