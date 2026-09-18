@@ -1,12 +1,12 @@
 -- Bundle identity only. Bingus Shared Loader starts the gameplay resources
--- through its normal registry, exactly once, preserving their existing order.
+-- through its registry or declared entry discovery, exactly once.
 -- Do not require them here: that would duplicate startup and failure handling.
 local loader = assert(rawget(_G, 'CowboyBingusModLoader'), 'Bingus Shared Loader is required')
 assert(type(loader.api) == 'number' and loader.api >= 1, 'Shared loader API 1 is required')
-assert(type(loader.version) == 'number' and loader.version >= 15, 'Bingus Shared Loader loader-v14 is required')
+assert(type(loader.version) == 'number' and loader.version >= 16, 'Bingus Shared Loader loader-v15 is required')
 local pack = {
     name = 'Vanilla Plus Megapack',
-    revision = 'megapack-v10.1',
+    revision = 'megapack-v11',
     -- Available component inventory; installed choices are in loader.modules.
     modules = {
         'mods/cowboybingus/better_stratagem_bounce',

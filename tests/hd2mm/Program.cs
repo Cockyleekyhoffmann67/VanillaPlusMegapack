@@ -61,7 +61,7 @@ byte[] Payload(string name) {
 }
 using var json = JsonDocument.Parse(Payload("manifest.json"));
 var expected = json.RootElement.GetProperty("Options").EnumerateArray().ToArray();
-Require(expected.Length == 9, "Expected nine independent options");
+Require(expected.Length == 10, "Expected ten independent options");
 void Verify(string data, int mask) {
     var folders = expected.Where((_,i)=>(mask & (1<<i))!=0).Select(o=>o.GetProperty("Include")[0].GetString()).ToArray();
     Require(Directory.GetFiles(data).Length == folders.Length * 3, "Unexpected deployment file count");
@@ -79,18 +79,18 @@ var mod = mods[0];
 var manifest = Get(mod, "Manifest");
 Require(Get(manifest, "Version").ToString()=="V1", "Expected V1 manifest");
 var options = ((IEnumerable)Get(manifest, "Options")).Cast<object>().ToArray();
-Require(options.Length==9, "Expected nine parsed options");
+Require(options.Length==10, "Expected ten parsed options");
 Require(((bool[])Get(mod,"EnabledOptions")).All(x=>x), "Default selections missing");
-for(var i=0;i<9;i++) {
+for(var i=0;i<10;i++) {
     Require((string)Get(options[i],"Name")==expected[i].GetProperty("Name").GetString(), "Wrong option label");
     Require((string)Get(options[i],"Description")==expected[i].GetProperty("Description").GetString(), "Wrong option description");
     Require(File.Exists(Path.Combine(((DirectoryInfo)Get(mod,"Directory")).FullName,(string)Get(options[i],"Image"))), "Missing option image");
 }
 Set(mod, "Enabled", true);
-foreach(var mask in new[]{511,0}.Concat(Enumerable.Range(0,512))) {
+foreach(var mask in new[]{1023,0}.Concat(Enumerable.Range(0,1024))) {
     await Run(fixture.Service,"PurgeAsync"); Verify(fixture.Data,0);
     var enabled = (bool[])Get(mod,"EnabledOptions");
-    for(var i=0;i<9;i++) enabled[i]=(mask & (1<<i))!=0;
+    for(var i=0;i<10;i++) enabled[i]=(mask & (1<<i))!=0;
     await Run(fixture.Service,"DeployAsync",new object?[]{new[]{Id(mod)}});
     Verify(fixture.Data,mask);
 }
@@ -99,10 +99,10 @@ Set(mod,"Enabled",false);
 await Run(fixture.Service,"DeployAsync",new object?[]{Array.Empty<Guid>()}); Verify(fixture.Data,0);
 Set(mod,"Enabled",true);
 Array.Fill((bool[])Get(mod,"EnabledOptions"),true);
-await Run(fixture.Service,"DeployAsync",new object?[]{new[]{Id(mod)}}); Verify(fixture.Data,511);
+await Run(fixture.Service,"DeployAsync",new object?[]{new[]{Id(mod)}}); Verify(fixture.Data,1023);
 await Run(fixture.Service,"PurgeAsync");
 await Run(fixture.Service,"RemoveAsync",mod);
 Require(Mods(fixture.Service).Length==0,"Removal left entry"); Verify(fixture.Data,0);
-var report=new {manager_version=assembly.GetName().Version!.ToString(),options=9,all_512_subsets=true,payloads_match=true,purge_reenable_remove=true,game_launched=false,live_profile_changed=false,release_sha256=Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(release))),manager_assembly_sha256=Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(assembly.Location)))};
+var report=new {manager_version=assembly.GetName().Version!.ToString(),options=10,all_1024_subsets=true,payloads_match=true,purge_reenable_remove=true,game_launched=false,live_profile_changed=false,release_sha256=Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(release))),manager_assembly_sha256=Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(assembly.Location)))};
 File.WriteAllText(Path.Combine(outputDir,"hd2mm-compatibility.json"),JsonSerializer.Serialize(report,new JsonSerializerOptions{WriteIndented=true}));
 Console.WriteLine(JsonSerializer.Serialize(report));

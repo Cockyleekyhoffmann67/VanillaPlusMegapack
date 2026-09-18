@@ -1,5 +1,6 @@
 """Prove one manager entry contains exactly the pinned gameplay payloads, without a loader."""
 import json
+import re
 from pathlib import Path
 import struct
 import sys
@@ -25,7 +26,7 @@ def resources(data):
         occupied.update(range(offset, offset + size))
         payload = data[offset:offset + size]
         assert struct.unpack_from('<II', payload) == (size - 8, 2)
-        assert payload[8:13] == b'\x1bLJ\x02\x02'
+        assert payload[8:].startswith(b'-- HD2-Addon: ')
         result[key] = payload
     return result
 
@@ -51,7 +52,7 @@ def main():
         assert width == height and width >= 512
         report = json.loads(package.read(slug+'-manifest.json'))
         assert report['revision'] == (ROWS_REVISION if rows else REVISION) and report['runtime_verified'] is False
-        assert report['requires'][0]['revision'] == 'loader-v14'
+        assert report['requires'][0]['revision'] == 'loader-v15' and report['requires'][0]['api'] == 1
         assert report['loader_bundled'] is False and report['boot_replaced'] is False
         assert len(report['components']) == len(components)
         for name, digest in report['files'].items():
@@ -64,7 +65,7 @@ def main():
             assert option['Image'] == 'thumbnail.png' and 'SubOptions' not in option
             choice = resources(package.read(folder + '/' + ARCHIVE))
             assert set(choice) == {resource_hash(MODULE), resource_hash(component['module'])}
-            assert choice[resource_hash(MODULE)] == (build / 'mod.lua.main').read_bytes()
+            assert choice[resource_hash(MODULE)] == (build / 'entry.lua.main').read_bytes()
             for key, value in choice.items():
                 if key in payloads:
                     assert payloads[key] == value, 'Overlapping resources must be identical'
@@ -85,8 +86,20 @@ def main():
             assert set(selected) == wanted
         assert set(payloads) == {resource_hash(c['module']) for c in components} | {resource_hash(MODULE)}
         for component in components:
-            assert sha(payloads[resource_hash(component['module'])]) == component['resource_sha256']
-        assert payloads[resource_hash(MODULE)] == (build / 'mod.lua.main').read_bytes()
+            original = (build / component['slug'] / 'mod.lua.main').read_bytes()
+            assert sha(original) == component['resource_sha256']
+        for component in [*components, {'module': MODULE, 'slug': ''}]:
+            module = component['module']
+            entry = payloads[resource_hash(module)]
+            assert entry == (build / component['slug'] / 'entry.lua.main').read_bytes()
+            body = entry[8:]
+            marker = ('-- HD2-Addon: ' + module + '\n').encode()
+            assert body.startswith(marker) and len(marker) <= 256
+            match = re.fullmatch(rb'return assert\(loadstring\("((?:\\[0-9]{3})+)", "@' + re.escape(module.encode()) + rb'"\)\)\(\.\.\.\)\n', body[len(marker):])
+            assert match, 'Entry must forward module arguments to the unchanged implementation'
+            bytecode = bytes(int(x) for x in re.findall(rb'\\([0-9]{3})', match[1]))
+            original = (build / component['slug'] / 'mod.lua.main').read_bytes()
+            assert bytecode == original[8:] and bytecode[:5] == b'\x1bLJ\x02\x02'
         if rows:
             with zipfile.ZipFile(sys.argv[sys.argv.index('--rows')+1]) as baseline:
                 original = {}

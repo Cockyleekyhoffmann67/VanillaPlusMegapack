@@ -12,7 +12,8 @@ for i = 4, #arg, 2 do
     local source = read(root .. '/components/' .. slug .. '/src/' .. entry)
     local guard = source:match("rawget%(_G,%s*'(%w+)'%)") or source:match('_G%.(%w+) then return end')
     components[#components + 1] = {module = module, guard = assert(guard),
-        bytes = read(build .. '/' .. slug .. '/mod.lua.main'):sub(9)}
+        bytes = read(build .. '/' .. slug .. '/mod.lua.main'):sub(9),
+        entry = read(build .. '/' .. slug .. '/entry.lua.main'):sub(9)}
 end
 local pack = 'mods/cowboybingus/vanilla_plus_megapack'
 local cases = 0
@@ -22,7 +23,7 @@ for mask = 0, 2 ^ #components - 1 do
     env._G, env.print = env, function() end
     env.os = {getenv = function() end, clock = os.clock}
     env.io = {open = function() return nil end}
-    local available = {[pack] = {bytes = read(build .. '/mod.lua.main'):sub(9)}}
+    local available = {[pack] = {bytes = read(build .. '/entry.lua.main'):sub(9)}}
     local loaded, calls, owners = {}, {}, {}
     local function execute(bytes)
         return setfenv(assert(loadstring(bytes)), env)()
@@ -33,7 +34,7 @@ for mask = 0, 2 ^ #components - 1 do
         return chunk, reason
     end
     for i, component in ipairs(components) do
-        local bundled = {bytes = component.bytes, owner = 'pack'}
+        local bundled = {bytes = component.entry, owner = 'pack'}
         local standalone = {bytes = component.bytes, owner = 'standalone'}
         local installed = math.floor(mask / 2 ^ (i - 1)) % 2 == 1
         -- A Lua resource has one winning value, regardless of archive name.

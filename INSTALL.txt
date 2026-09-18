@@ -1,18 +1,18 @@
-TEST BUILD: mission-mode and centralized-log corrections. In-game validation pending.
+v11: declared addon discovery; pinned gameplay implementations unchanged.
 
-Requires Bingus Shared Loader v14 for the shared log folder.
+Requires Bingus Shared Loader v15 for addon discovery; API 1 is unchanged.
 
 Logs: %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs
 
 
 
-Vanilla Plus Megapack - v10.1
+Vanilla Plus Megapack - v11
 
 
 
-Install Vanilla-Plus-Megapack-v10.1.zip AND the separate Bingus-Shared-Loader-v14.zip
+Install Vanilla-Plus-Megapack-v11.zip AND the separate Bingus-Shared-Loader-v15.zip
 
-(v14 or newer / API 1). The loader is not included and mod managers do
+(v15 or newer / API 1). The loader is not included and mod managers do
 
 not download it automatically.
 
@@ -28,9 +28,9 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
    An unchecked pack option cannot disable a separately enabled copy.
 
-3. Replace any old loader entry with Bingus Shared Loader v14 or newer.
+3. Replace any old loader entry with Bingus Shared Loader v15 or newer.
 
-4. Import Vanilla-Plus-Megapack-v10.1.zip and Bingus-Shared-Loader-v14.zip and enable both.
+4. Import Vanilla-Plus-Megapack-v11.zip and Bingus-Shared-Loader-v15.zip and enable both.
 
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
 
@@ -115,4 +115,4 @@ No DLLs or manual game-file copying are needed.
 Developed with assistance from GPT-6 Astra.
 
 Logs: %LOCALAPPDATA%\CowboyBingus\Helldivers2\Logs
-Requires Bingus Shared Loader v14 or newer for this log folder.
+Requires Bingus Shared Loader v15 or newer for this log folder.

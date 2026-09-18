@@ -38,8 +38,10 @@ def main():
             commands.append(command)
     corpse = mods / 'EnemyCollisionSynchronized'
     print(run([sys.executable, corpse / 'tests/test_profiles.py']).strip())
-    for name in ('repair', 'snapshot', 'fling', 'settlement', 'completion', 'loader'):
+    for name in ('snapshot', 'loader'):
         commands.append([corpse / 'tests' / ('test_' + name + '.lua'), corpse / 'src'])
+    for name in ('repair', 'recorded_snapshot', 'automaton_recording', 'fling', 'settlement', 'completion', 'bindings'):
+        commands.append([corpse / 'tests' / ('test_' + name + '.lua'), corpse / 'src', corpse / 'tests/fixtures'])
     commands.append([corpse / 'tests/test_performance.lua', corpse / 'src', corpse / 'tests'])
     commands.append([corpse / 'tests/test_profiler.lua', corpse / 'src'])
     commands.append([corpse / 'tests/test_profiler_detail.lua', corpse / 'src'])

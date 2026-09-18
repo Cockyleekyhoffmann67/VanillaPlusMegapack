@@ -4,26 +4,26 @@
 
 Choose which of the ten bundled CowboyBingus Helldivers 2 gameplay mods to enable in one install. Better stratagem placement, hellpod steering, reinforcement placement, vaulting, shallow-water diving, sentry aim retention, synchronized enemy corpse collision, controllable hover-pack descent, mission constellation forecasts, and faster equipment thumbnails.
 
-**Requires the separately built Bingus Shared Loader v14 or newer.** Install two ZIPs: `Vanilla-Plus-Megapack-v10.1.zip` and `Bingus-Shared-Loader-v14.zip`. Mod managers do not install the dependency automatically.
+**Requires the separately built Bingus Shared Loader v15 or newer.** Install two ZIPs: `Vanilla-Plus-Megapack-v11.zip` and `Bingus-Shared-Loader-v15.zip`. Mod managers do not install the dependency automatically.
 
-Current release: **v10.1**, with mission-mode corrections and shared log-folder support. Download [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader/releases/latest) from its own repository.
+Current release: **v11**, with discovery entries for Loader v15. All pinned gameplay implementations are unchanged. See [validation coverage](docs/DISCOVERY_MIGRATION.md). Download [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader/releases/latest) from its own repository.
 
-The release also provides an optional [Rows package](docs/ROWS.md), `Vanilla-Plus-Megapack-Rows-v10.1.zip`. It displays every constellation section at once with the same native styling. Enable either the standard pack or Rows with the shared loader. All other bundled resources are identical.
+The release also provides an optional [Rows package](docs/ROWS.md), `Vanilla-Plus-Megapack-Rows-v11.zip`. It displays every constellation section at once with the same native styling. Enable either the standard pack or Rows with the shared loader. All other bundled resources are identical.
 
 ## Install with Arsenal or HD2MM
 
 1. Close Helldivers 2. Use one mod manager.
-2. Replace any previous loader entry with v14 or newer. Disable old megapacks and standalone copies of features you want turned off.
-3. Import `Vanilla-Plus-Megapack-v10.1.zip` and `Bingus-Shared-Loader-v14.zip`, then enable both.
+2. Replace any previous loader entry with v15 or newer. Disable old megapacks and standalone copies of features you want turned off.
+3. Import `Vanilla-Plus-Megapack-v11.zip` and `Bingus-Shared-Loader-v15.zip`, then enable both.
 4. With Arsenal's default priority, put **Bingus Shared Loader last**, at the bottom. If first-mod priority is enabled, put the loader first.
 5. Open the Megapack's **Options** (sliders button) in Arsenal, or its mod options in HD2MM. Check each mod you want and uncheck each mod you do not want. Confirm/save the selection.
 6. **Purge / Deploy**, then launch the game normally. Close the game and repeat these steps whenever you change options.
 
 Each of the ten options is independent. Select all for the complete pack, any subset for a custom pack, or none to deploy no gameplay features from the pack. Review your choices after importing or updating: initial selections depend on the manager's settings. Both standard and Rows ZIPs offer the same ten toggles; Rows changes the Know Your Constellation layout.
 
-An unchecked option removes only the pack's copy. An enabled standalone package or another megapack can still activate that feature, so disable those copies as well. Identical overlapping gameplay resources run once and their callbacks do not stack. If versions differ, manager priority selects the winner.
+An unchecked option removes only the pack's copy. An enabled standalone package or another megapack can still activate that feature, so disable those copies as well. Overlapping gameplay entries run once and their callbacks do not stack. If versions differ, manager priority selects the winner.
 
-## Included in v10.1
+## Included in v11
 
 | Mod | Version | Effect |
 | --- | --- | --- |
@@ -44,7 +44,7 @@ Supported game: Steam build 24826606 / EXE 1.8.45317.0. Each bundled mod retains
 
 ## Compatibility and updates
 
-The pack preserves all gameplay resource names and bytecode exactly. It contains no shared startup loader, `boot` replacement or Wwise callback replacement. Existing HUD+ and supported HUD Ballistic Trajectory Overlay compatibility is handled by Bingus Shared Loader. Give the loader winning priority over the supported overlay as described in its instructions.
+The pack preserves all public gameplay resource names and embeds the exact pinned bytecode inside plaintext discovery entries. It contains no shared startup loader, `boot` replacement or Wwise callback replacement. Existing HUD+ and supported HUD Ballistic Trajectory Overlay compatibility is handled by Bingus Shared Loader. Give the loader winning priority over the supported overlay as described in its instructions.
 
 Replace the megapack ZIP to update its bundled gameplay versions. Updating an individual mod repository does not silently change this pinned pack. The loader can be updated separately.
 

@@ -86,11 +86,11 @@ function verify(mask) {
  await handler.processAndValidateZipsFromRenderer(library,[release]);
  assert.equal(records.modsList.length,1);
  const mod=records.modsList[0];mod.enabled=true;
- assert.equal(mod.options.length,9);
+ assert.equal(mod.options.length,10);
  assert.equal(mod.label,manifest.Name);
  assert.equal(mod.description,manifest.Description);
  assert.equal(digest(fs.readFileSync(await icons.getModPackIcon(mod.path))),digest(expected.readFile(manifest.IconPath)));
- for(let i=0;i<9;i++) {
+ for(let i=0;i<10;i++) {
   assert.equal(mod.options[i].name,manifest.Options[i].Name);
   assert.equal(mod.options[i].description,manifest.Options[i].Description);
   assert.equal(mod.options[i].enabled,true);
@@ -99,7 +99,7 @@ function verify(mask) {
  records.modsLibrary=[mod];records.data.test.mods=[mod];
  // Start with everything, then remove all, each singleton, each complement,
  // and every remaining subset. This catches stale files after changing options.
- const masks=[511,0,...Array.from({length:512},(_,i)=>i)];
+ const masks=[1023,0,...Array.from({length:1024},(_,i)=>i)];
  for(const mask of masks) {
   await remover.purgeMods();
   assert.equal(listFiles(game).length,0);
@@ -112,10 +112,10 @@ function verify(mask) {
  await deployer.deployMod(mod.uuid,[mod],data,temp,state,[mod]);verify(0);
  mod.enabled=true;
  mod.options.forEach(option=>{option.enabled=true;});
- await deployer.deployMod(mod.uuid,[mod],data,temp,state,[mod]);verify(511);
+ await deployer.deployMod(mod.uuid,[mod],data,temp,state,[mod]);verify(1023);
  mod.patchFileNames=listFiles(data);
  await remover.removeInstalledMod(0,'test');assert.equal(listFiles(game).length,0);
- const result={manager_version:'0.36.0',options:9,all_512_subsets:true,payloads_match:true,purge_reenable_remove:true,game_launched:false,live_profile_changed:false,release_sha256:digest(fs.readFileSync(release))};
+ const result={manager_version:'0.36.0',options:10,all_1024_subsets:true,payloads_match:true,purge_reenable_remove:true,game_launched:false,live_profile_changed:false,release_sha256:digest(fs.readFileSync(release))};
  fs.writeFileSync(path.join(base,'arsenal-compatibility.json'),JSON.stringify(result,null,2));
  console.log(JSON.stringify(result,null,2));
 })().catch(error=>{fs.writeFileSync(path.join(fixture,'backend-log.json'),JSON.stringify(logs,null,2));console.error(error);process.exitCode=1;});

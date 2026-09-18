@@ -14,7 +14,7 @@ from package import package_release, release_directory
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-VERSION = '10.1'
+VERSION = '11'
 REVISION = f'megapack-v{VERSION}'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 ROWS_GUID = 'fb497df5-080b-48a5-b31d-103ccb060e1c'
@@ -62,6 +62,18 @@ def compile_resource(source, directory):
     resource = struct.pack('<II', len(bytecode), 2) + bytecode
     (directory / 'mod.lua.main').write_bytes(resource)
     return resource
+
+
+def discoverable_resource(name, resource, directory):
+    """Retain the public name, original bytecode and module arguments verbatim."""
+    if struct.unpack('<II', resource[:8]) != (len(resource) - 8, 2):
+        raise ValueError('Invalid compiled Lua envelope')
+    literal = '"' + ''.join(f'\\{byte:03d}' for byte in resource[8:]) + '"'
+    source = f'-- HD2-Addon: {name}\nreturn assert(loadstring({literal}, "@{name}"))(...)\n'
+    body = source.encode('utf-8')
+    entry = struct.pack('<II', len(body), 2) + body
+    (directory / 'entry.lua.main').write_bytes(entry)
+    return entry
 
 
 def build_component(component, build=BUILD, rows=False):
@@ -130,6 +142,9 @@ def main():
     resources = {resource_hash(c['module']): build_component(c, build, args.rows) for c in components}
     resources[resource_hash(MODULE)] = compile_resource(
         (ROOT / 'src/megapack.lua').read_text(encoding='utf-8'), build)
+    resources = {resource_hash(c['module']): discoverable_resource(c['module'],
+        resources[resource_hash(c['module'])], build / c['slug'])
+        for c in [*components, {'module': MODULE, 'slug': ''}]}
     tests = run([sys.executable, ROOT / 'tests/test_components.py', build])
     loader_build = Path(os.environ.get('HD2_SHARED_LOADER_BUILD', ROOT.parent / 'BingusSharedLoader/build'))
     tests += run([LUA, ROOT / 'tests/test_loader.lua', build, loader_build])
@@ -156,8 +171,8 @@ def main():
                         'Include': [folder]})
     report = {
         'name': 'Vanilla Plus Megapack', 'slug': 'VanillaPlusMegapack', 'revision': REVISION, 'guid': GUID,
-        'description': 'Choose any of the ten bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v14 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
-        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v14'}],
+        'description': 'Choose any of the ten bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v15 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
+        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v15'}],
         'game_exe_sha256': EXE_SHA, 'game_dll_sha256': GAME_DLL_SHA,
         'deployment_files': files, 'options': options,
         'files': {p: sha((ROOT / p).read_bytes()) for p in files.values()},
@@ -175,6 +190,7 @@ def main():
     if args.rows:
         check += ['--rows', release_directory(ROOT) / f'Vanilla-Plus-Megapack-v{VERSION}.zip']
     tests += run(check)
+    tests += run([LUA, ROOT / 'tests/test_loader.lua', build, loader_build, 'discovery'])
     report['offline_tests'] = tests.strip()
     report['release_sha256'] = sha(release.read_bytes())
     (build / 'build-report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

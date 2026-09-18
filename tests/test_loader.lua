@@ -1,5 +1,6 @@
 -- Run real compiled bundle and loader in an isolated, non-game environment.
 local build, loader = assert(arg[1]), assert(arg[2])
+local discovery_only = arg[3] == 'discovery'
 local pack = 'mods/cowboybingus/vanilla_plus_megapack'
 local wwise = 'core/wwise/lua/wwise_flow_callbacks'
 local names = {pack, 'mods/cowboybingus/better_stratagem_bounce',
@@ -13,7 +14,13 @@ local function read(path)
     local bytes = file:read('*a'); file:close(); return bytes
 end
 local sources = {}
-for i, name in ipairs(names) do sources[name] = read(build .. '/' .. folders[i] .. '/mod.lua.main'):sub(9) end
+for i, name in ipairs(names) do sources[name] = read(build .. '/' .. folders[i] .. '/entry.lua.main'):sub(9) end
+local startup = read(loader .. '/callbacks.ljbc')
+if discovery_only then
+    local wrapper, replacements = read(loader .. '/callbacks.wrapper.lua'):gsub('local names = {%s*.-\n}', 'local names = {}', 1)
+    assert(replacements == 1, 'Expected exactly one legacy registry to remove for discovery proof')
+    startup = string.dump(assert(loadstring(wrapper)), true)
+end
 local cases = 0
 local scenarios = {}
 for _, installed_loader in ipairs({false, true}) do
@@ -39,6 +46,46 @@ for _, scenario in ipairs(scenarios) do
                 available[name] = math.floor(mask / 2 ^ (i - 2)) % 2 == 1
             end
         end
+        if discovery_only then
+            local ffi, bit = require('ffi'), require('bit')
+            local archives, index = {}, 0
+            for i = 2, #names do
+                if available[names[i]] then archives[#archives + 1] = build .. '/options/' .. folders[i] .. '/9ba626afa44a3aa3.patch_0' end
+            end
+            local function fill(buffer)
+                ffi.fill(buffer, 320)
+                ffi.copy(buffer + 44, '9ba626afa44a3aa3.patch_' .. index)
+            end
+            local kernel = {
+                GetModuleFileNameA = function(_, buffer)
+                    local path = 'T:/discovery-fixture/bin/helldivers2.exe'
+                    ffi.copy(buffer, path); return #path
+                end,
+                FindFirstFileA = function(_, buffer)
+                    index = 1
+                    if #archives == 0 then return ffi.cast('void *', -1) end
+                    fill(buffer); return ffi.cast('void *', 1)
+                end,
+                FindNextFileA = function(_, buffer)
+                    index = index + 1
+                    if index > #archives then return 0 end
+                    fill(buffer); return 1
+                end,
+                GetLastError = function() return 18 end,
+                FindClose = function() return 1 end,
+            }
+            -- Mocked Win32 calls need no declarations. Repeating cdef thousands
+            -- of times exhausts the process-wide LuaJIT CType table; production
+            -- discovery declares these once, and the loader's native test covers it.
+            local scanner_ffi = setmetatable({cdef = function() end,
+                load = function(name) assert(name == 'kernel32'); return kernel end}, {__index = ffi})
+            env.package = {loaded = {ffi = scanner_ffi, bit = bit}, preload = {}}
+            env.io = {open = function(path, mode)
+                assert(mode == 'rb', 'Discovery must be read-only')
+                local slot = assert(tonumber(path:match('^T:/discovery%-fixture/data/9ba626afa44a3aa3%.patch_(%d+)$')))
+                return io.open(assert(archives[slot]), mode)
+            end}
+        end
         env.stingray = {Application = {build = function() return 'release' end,
             can_get = function(kind, name) assert(kind == 'lua'); return available[name] or false end}}
         local function execute(bytes)
@@ -54,7 +101,7 @@ for _, scenario in ipairs(scenarios) do
             if name == 'ffi' or name == 'bit' then return require(name) end
             if name == 'core/wwise/lua/wwise_visualization' or name == 'core/wwise/lua/wwise_bank_reference' then return {} end
             if name == wwise then
-                return execute(read(loader .. (installed_loader and '/callbacks.ljbc' or '/vanilla-callbacks.ljbc')))
+                return execute(installed_loader and startup or read(loader .. '/vanilla-callbacks.ljbc'))
             end
             assert(available[name], 'Missing resource reached require')
             count[name] = (count[name] or 0) + 1
@@ -68,18 +115,18 @@ for _, scenario in ipairs(scenarios) do
         env.shutdown = function() return 'shutdown', nil, 7 end
         env.init()
         if installed_loader then
-            assert(env.CowboyBingusModLoader.version >= 15 and env.CowboyBingusModLoader.api == 1)
-            execute(read(loader .. '/callbacks.ljbc'))
+            assert(env.CowboyBingusModLoader.version >= 16 and env.CowboyBingusModLoader.api == 1)
+            execute(startup)
             for i, name in ipairs(names) do
-                assert((count[name] or 0) == (available[name] and 1 or 0), name)
+                assert((count[name] or 0) == (available[name] and 1 or 0), name .. ': ' .. tostring(env.CowboyBingusModLoader.discovery) .. '; count=' .. tostring(count[name]) .. '; failure=' .. failure .. '; mask=' .. tostring(mask))
                 local status = env.CowboyBingusModLoader.modules[name]
-                if not available[name] then assert(status == 'not installed')
+                if not available[name] then assert(status == 'not installed' or discovery_only and status == nil)
                 elseif failure == i + #names then assert(status:find('load failed:', 1, true))
                 else assert(status == 'loaded', name .. ': ' .. status) end
             end
             local identity = env.CowboyBingusModLoader.megapack
             if installed_pack and failure ~= 1 and failure ~= #names + 1 then
-                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v10.1')
+                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v11')
                 assert(#identity.modules == #names - 1)
                 for i = 2, #names do assert(identity.modules[i-1] == names[i]) end
             else assert(identity == nil) end
@@ -93,4 +140,4 @@ for _, scenario in ipairs(scenarios) do
         assert(x == 'shutdown' and y == nil and z == 7)
         cases = cases + 1
 end
-print('PASS: ' .. cases .. ' compiled bundle/loader scenarios; all 1024 option subsets with/without loader, failures isolated, one startup, callbacks preserved')
+print('PASS: ' .. cases .. (discovery_only and ' discovery-only (legacy list removed)' or ' normal loader') .. ' bundle scenarios; all 1024 option subsets with/without loader, failures isolated, one startup, callbacks preserved')

@@ -1,3 +1,18 @@
+# v11
+
+Migrates the standard and Rows packages to Loader v15 addon discovery. All ten
+component implementations remain byte-identical to their v10.1 pins. Each
+public resource now has a plaintext declaration and forwards its original
+module arguments to the embedded bytecode. The pack identity is declared too.
+
+API 1, manager GUIDs, option folders, gameplay settings and shared logs remain.
+The loader is still a separate download. Use v15 or newer and Purge / Deploy
+after replacing the pack. The loader has preliminary user-reported in-game
+success; this changed Megapack packaging requires its own in-game check.
+
+Rollback uses the retained v10.1 package with Loader v15; restore your option
+selection and Purge / Deploy. No configuration or save migration is performed.
+
 # v10
 
 - Adds Armory Preview Cache v16 as the tenth independent option.
