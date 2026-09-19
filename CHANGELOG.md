@@ -1,3 +1,11 @@
+# v12
+
+- Updates the bundled Armory Preview Cache to v18.
+- Refreshes a weapon's preview when the game re-renders it, so changing a pattern or attachment updates the thumbnail.
+- Retires the previous preview immediately after a weapon is re-configured instead of waiting for the whole category to rebuild.
+- Keeps the other nine pinned gameplay implementations unchanged; standard and Rows packages carry identical components.
+- Requires Bingus Shared Loader v15 or newer.
+
 # v11
 
 - Adds plaintext discovery entries for the pack identity and all ten components.

@@ -32,6 +32,7 @@
   "components/ArmoryPreviewCache/tests/test_partial_images.lua",
   "components/ArmoryPreviewCache/tests/test_policy.lua",
   "components/ArmoryPreviewCache/tests/test_prewarm_recency.lua",
+  "components/ArmoryPreviewCache/tests/test_render_refresh.lua",
   "components/ArmoryPreviewCache/tests/test_v10_images.lua",
   "components/ArmoryPreviewCache/tests/test_v10_policy.lua",
   "components/BetterStratagemBounce/THIRD_PARTY.md",
@@ -157,6 +158,7 @@
   "components/ShallowWaterDiving/tests/test_dive.lua",
   "components/ShallowWaterDiving/tests/test_loader.lua",
   "dependencies.json",
+  "docs/DISCOVERY_MIGRATION.md",
   "docs/PERFORMANCE.md",
   "docs/PRIVACY.md",
   "docs/RELEASE_NOTES.md",
@@ -176,6 +178,5 @@
   "tests/test_components.py",
   "tests/test_duplicates.lua",
   "tests/test_loader.lua",
-  "tests/test_package.py",
-  "docs/DISCOVERY_MIGRATION.md"
+  "tests/test_package.py"
 ]

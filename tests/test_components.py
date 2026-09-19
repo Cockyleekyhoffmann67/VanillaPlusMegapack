@@ -47,7 +47,7 @@ def main():
     commands.append([corpse / 'tests/test_profiler_detail.lua', corpse / 'src'])
     commands.append([corpse / 'tests/test_profiler_behavior.lua', corpse / 'src', corpse / 'tests'])
     commands.append([corpse / 'tests/test_metadata_cache.lua', corpse / 'src', corpse / 'tests'])
-    for name in ['test_policy', 'test_install', 'test_images', 'test_partial_images', 'test_image_keys', 'test_v10_images', 'test_v10_policy', 'test_prewarm_recency', 'test_material_synthetic']:
+    for name in ['test_policy', 'test_install', 'test_images', 'test_partial_images', 'test_image_keys', 'test_v10_images', 'test_v10_policy', 'test_prewarm_recency', 'test_material_synthetic', 'test_render_refresh']:
         commands.append([mods/'ArmoryPreviewCache/tests'/(name+'.lua'),mods/'ArmoryPreviewCache'])
     for command in commands:
         result = run([LUA, *command])

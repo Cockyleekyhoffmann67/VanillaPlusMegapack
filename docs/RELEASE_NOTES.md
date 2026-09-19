@@ -1,3 +1,11 @@
+# v12
+
+- Updates the bundled Armory Preview Cache from v16.1 to v18 in both the standard and Rows packages.
+- Weapon pattern and attachment changes now update the Armory thumbnail instead of showing the previous appearance.
+- The stale preview is retired as soon as the game reports the weapon's new configuration, rather than after the whole category re-renders.
+- All ten components stay independently selectable and the other nine pinned implementations are unchanged.
+- Requires Bingus Shared Loader v15 or newer, installed separately.
+
 # v11
 
 Migrates the standard and Rows packages to Loader v15 addon discovery. All ten
