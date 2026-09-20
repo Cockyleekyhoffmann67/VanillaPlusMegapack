@@ -44,7 +44,7 @@ def main():
         assert len(package.namelist()) == len(expected) and set(package.namelist()) == expected
         manager = json.loads(package.read('manifest.json'))
         assert manager['Version'] == 1 and manager['Name'] == name+f' - v{VERSION}' and manager['Guid'] == (ROWS_GUID if rows else GUID)
-        assert len(manager['Options']) == len(components) == 10
+        assert len(manager['Options']) == len(components) == 11
         assert manager['IconPath'] == 'thumbnail.png'
         png = package.read('thumbnail.png')
         assert png[:8] == b'\x89PNG\r\n\x1a\n'
@@ -95,6 +95,13 @@ def main():
             body = entry[8:]
             marker = ('-- HD2-Addon: ' + module + '\n').encode()
             assert body.startswith(marker) and len(marker) <= 256
+            if component.get('entry') == 'direct':
+                # Clickable Scrollbars is its own plaintext entry: the option
+                # carries the standalone source, not a compiled wrapper.
+                assert b"local module = {revision = 'v2.1'}" in body
+                assert b'loadstring(' not in body
+                assert entry == (build / 'ClickableScrollbars/mod.lua.main').read_bytes()
+                continue
             match = re.fullmatch(rb'return assert\(loadstring\("((?:\\[0-9]{3})+)", "@' + re.escape(module.encode()) + rb'"\)\)\(\.\.\.\)\n', body[len(marker):])
             assert match, 'Entry must forward module arguments to the unchanged implementation'
             bytecode = bytes(int(x) for x in re.findall(rb'\\([0-9]{3})', match[1]))
@@ -114,7 +121,7 @@ def main():
         for name in package.namelist():
             data = package.read(name).lower()
             assert b'users\\' not in data and b'users/' not in data
-    print('PASS: ten independent options, all 1024 selections, exact pinned payloads, no boot or shared loader')
+    print('PASS: eleven independent options, all 2048 selections, exact pinned payloads, no boot or shared loader')
 
 
 if __name__ == '__main__':

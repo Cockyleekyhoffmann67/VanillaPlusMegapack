@@ -1,3 +1,11 @@
+# v13
+
+- Adds Clickable Scrollbars v2.1 as an eleventh option in both the standard and Rows packages.
+- A click on the scrollbar track moves the thumb to the pointer in one pass; a press on the thumb grabs it and it follows the mouse one-to-one.
+- Scrolls the Armory tabs and the Career list, which previously answered only to the mouse wheel.
+- All eleven components stay independently selectable and the other ten pinned implementations are unchanged.
+- Requires Bingus Shared Loader v15 or newer, installed separately.
+
 # v12
 
 - Updates the bundled Armory Preview Cache from v16.1 to v18 in both the standard and Rows packages.

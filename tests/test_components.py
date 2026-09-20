@@ -49,6 +49,13 @@ def main():
     commands.append([corpse / 'tests/test_metadata_cache.lua', corpse / 'src', corpse / 'tests'])
     for name in ['test_policy', 'test_install', 'test_images', 'test_partial_images', 'test_image_keys', 'test_v10_images', 'test_v10_policy', 'test_prewarm_recency', 'test_material_synthetic', 'test_render_refresh']:
         commands.append([mods/'ArmoryPreviewCache/tests'/(name+'.lua'),mods/'ArmoryPreviewCache'])
+    # Clickable Scrollbars keeps its own suites: a detector replay, a scripted
+    # runtime and the Windows platform bindings, each taking the search root and
+    # the vendored source path.
+    scrollbars = mods / 'ClickableScrollbars'
+    for name in ('test_detector', 'test_install', 'test_platform'):
+        commands.append([scrollbars / 'tests' / (name + '.lua'), ROOT,
+                         scrollbars / 'src/clickable_scrollbars.lua'])
     for command in commands:
         result = run([LUA, *command])
         print(result.strip())

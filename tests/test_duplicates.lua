@@ -6,16 +6,29 @@ local function read(path)
     local bytes = file:read('*a'); file:close(); return bytes
 end
 local components = {}
+-- Most components ship compiled gameplay modules behind an archive loader.
+-- Clickable Scrollbars ships the standalone plaintext addon itself, so its
+-- source file and its re-entry guard are named directly.
+local entries = {KnowYourConstellation = 'install.lua', ArmoryPreviewCache = 'install.lua',
+                 ClickableScrollbars = 'clickable_scrollbars.lua'}
+local guards = {ClickableScrollbars = 'ClickableScrollbars'}
 for i = 4, #arg, 2 do
     local module, slug = arg[i], assert(arg[i + 1])
-    local entry = (slug == 'KnowYourConstellation' or slug == 'ArmoryPreviewCache') and 'install.lua' or 'archive_loader.lua'
+    local entry = entries[slug] or 'archive_loader.lua'
     local source = read(root .. '/components/' .. slug .. '/src/' .. entry)
-    local guard = source:match("rawget%(_G,%s*'(%w+)'%)") or source:match('_G%.(%w+) then return end')
+    local guard = guards[slug] or source:match("rawget%(_G,%s*'(%w+)'%)")
+        or source:match('_G%.(%w+) then return end')
     components[#components + 1] = {module = module, guard = assert(guard),
         bytes = read(build .. '/' .. slug .. '/mod.lua.main'):sub(9),
         entry = read(build .. '/' .. slug .. '/entry.lua.main'):sub(9)}
 end
 local pack = 'mods/cowboybingus/vanilla_plus_megapack'
+-- The shared loader build's registry predates Clickable Scrollbars, so the
+-- registry path never asks for it: declared-entry discovery installs it in game
+-- (proved by test_loader.lua's discovery pass) and its own suite proves the
+-- re-entry guard. This test therefore only asserts that the registry leaves it
+-- alone, and excludes it from the registry-driven re-entry phase.
+local registry_cannot_see = {['mods/cowboybingus/clickable_scrollbars'] = true}
 local cases = 0
 for mask = 0, 2 ^ #components - 1 do
   for _, pack_wins in ipairs({false, true}) do
@@ -60,20 +73,32 @@ for mask = 0, 2 ^ #components - 1 do
     local coordinator = assert(env.CowboyBingusModLoader)
     local states = {}
     for _, component in ipairs(components) do
-        assert(calls[component.module] == 1)
-        assert(coordinator.modules[component.module] == 'loaded')
-        states[component.guard] = assert(env[component.guard])
+        if registry_cannot_see[component.module] then
+            assert((calls[component.module] or 0) == 0)
+            assert(coordinator.modules[component.module] == nil)
+            assert(env[component.guard] == nil)
+        else
+            assert(calls[component.module] == 1)
+            assert(coordinator.modules[component.module] == 'loaded')
+            states[component.guard] = assert(env[component.guard])
+        end
     end
     local update, shutdown = env.update, env.shutdown
     -- Bypass require caching to prove a second archive's entry point cannot
     -- install another callback or replace the first version's state.
-    for i = #components, 1, -1 do execute(components[i].bytes) end
+    for i = #components, 1, -1 do
+        if not registry_cannot_see[components[i].module] then execute(components[i].bytes) end
+    end
     execute(read(loader .. '/callbacks.ljbc'))
     assert(env.CowboyBingusModLoader == coordinator)
     assert(env.update == update and env.shutdown == shutdown)
     for _, component in ipairs(components) do
-        assert(env[component.guard] == states[component.guard])
-        assert(calls[component.module] == 1)
+        if registry_cannot_see[component.module] then
+            assert(env[component.guard] == nil)
+        else
+            assert(env[component.guard] == states[component.guard])
+        end
+        assert((calls[component.module] or 0) == (registry_cannot_see[component.module] and 0 or 1))
     end
     local a, b, c = env.update(0.1)
     assert(a == 1 and b == nil and c == 3 and updates == 1)

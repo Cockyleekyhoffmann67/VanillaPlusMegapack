@@ -6,9 +6,17 @@ local wwise = 'core/wwise/lua/wwise_flow_callbacks'
 local names = {pack, 'mods/cowboybingus/better_stratagem_bounce',
     'mods/cowboybingus/hellpod_steering_unlocked', 'mods/cowboybingus/reinforcement_beacon_fix_data',
     'mods/cowboybingus/consistent_vaulting', 'mods/cowboybingus/shallow_water_dive',
-    'mods/cowboybingus/sentry_aim_retention', 'mods/cowboybingus/corpse_collision_repair', 'mods/cowboybingus/hover_pack_cancel', 'mods/cowboybingus/enemy_intelligence', 'mods/cowboybingus/armory_preview_cache'}
+    'mods/cowboybingus/sentry_aim_retention', 'mods/cowboybingus/corpse_collision_repair', 'mods/cowboybingus/hover_pack_cancel', 'mods/cowboybingus/enemy_intelligence', 'mods/cowboybingus/armory_preview_cache',
+    'mods/cowboybingus/clickable_scrollbars'}
 local folders = {'', 'BetterStratagemBounce', 'HellpodSteeringUnlocked', 'ReinforcementBeaconsFixed',
-    'ConsistentVaulting', 'ShallowWaterDiving', 'SentryAimRetention', 'EnemyCollisionSynchronized', 'ControllableHoverPack', 'KnowYourConstellation', 'ArmoryPreviewCache'}
+    'ConsistentVaulting', 'ShallowWaterDiving', 'SentryAimRetention', 'EnemyCollisionSynchronized', 'ControllableHoverPack', 'KnowYourConstellation', 'ArmoryPreviewCache',
+    'ClickableScrollbars'}
+-- The shared loader build carries a built-in registry written before this
+-- component existed, so the registry path cannot see it: in game it is loaded
+-- through declared-entry discovery, which the 'discovery' pass below proves by
+-- running with that registry emptied. Both paths are asserted separately here
+-- instead of pretending the older registry knows the new module.
+local registry_cannot_see = {['mods/cowboybingus/clickable_scrollbars'] = true}
 local function read(path)
     local file = assert(io.open(path, 'rb'))
     local bytes = file:read('*a'); file:close(); return bytes
@@ -118,15 +126,21 @@ for _, scenario in ipairs(scenarios) do
             assert(env.CowboyBingusModLoader.version >= 16 and env.CowboyBingusModLoader.api == 1)
             execute(startup)
             for i, name in ipairs(names) do
+                if not discovery_only and registry_cannot_see[name] then
+                    -- The registry never asks for it, so nothing may load it.
+                    assert((count[name] or 0) == 0, name)
+                    assert(env.CowboyBingusModLoader.modules[name] == nil, name)
+                else
                 assert((count[name] or 0) == (available[name] and 1 or 0), name .. ': ' .. tostring(env.CowboyBingusModLoader.discovery) .. '; count=' .. tostring(count[name]) .. '; failure=' .. failure .. '; mask=' .. tostring(mask))
                 local status = env.CowboyBingusModLoader.modules[name]
                 if not available[name] then assert(status == 'not installed' or discovery_only and status == nil)
                 elseif failure == i + #names then assert(status:find('load failed:', 1, true))
                 else assert(status == 'loaded', name .. ': ' .. status) end
+                end
             end
             local identity = env.CowboyBingusModLoader.megapack
             if installed_pack and failure ~= 1 and failure ~= #names + 1 then
-                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v12')
+                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v13')
                 assert(#identity.modules == #names - 1)
                 for i = 2, #names do assert(identity.modules[i-1] == names[i]) end
             else assert(identity == nil) end
@@ -140,4 +154,4 @@ for _, scenario in ipairs(scenarios) do
         assert(x == 'shutdown' and y == nil and z == 7)
         cases = cases + 1
 end
-print('PASS: ' .. cases .. (discovery_only and ' discovery-only (legacy list removed)' or ' normal loader') .. ' bundle scenarios; all 1024 option subsets with/without loader, failures isolated, one startup, callbacks preserved')
+print('PASS: ' .. cases .. (discovery_only and ' discovery-only (legacy list removed)' or ' normal loader') .. ' bundle scenarios; all 2048 option subsets with/without loader, failures isolated, one startup, callbacks preserved')

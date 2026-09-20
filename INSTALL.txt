@@ -1,4 +1,4 @@
-v12: updates the bundled Armory Preview Cache to v18; all other pinned gameplay implementations are unchanged.
+v13: updates the bundled Armory Preview Cache to v18; all other pinned gameplay implementations are unchanged.
 
 Requires Bingus Shared Loader v15 for addon discovery; API 1 is unchanged.
 
@@ -6,11 +6,11 @@ Logs: %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs
 
 
 
-Vanilla Plus Megapack - v12
+Vanilla Plus Megapack - v13
 
 
 
-Install Vanilla-Plus-Megapack-v12.zip AND the separate Bingus-Shared-Loader-v15.zip
+Install Vanilla-Plus-Megapack-v13.zip AND the separate Bingus-Shared-Loader-v15.zip
 
 (v15 or newer / API 1). The loader is not included and mod managers do
 
@@ -30,7 +30,7 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
 3. Replace any old loader entry with Bingus Shared Loader v15 or newer.
 
-4. Import Vanilla-Plus-Megapack-v12.zip and Bingus-Shared-Loader-v15.zip and enable both.
+4. Import Vanilla-Plus-Megapack-v13.zip and Bingus-Shared-Loader-v15.zip and enable both.
 
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
 
@@ -46,7 +46,7 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
 
 
-All ten gameplay features have independent checkboxes in both managers.
+All eleven gameplay features have independent checkboxes in both managers.
 
 Select all for the full pack, any subset, or none for no pack gameplay mods.
 
@@ -83,6 +83,8 @@ Included revisions:
 - Know Your Constellation v3.13
 
 - Armory Preview Cache v18
+
+- Clickable Scrollbars v2.1
 
 
 

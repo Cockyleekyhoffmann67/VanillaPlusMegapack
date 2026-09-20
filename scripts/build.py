@@ -14,7 +14,7 @@ from package import package_release, release_directory
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-VERSION = '12'
+VERSION = '13'
 REVISION = f'megapack-v{VERSION}'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 ROWS_GUID = 'fb497df5-080b-48a5-b31d-103ccb060e1c'
@@ -31,6 +31,7 @@ OPTION_DESCRIPTIONS = {
     'EnemyCollisionSynchronized': 'Aligns displaced corpse collision and curbs renewed movement after large remote corpses settle.',
     'ControllableHoverPack': 'Press the Jump Pack action again to descend early with native landing assistance.',
     'KnowYourConstellation': 'Shows local enemy forecasts on mission previews and briefing.',
+    'ClickableScrollbars': 'Click the item-list scrollbar track to move the thumb there, or press the thumb to drag it with the mouse.',
 }
 
 
@@ -89,6 +90,19 @@ def build_component(component, build=BUILD, rows=False):
         if sha(payload) != component['resource_sha256']:
             raise ValueError('Armory resource differs from tested standalone v16')
         return payload
+    if component['slug'] == 'ClickableScrollbars':
+        # This addon is already a plaintext discovery entry whose body installs
+        # itself, so the pack ships the standalone source verbatim: the option
+        # deploys the exact bytes the standalone release does, with no wrapper
+        # and no recompilation.
+        body = (root / 'src/clickable_scrollbars.lua').read_bytes()
+        payload = struct.pack('<II', len(body), 2) + body
+        if sha(payload) != component['resource_sha256']:
+            raise ValueError('Scrollbar resource differs from the verified standalone release')
+        directory = build / component['slug']
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / 'mod.lua.main').write_bytes(payload)
+        return payload
     if component['slug'] == 'KnowYourConstellation':
         import importlib.util
         spec = importlib.util.spec_from_file_location('constellation_module', root / 'scripts/module.py')
@@ -142,9 +156,18 @@ def main():
     resources = {resource_hash(c['module']): build_component(c, build, args.rows) for c in components}
     resources[resource_hash(MODULE)] = compile_resource(
         (ROOT / 'src/megapack.lua').read_text(encoding='utf-8'), build)
-    resources = {resource_hash(c['module']): discoverable_resource(c['module'],
-        resources[resource_hash(c['module'])], build / c['slug'])
-        for c in [*components, {'module': MODULE, 'slug': ''}]}
+    def entry(component):
+        resource = resources[resource_hash(component['module'])]
+        if component.get('entry') == 'direct':
+            # Already a plaintext declaration-bearing resource: leave it alone.
+            directory = build / component['slug']
+            directory.mkdir(parents=True, exist_ok=True)
+            (directory / 'entry.lua.main').write_bytes(resource)
+            (directory / 'mod.lua.main').write_bytes(resource)
+            return resource
+        return discoverable_resource(component['module'], resource, build / component['slug'])
+    resources = {resource_hash(c['module']): entry(c)
+                 for c in [*components, {'module': MODULE, 'slug': ''}]}
     tests = run([sys.executable, ROOT / 'tests/test_components.py', build])
     loader_build = Path(os.environ.get('HD2_SHARED_LOADER_BUILD', ROOT.parent / 'BingusSharedLoader/build'))
     tests += run([LUA, ROOT / 'tests/test_loader.lua', build, loader_build])
@@ -171,7 +194,7 @@ def main():
                         'Include': [folder]})
     report = {
         'name': 'Vanilla Plus Megapack', 'slug': 'VanillaPlusMegapack', 'revision': REVISION, 'guid': GUID,
-        'description': 'Choose any of the ten bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v15 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
+        'description': 'Choose any of the eleven bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v15 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
         'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v15'}],
         'game_exe_sha256': EXE_SHA, 'game_dll_sha256': GAME_DLL_SHA,
         'deployment_files': files, 'options': options,

@@ -253,5 +253,20 @@
       "tests/test_v10_images.lua": "E48B68D7DE9EA1D72EBE2EA995CA6F944FBEC0068B3D227E3F53783FD3D554C0",
       "tests/test_v10_policy.lua": "79804CF5E0F691A6E4AA0F96443016088565418DB9B40A58BFB3CDE531514C79"
     }
+  },
+  {
+    "slug": "ClickableScrollbars",
+    "name": "Clickable Scrollbars",
+    "revision": "v2.1",
+    "repository": "https://github.com/CowboyBingus/ClickableScrollbars",
+    "module": "mods/cowboybingus/clickable_scrollbars",
+    "entry": "direct",
+    "resource_sha256": "61E912E227AE631B6920319C574A1698894084278500F3AE61D0880DD70DE2CE",
+    "source_sha256": {
+      "src/clickable_scrollbars.lua": "CEAB7629D18D10FFE26C2A8588F5B7E46D7B4324AEE684A352C1BB5BE2A9CC6A",
+      "tests/test_detector.lua": "D5C24FB7953FB58969D84ABD5C091A5F67241BE7C239A0C66FAF73A8B554C4EA",
+      "tests/test_install.lua": "81A357CBC3799C38DB2AF9BB1DBCA01705E7A7F468CE8036862D04405056F8DD",
+      "tests/test_platform.lua": "03B04360A516E2171C7CA50F70A46E49B7960F638D7353723D230D8237724451"
+    }
   }
 ]

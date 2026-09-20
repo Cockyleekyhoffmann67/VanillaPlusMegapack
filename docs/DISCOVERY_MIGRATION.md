@@ -2,7 +2,7 @@
 
 The standard and Rows packages require Bingus Shared Loader v15 or newer, with
 API 1 unchanged. The pack identity requires internal loader version 16. Both
-manager GUIDs and all ten option folders retain their previous identities.
+manager GUIDs and all eleven option folders retain their previous identities.
 
 Each public Lua resource now begins with `-- HD2-Addon: <resource name>`. The
 rest is a plaintext wrapper containing the original compiled implementation as
@@ -26,7 +26,7 @@ guards prevent callback stacking even if require caching is bypassed.
 Tests exercise normal startup and a compiled copy of Loader v15 with its legacy
 registry removed. The latter scans the actual per-option archives, proving that
 the pack identity and components can start through declarations alone. Both
-paths cover all 1024 selections, absent loader, missing modules and load errors.
+paths cover all 2048 selections, absent loader, missing modules and load errors.
 
 Upgrade with the game closed: retain Loader v15, replace v10.1 with the v11
 standard or Rows package, review options, then Purge / Deploy. Keep only one
@@ -45,7 +45,7 @@ normal-loader scenarios, 2,140 discovery-only scenarios and 2,048 duplicate
 installation/priority combinations. Finished-ZIP checks covered all 1,024 option
 selections and proved every embedded gameplay implementation matches its pin.
 Direct comparisons against the retained v10.1 ZIPs confirmed unchanged manager
-GUIDs, option names/order/folders, public resource IDs and all ten gameplay
+GUIDs, option names/order/folders, public resource IDs and all eleven gameplay
 implementations. Only the forecast entry differs between standard and Rows.
 
 Arsenal's existing backend fixture passed all 1,024 subsets for each final ZIP.

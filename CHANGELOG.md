@@ -1,3 +1,10 @@
+# v13
+
+- Adds Clickable Scrollbars v2.1 as an eleventh independent option.
+- Lets a track click move the item-list scrollbar thumb to the pointer, and a press on the thumb drag it with the mouse.
+- Keeps the other ten pinned gameplay implementations unchanged; standard and Rows packages carry identical components.
+- Requires Bingus Shared Loader v15 or newer.
+
 # v12
 
 - Updates the bundled Armory Preview Cache to v18.
