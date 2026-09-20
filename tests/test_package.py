@@ -98,7 +98,8 @@ def main():
             if component.get('entry') == 'direct':
                 # Clickable Scrollbars is its own plaintext entry: the option
                 # carries the standalone source, not a compiled wrapper.
-                assert b"local module = {revision = 'v2.1'}" in body
+                pinned = next(c['revision'] for c in components if c['slug'] == component['slug'])
+                assert f"local module = {{revision = '{pinned}'}}".encode() in body
                 assert b'loadstring(' not in body
                 assert entry == (build / 'ClickableScrollbars/mod.lua.main').read_bytes()
                 continue

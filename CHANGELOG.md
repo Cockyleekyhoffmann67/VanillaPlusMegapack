@@ -1,3 +1,12 @@
+# v14
+
+- Updates the bundled Clickable Scrollbars to v2.2.
+- Scales the scrollbar geometry to the display height, so 1080p, 1440p and 4K screens keep the same relative behaviour.
+- Keeps the verified 1440p values as the reference and follows a resolution or monitor change on the next click.
+- Finds a thumb taller than the capture strip with one doubled retry pass instead of ignoring the click.
+- Keeps the other ten pinned gameplay implementations unchanged; standard and Rows packages carry identical components.
+- Requires Bingus Shared Loader v15 or newer.
+
 # v13
 
 - Adds Clickable Scrollbars v2.1 as an eleventh independent option.

@@ -1,4 +1,4 @@
-v13: updates the bundled Armory Preview Cache to v18; all other pinned gameplay implementations are unchanged.
+v14: updates the bundled Armory Preview Cache to v18; all other pinned gameplay implementations are unchanged.
 
 Requires Bingus Shared Loader v15 for addon discovery; API 1 is unchanged.
 
@@ -6,11 +6,11 @@ Logs: %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs
 
 
 
-Vanilla Plus Megapack Rows - v13
+Vanilla Plus Megapack Rows - v14
 
 
 
-Install Vanilla-Plus-Megapack-Rows-v13.zip AND the separate Bingus-Shared-Loader-v15.zip
+Install Vanilla-Plus-Megapack-Rows-v14.zip AND the separate Bingus-Shared-Loader-v15.zip
 
 (v15 or newer / API 1). The loader is not included and mod managers do
 
@@ -32,7 +32,7 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
 3. Replace any old loader entry with Bingus Shared Loader v15 or newer.
 
-4. Import Vanilla-Plus-Megapack-Rows-v13.zip and Bingus-Shared-Loader-v15.zip and enable both.
+4. Import Vanilla-Plus-Megapack-Rows-v14.zip and Bingus-Shared-Loader-v15.zip and enable both.
 
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
 
@@ -94,7 +94,7 @@ Included revisions:
 
 - Armory Preview Cache v18
 
-- Clickable Scrollbars v2.1
+- Clickable Scrollbars v2.2
 
 
 

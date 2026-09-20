@@ -257,16 +257,16 @@
   {
     "slug": "ClickableScrollbars",
     "name": "Clickable Scrollbars",
-    "revision": "v2.1",
+    "revision": "v2.2",
     "repository": "https://github.com/CowboyBingus/ClickableScrollbars",
     "module": "mods/cowboybingus/clickable_scrollbars",
     "entry": "direct",
-    "resource_sha256": "61E912E227AE631B6920319C574A1698894084278500F3AE61D0880DD70DE2CE",
+    "resource_sha256": "999A3E89CE58419E6DC8ACF22550376B58634856B45D3E6C5BBDFF41ED69371A",
     "source_sha256": {
-      "src/clickable_scrollbars.lua": "CEAB7629D18D10FFE26C2A8588F5B7E46D7B4324AEE684A352C1BB5BE2A9CC6A",
-      "tests/test_detector.lua": "D5C24FB7953FB58969D84ABD5C091A5F67241BE7C239A0C66FAF73A8B554C4EA",
-      "tests/test_install.lua": "81A357CBC3799C38DB2AF9BB1DBCA01705E7A7F468CE8036862D04405056F8DD",
-      "tests/test_platform.lua": "03B04360A516E2171C7CA50F70A46E49B7960F638D7353723D230D8237724451"
+      "src/clickable_scrollbars.lua": "48F2A140FC2256473E0C5A5850A84EBE10B7935A7C340F318917F4E60ECE92FF",
+      "tests/test_detector.lua": "FB17FC63AA0B1C88AF6AA27F013384458C1881C9C9CBB11B72C176E55AEB04FA",
+      "tests/test_install.lua": "7DBFEF3263D19AA6E1C218898FBB84BC363670092833221B9716B24161048BA5",
+      "tests/test_platform.lua": "BB0F3BC28CADF0BA85030991BDDA1DC71BC999C2B7A2C5CE326CE4994C9D3B13"
     }
   }
 ]
