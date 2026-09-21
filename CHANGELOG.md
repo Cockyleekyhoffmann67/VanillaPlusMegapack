@@ -1,3 +1,16 @@
+# v15
+
+- Adds Arc Thrower Revamped v1 as a twelfth independent option: hold the fire
+  button and the ARC-3 Arc Thrower keeps firing through its own charge cycle.
+- Arc Thrower Revamped keeps stock charge times, cadence, damage and arc
+  settings, follows a second thrower called down mid-mission, and shares a
+  re-entry guard with its standalone package.
+- Keeps the other eleven pinned gameplay implementations unchanged; standard and
+  Rows packages carry identical components.
+- Requires Bingus Shared Loader v15 or newer. Arc Thrower Revamped is loaded
+  through declared-entry discovery because the shared loader's built-in
+  registry predates it.
+
 # v14
 
 - Updates the bundled Clickable Scrollbars to v2.2.

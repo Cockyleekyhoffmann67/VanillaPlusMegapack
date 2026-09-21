@@ -7,16 +7,16 @@ local names = {pack, 'mods/cowboybingus/better_stratagem_bounce',
     'mods/cowboybingus/hellpod_steering_unlocked', 'mods/cowboybingus/reinforcement_beacon_fix_data',
     'mods/cowboybingus/consistent_vaulting', 'mods/cowboybingus/shallow_water_dive',
     'mods/cowboybingus/sentry_aim_retention', 'mods/cowboybingus/corpse_collision_repair', 'mods/cowboybingus/hover_pack_cancel', 'mods/cowboybingus/enemy_intelligence', 'mods/cowboybingus/armory_preview_cache',
-    'mods/cowboybingus/clickable_scrollbars'}
+    'mods/cowboybingus/clickable_scrollbars', 'mods/cowboybingus/arc_thrower_auto'}
 local folders = {'', 'BetterStratagemBounce', 'HellpodSteeringUnlocked', 'ReinforcementBeaconsFixed',
     'ConsistentVaulting', 'ShallowWaterDiving', 'SentryAimRetention', 'EnemyCollisionSynchronized', 'ControllableHoverPack', 'KnowYourConstellation', 'ArmoryPreviewCache',
-    'ClickableScrollbars'}
+    'ClickableScrollbars', 'ArcThrowerRevamped'}
 -- The shared loader build carries a built-in registry written before this
 -- component existed, so the registry path cannot see it: in game it is loaded
 -- through declared-entry discovery, which the 'discovery' pass below proves by
 -- running with that registry emptied. Both paths are asserted separately here
 -- instead of pretending the older registry knows the new module.
-local registry_cannot_see = {['mods/cowboybingus/clickable_scrollbars'] = true}
+local registry_cannot_see = {['mods/cowboybingus/clickable_scrollbars'] = true, ['mods/cowboybingus/arc_thrower_auto'] = true}
 local function read(path)
     local file = assert(io.open(path, 'rb'))
     local bytes = file:read('*a'); file:close(); return bytes
@@ -140,7 +140,7 @@ for _, scenario in ipairs(scenarios) do
             end
             local identity = env.CowboyBingusModLoader.megapack
             if installed_pack and failure ~= 1 and failure ~= #names + 1 then
-                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v14')
+                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v15')
                 assert(#identity.modules == #names - 1)
                 for i = 2, #names do assert(identity.modules[i-1] == names[i]) end
             else assert(identity == nil) end

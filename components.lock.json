@@ -268,5 +268,17 @@
       "tests/test_install.lua": "7DBFEF3263D19AA6E1C218898FBB84BC363670092833221B9716B24161048BA5",
       "tests/test_platform.lua": "BB0F3BC28CADF0BA85030991BDDA1DC71BC999C2B7A2C5CE326CE4994C9D3B13"
     }
+  },
+  {
+    "slug": "ArcThrowerRevamped",
+    "name": "Arc Thrower Revamped",
+    "revision": "v1",
+    "repository": "https://github.com/CowboyBingus/ArcThrowerRevamped",
+    "module": "mods/cowboybingus/arc_thrower_auto",
+    "entry": "direct",
+    "resource_sha256": "40D45EECA794B633DE618652FF3C78F4DE62B0D71C4B5D10F9F2E620B520F304",
+    "source_sha256": {
+      "src/arc_thrower_auto.lua": "65AAB2FB048B3E293743F3E0C56DCA3C35CC5C169641CE6CF12C7FAFC970F216"
+    }
   }
 ]

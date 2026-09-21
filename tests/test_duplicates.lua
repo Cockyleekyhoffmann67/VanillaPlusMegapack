@@ -10,8 +10,10 @@ local components = {}
 -- Clickable Scrollbars ships the standalone plaintext addon itself, so its
 -- source file and its re-entry guard are named directly.
 local entries = {KnowYourConstellation = 'install.lua', ArmoryPreviewCache = 'install.lua',
-                 ClickableScrollbars = 'clickable_scrollbars.lua'}
-local guards = {ClickableScrollbars = 'ClickableScrollbars'}
+                 ClickableScrollbars = 'clickable_scrollbars.lua',
+                 ArcThrowerRevamped = 'arc_thrower_auto.lua'}
+local guards = {ClickableScrollbars = 'ClickableScrollbars',
+                ArcThrowerRevamped = 'ArcThrowerRevampedInstalled'}
 for i = 4, #arg, 2 do
     local module, slug = arg[i], assert(arg[i + 1])
     local entry = entries[slug] or 'archive_loader.lua'
@@ -28,7 +30,8 @@ local pack = 'mods/cowboybingus/vanilla_plus_megapack'
 -- (proved by test_loader.lua's discovery pass) and its own suite proves the
 -- re-entry guard. This test therefore only asserts that the registry leaves it
 -- alone, and excludes it from the registry-driven re-entry phase.
-local registry_cannot_see = {['mods/cowboybingus/clickable_scrollbars'] = true}
+local registry_cannot_see = {['mods/cowboybingus/clickable_scrollbars'] = true,
+                             ['mods/cowboybingus/arc_thrower_auto'] = true}
 local cases = 0
 for mask = 0, 2 ^ #components - 1 do
   for _, pack_wins in ipairs({false, true}) do

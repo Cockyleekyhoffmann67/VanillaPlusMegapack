@@ -1,18 +1,18 @@
-# v14
+# v15
 
 - Updates Clickable Scrollbars to v2.2 in both the standard and Rows packages.
 - The scrollbar geometry now follows the display height instead of fixed pixels, so 1080p, 1440p and 4K keep the same relative behaviour.
 - The tested 1440p values stay the reference, and a resolution or monitor change is picked up on the next click.
 - A thumb taller than the capture strip is found with one doubled retry pass, so long lists stay clickable.
-- All eleven components stay independently selectable and the other ten pinned implementations are unchanged.
+- All twelve components stay independently selectable and the other ten pinned implementations are unchanged.
 - Requires Bingus Shared Loader v15 or newer, installed separately.
 
 # v13
 
-- Adds Clickable Scrollbars v2.1 as an eleventh option in both the standard and Rows packages.
+- Adds Clickable Scrollbars v2.1 as an twelveth option in both the standard and Rows packages.
 - A click on the scrollbar track moves the thumb to the pointer in one pass; a press on the thumb grabs it and it follows the mouse one-to-one.
 - Scrolls the Armory tabs and the Career list, which previously answered only to the mouse wheel.
-- All eleven components stay independently selectable and the other ten pinned implementations are unchanged.
+- All twelve components stay independently selectable and the other ten pinned implementations are unchanged.
 - Requires Bingus Shared Loader v15 or newer, installed separately.
 
 # v12

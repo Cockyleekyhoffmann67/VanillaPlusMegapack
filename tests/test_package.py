@@ -44,7 +44,7 @@ def main():
         assert len(package.namelist()) == len(expected) and set(package.namelist()) == expected
         manager = json.loads(package.read('manifest.json'))
         assert manager['Version'] == 1 and manager['Name'] == name+f' - v{VERSION}' and manager['Guid'] == (ROWS_GUID if rows else GUID)
-        assert len(manager['Options']) == len(components) == 11
+        assert len(manager['Options']) == len(components) == 12
         assert manager['IconPath'] == 'thumbnail.png'
         png = package.read('thumbnail.png')
         assert png[:8] == b'\x89PNG\r\n\x1a\n'
@@ -96,12 +96,12 @@ def main():
             marker = ('-- HD2-Addon: ' + module + '\n').encode()
             assert body.startswith(marker) and len(marker) <= 256
             if component.get('entry') == 'direct':
-                # Clickable Scrollbars is its own plaintext entry: the option
+                # A direct component is its own plaintext entry: the option
                 # carries the standalone source, not a compiled wrapper.
                 pinned = next(c['revision'] for c in components if c['slug'] == component['slug'])
                 assert f"local module = {{revision = '{pinned}'}}".encode() in body
                 assert b'loadstring(' not in body
-                assert entry == (build / 'ClickableScrollbars/mod.lua.main').read_bytes()
+                assert entry == (build / component['slug'] / 'mod.lua.main').read_bytes()
                 continue
             match = re.fullmatch(rb'return assert\(loadstring\("((?:\\[0-9]{3})+)", "@' + re.escape(module.encode()) + rb'"\)\)\(\.\.\.\)\n', body[len(marker):])
             assert match, 'Entry must forward module arguments to the unchanged implementation'
@@ -122,7 +122,7 @@ def main():
         for name in package.namelist():
             data = package.read(name).lower()
             assert b'users\\' not in data and b'users/' not in data
-    print('PASS: eleven independent options, all 2048 selections, exact pinned payloads, no boot or shared loader')
+    print('PASS: twelve independent options, all 4096 selections, exact pinned payloads, no boot or shared loader')
 
 
 if __name__ == '__main__':

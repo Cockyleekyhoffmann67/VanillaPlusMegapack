@@ -14,13 +14,14 @@ from package import package_release, release_directory
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-VERSION = '14'
+VERSION = '15'
 REVISION = f'megapack-v{VERSION}'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 ROWS_GUID = 'fb497df5-080b-48a5-b31d-103ccb060e1c'
 ROWS_REVISION = REVISION + '-rows-v1'
 
 OPTION_DESCRIPTIONS = {
+    'ArcThrowerRevamped': 'Hold the fire button to keep the Arc Thrower firing.',
     'ArmoryPreviewCache': 'Caches equipment thumbnails and preloads assets in Armory and mission briefing.',
     'BetterStratagemBounce': 'Allows stratagem balls to stick on more usable surfaces.',
     'HellpodSteeringUnlocked': 'Removes the hellpod steering restriction near high ground.',
@@ -102,6 +103,20 @@ def build_component(component, build=BUILD, rows=False):
         directory = build / component['slug']
         directory.mkdir(parents=True, exist_ok=True)
         (directory / 'mod.lua.main').write_bytes(payload)
+        return payload
+    if component['slug'] == 'ArcThrowerRevamped':
+        # Same shape as the scrollbar option: the standalone addon is a
+        # plaintext discovery entry, so the pack ships those exact bytes.
+        body = (root / 'src/arc_thrower_auto.lua').read_bytes()
+        payload = struct.pack('<II', len(body), 2) + body
+        if sha(payload) != component['resource_sha256']:
+            raise ValueError('Arc thrower resource differs from the verified standalone release')
+        directory = build / component['slug']
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / 'mod.lua.main').write_bytes(payload)
+        # The addon declares itself on its first line, so the same bytes are
+        # also its discovery entry.
+        (directory / 'entry.lua.main').write_bytes(payload)
         return payload
     if component['slug'] == 'KnowYourConstellation':
         import importlib.util
@@ -194,7 +209,7 @@ def main():
                         'Include': [folder]})
     report = {
         'name': 'Vanilla Plus Megapack', 'slug': 'VanillaPlusMegapack', 'revision': REVISION, 'guid': GUID,
-        'description': 'Choose any of the eleven bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v15 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
+        'description': 'Choose any of the twelve bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v15 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
         'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v15'}],
         'game_exe_sha256': EXE_SHA, 'game_dll_sha256': GAME_DLL_SHA,
         'deployment_files': files, 'options': options,

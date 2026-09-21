@@ -47,6 +47,14 @@ def main():
     commands.append([corpse / 'tests/test_profiler_detail.lua', corpse / 'src'])
     commands.append([corpse / 'tests/test_profiler_behavior.lua', corpse / 'src', corpse / 'tests'])
     commands.append([corpse / 'tests/test_metadata_cache.lua', corpse / 'src', corpse / 'tests'])
+    # The synthetic harness is additive: it stages scenes, allocations and
+    # hostile reads the public recordings cannot, and prints a hotspot ranking
+    # for every build so a performance change is visible in the build log.
+    commands.append([corpse / 'tests/test_synthetic_harness.lua', corpse / 'src', corpse / 'tests'])
+    commands.append([corpse / 'tests/test_perf_contract.lua', corpse / 'src', corpse / 'tests'])
+    commands.append([corpse / 'tests/benchmark_synthetic.lua', corpse / 'src', corpse / 'tests'])
+    commands.append([mods / 'ArcThrowerRevamped/tests/test_declaration.lua',
+                     mods / 'ArcThrowerRevamped/src/arc_thrower_auto.lua'])
     for name in ['test_policy', 'test_install', 'test_images', 'test_partial_images', 'test_image_keys', 'test_v10_images', 'test_v10_policy', 'test_prewarm_recency', 'test_material_synthetic', 'test_render_refresh']:
         commands.append([mods/'ArmoryPreviewCache/tests'/(name+'.lua'),mods/'ArmoryPreviewCache'])
     # Clickable Scrollbars keeps its own suites: a detector replay, a scripted
