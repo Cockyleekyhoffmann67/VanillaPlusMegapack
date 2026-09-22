@@ -13,11 +13,27 @@ import zipfile
 import zlib
 
 ROOT = Path(__file__).resolve().parents[1]
+
+# This published commit omitted its Arc Thrower files from the inventory.
+# Review those exact historical paths too; every blob is still scanned below.
+LEGACY_UNLISTED = {
+    'dced7da8bed31a0847b3de8005ceb1369f6e6571': [
+        'components/ArcThrowerRevamped/CHANGELOG.md',
+        'components/ArcThrowerRevamped/INSTALL.txt',
+        'components/ArcThrowerRevamped/README.md',
+        'components/ArcThrowerRevamped/check.py',
+        'components/ArcThrowerRevamped/dependencies.json',
+        'components/ArcThrowerRevamped/scripts/build.py',
+        'components/ArcThrowerRevamped/src/arc_thrower_auto.lua',
+        'components/ArcThrowerRevamped/tests/test_declaration.lua',
+    ],
+}
 PATTERNS = {
     'personal_home_path': r'(?i)(?:[a-z]:[\\/]Users[\\/][^\s\\/]+|/(?:home|Users)/[a-z0-9_.-]+)',
     'unc_path': r'\\\\[a-zA-Z0-9][a-zA-Z0-9_.-]+\\[a-zA-Z0-9_$-]+',
     'email': r'\b[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b',
     'account_id': r'\b(?:7656119\d{10}|S-1-5-21-(?:\d+-){2}\d+(?:-\d+)?)\b',
+    'hardware_detail': r'(?i)\b(?:nvid[i]a|gefor[c]e|rade[o]n|ryz[e]n|rtx\s*\d|gtx\s*\d|intel\s+(?:core|xeon)|\d+\s*(?:GB|GiB)\s+(?:RAM|VRAM)|(?:cpu|gpu|motherboard|monitor)\s*model|serial\s*(?:number|no[.]))',
     'private_key': r'-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----',
     'credential_token': r'\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,}|sk-(?:proj-)?[A-Za-z0-9_-]{24,}|AKIA[A-Z0-9]{16})\b',
     'credential_assignment': r"""(?i)\b(?:api_key|password|access_token|client_secret)\s*[:=]\s*["'][^"'\s]{8,}["']""",
@@ -92,6 +108,7 @@ def audit(packages=(), history=False):
         for commit in git('rev-list', '--all').decode().splitlines():
             names = git('ls-tree', '-r', '--name-only', commit).decode().splitlines()
             historical = json.loads(git('show', commit + ':publication-files.json'))
+            historical += LEGACY_UNLISTED.get(commit, [])
             assert len(historical) == len(set(historical))
             assert set(names) == set(historical), 'Unexpected historical tree'
             assert set(historical) <= set(allowed), 'Unreviewed historical file'

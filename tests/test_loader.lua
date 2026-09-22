@@ -66,6 +66,8 @@ for _, scenario in ipairs(scenarios) do
             end
             local kernel = {
                 GetModuleFileNameA = function(_, buffer)
+                    -- Fictional drive: the loader requires an absolute game path.
+                    -- This fixture does not refer to a developer installation.
                     local path = 'T:/discovery-fixture/bin/helldivers2.exe'
                     ffi.copy(buffer, path); return #path
                 end,
@@ -140,7 +142,7 @@ for _, scenario in ipairs(scenarios) do
             end
             local identity = env.CowboyBingusModLoader.megapack
             if installed_pack and failure ~= 1 and failure ~= #names + 1 then
-                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v15')
+                assert(identity.name == 'Vanilla Plus Megapack' and identity.revision == 'megapack-v16')
                 assert(#identity.modules == #names - 1)
                 for i = 2, #names do assert(identity.modules[i-1] == names[i]) end
             else assert(identity == nil) end
@@ -154,4 +156,4 @@ for _, scenario in ipairs(scenarios) do
         assert(x == 'shutdown' and y == nil and z == 7)
         cases = cases + 1
 end
-print('PASS: ' .. cases .. (discovery_only and ' discovery-only (legacy list removed)' or ' normal loader') .. ' bundle scenarios; all 2048 option subsets with/without loader, failures isolated, one startup, callbacks preserved')
+print('PASS: ' .. cases .. (discovery_only and ' discovery-only (legacy list removed)' or ' normal loader') .. ' bundle scenarios; all 4096 option subsets with/without loader, failures isolated, one startup, callbacks preserved')

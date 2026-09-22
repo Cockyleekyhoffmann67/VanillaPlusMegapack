@@ -61,7 +61,8 @@ def main():
     # runtime and the Windows platform bindings, each taking the search root and
     # the vendored source path.
     scrollbars = mods / 'ClickableScrollbars'
-    for name in ('test_detector', 'test_install', 'test_platform'):
+    for name in ('test_detector', 'test_install', 'test_native', 'test_platform',
+                 'test_performance', 'test_profile', 'test_ui_sim'):
         commands.append([scrollbars / 'tests' / (name + '.lua'), ROOT,
                          scrollbars / 'src/clickable_scrollbars.lua'])
     for command in commands:

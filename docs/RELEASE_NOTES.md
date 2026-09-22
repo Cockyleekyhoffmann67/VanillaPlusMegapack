@@ -1,3 +1,10 @@
+# v16
+
+- Update Clickable Scrollbars to the in-game verified v2.6 in both standard and Rows packages.
+- Fix smooth dragging in equipment and Career, including sideways pointer movement.
+- Prevent scrollbar dragging from opening other tabs or activating items.
+- Keep all twelve mod options and the existing Rows constellation layout.
+
 # v15
 
 - Updates Clickable Scrollbars to v2.2 in both the standard and Rows packages.

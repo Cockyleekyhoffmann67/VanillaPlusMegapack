@@ -1,16 +1,12 @@
-v15: updates the bundled Armory Preview Cache to v18; all other pinned gameplay implementations are unchanged.
+v16: updates Clickable Scrollbars to the in-game verified v2.6 in equipment and Career.
 
 Requires Bingus Shared Loader v15 for addon discovery; API 1 is unchanged.
 
 Logs: %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs
 
+Vanilla Plus Megapack Rows - v16
 
-
-Vanilla Plus Megapack Rows - v15
-
-
-
-Install Vanilla-Plus-Megapack-Rows-v15.zip AND the separate Bingus-Shared-Loader-v15.zip
+Install Vanilla-Plus-Megapack-Rows-v16.zip AND the separate Bingus-Shared-Loader-v15.zip
 
 (v15 or newer / API 1). The loader is not included and mod managers do
 
@@ -19,8 +15,6 @@ not download it automatically.
 Download the loader from its own repository:
 
 https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
-
-
 
 1. Close Helldivers 2. Use Arsenal or HD2MM, not both.
 
@@ -32,7 +26,7 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
 3. Replace any old loader entry with Bingus Shared Loader v15 or newer.
 
-4. Import Vanilla-Plus-Megapack-Rows-v15.zip and Bingus-Shared-Loader-v15.zip and enable both.
+4. Import Vanilla-Plus-Megapack-Rows-v16.zip and Bingus-Shared-Loader-v15.zip and enable both.
 
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
 
@@ -45,8 +39,6 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 7. Purge, then Deploy. Start the game normally. Close the game before changing
 
    options again, and Purge / Deploy after every change.
-
-
 
 All twelve gameplay features have independent checkboxes in both managers.
 
@@ -62,15 +54,11 @@ duplicate callback installation. Older packages that replace the startup loader
 
 must still be removed when migrating to the shared loader.
 
-
-
 The forecast lists all constellation sections and their enemies in static
 
 rows, using the same native font, frame and visibility rules. Give this
 
 pack priority over standalone forecast packages to use the Rows layout.
-
-
 
 Included revisions:
 
@@ -94,15 +82,13 @@ Included revisions:
 
 - Armory Preview Cache v18
 
-- Clickable Scrollbars v2.2
+- Clickable Scrollbars v2.6
 
-
+- Arc Thrower Revamped v1
 
 Steam build 24826606 / EXE 1.8.45317.0.
 
 Offline verification is not live gameplay or multiplayer validation.
-
-
 
 Check %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs/BingusSharedLoader.log for the megapack and gameplay module
 
@@ -114,15 +100,11 @@ seconds. Save a copy after a busy client mission, before launching another
 
 session. Check its companion CorpseCollisionRepair.log starts with v2.9.
 
-
-
 To update, replace the pack ZIP, then Purge / Deploy. To uninstall, disable
 
 the pack, then Purge / Deploy. Keep the loader if other dependent mods remain.
 
 No DLLs or manual game-file copying are needed.
-
-
 
 Developed with assistance from GPT-6 Astra.
 

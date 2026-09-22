@@ -14,7 +14,7 @@ from package import package_release, release_directory
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-VERSION = '15'
+VERSION = '16'
 REVISION = f'megapack-v{VERSION}'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 ROWS_GUID = 'fb497df5-080b-48a5-b31d-103ccb060e1c'
@@ -32,7 +32,7 @@ OPTION_DESCRIPTIONS = {
     'EnemyCollisionSynchronized': 'Aligns displaced corpse collision and curbs renewed movement after large remote corpses settle.',
     'ControllableHoverPack': 'Press the Jump Pack action again to descend early with native landing assistance.',
     'KnowYourConstellation': 'Shows local enemy forecasts on mission previews and briefing.',
-    'ClickableScrollbars': 'Click the item-list scrollbar track to move the thumb there, or press the thumb to drag it with the mouse.',
+    'ClickableScrollbars': 'Smoothly drag equipment and Career scrollbars, even with the pointer away from the track.',
 }
 
 
