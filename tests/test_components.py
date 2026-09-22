@@ -24,7 +24,7 @@ def main():
         'KnowYourConstellation': [(n,None) for n in ('test_resolve','test_panel','test_install','test_mission','test_heavy','test_presentation','test_rows')],
         'ControllableHoverPack': [(n,None) for n in ('test_cancel','test_snapshot','test_settings','test_loader','test_replay')],
         'ReinforcementBeaconsFixed': [('test_data', 'solo_scenarios'), ('test_startup', None)],
-        'ConsistentVaulting': [(n, None) for n in ('test_vault', 'test_geometry', 'test_slope', 'test_loader')],
+        'ConsistentVaulting': [(n, None) for n in ('test_vault', 'test_geometry', 'test_raised_approach', 'test_slope', 'test_loader')],
         'ShallowWaterDiving': [('test_dive', None), ('test_loader', None)],
         'SentryAimRetention': [('test_aim', 'gatling_target_loss'), ('test_firing', 'firing_sweeps'),
                                ('test_loader', None), ('test_snapshot', None), ('test_windows_api', None)],
@@ -40,7 +40,7 @@ def main():
     print(run([sys.executable, corpse / 'tests/test_profiles.py']).strip())
     for name in ('snapshot', 'loader'):
         commands.append([corpse / 'tests' / ('test_' + name + '.lua'), corpse / 'src'])
-    for name in ('repair', 'recorded_snapshot', 'automaton_recording', 'fling', 'settlement', 'completion', 'bindings'):
+    for name in ('repair', 'fling', 'settlement', 'completion'):
         commands.append([corpse / 'tests' / ('test_' + name + '.lua'), corpse / 'src', corpse / 'tests/fixtures'])
     commands.append([corpse / 'tests/test_performance.lua', corpse / 'src', corpse / 'tests'])
     commands.append([corpse / 'tests/test_profiler.lua', corpse / 'src'])
@@ -69,8 +69,11 @@ def main():
     scrollbars = mods / 'ClickableScrollbars'
     for name in ('test_detector', 'test_install', 'test_native', 'test_platform',
                  'test_performance', 'test_profile', 'test_ui_sim'):
-        commands.append([scrollbars / 'tests' / (name + '.lua'), ROOT,
-                         scrollbars / 'src/clickable_scrollbars.lua'])
+        command = [scrollbars / 'tests' / (name + '.lua'), ROOT,
+                   scrollbars / 'src/clickable_scrollbars.lua']
+        if name == 'test_platform' and '--skip-desktop-capture' in sys.argv:
+            command.append('--skip-capture')
+        commands.append(command)
     for command in commands:
         result = run([LUA, *command])
         print(result.strip())

@@ -14,7 +14,7 @@ from package import package_release, release_directory
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build'
 MODULE = 'mods/cowboybingus/vanilla_plus_megapack'
-VERSION = '19'
+VERSION = '26'
 REVISION = f'megapack-v{VERSION}'
 GUID = '876060ae-0640-4ac5-95b6-ec7c9a0567d3'
 ROWS_GUID = 'fb497df5-080b-48a5-b31d-103ccb060e1c'
@@ -89,7 +89,7 @@ def build_component(component, build=BUILD, rows=False):
         module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
         payload = compile_resource(module.wrapper(root, GAME_DLL_SHA, EXE_SHA), build / component['slug'])
         if sha(payload) != component['resource_sha256']:
-            raise ValueError('Armory resource differs from tested standalone v16')
+            raise ValueError('Armory resource differs from tested standalone release')
         return payload
     if component['slug'] == 'ClickableScrollbars':
         # This addon is already a plaintext discovery entry whose body installs
@@ -163,6 +163,8 @@ def build_component(component, build=BUILD, rows=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--rows', action='store_true', help='Build the static forecast rows alternative')
+    parser.add_argument('--skip-desktop-capture', action='store_true',
+                        help='Skip interactive capture and record it as unverified')
     args = parser.parse_args()
     build = BUILD / 'rows' if args.rows else BUILD
     components = load_components(args.rows)
@@ -183,7 +185,9 @@ def main():
         return discoverable_resource(component['module'], resource, build / component['slug'])
     resources = {resource_hash(c['module']): entry(c)
                  for c in [*components, {'module': MODULE, 'slug': ''}]}
-    tests = run([sys.executable, ROOT / 'tests/test_components.py', build])
+    component_tests = [sys.executable, ROOT / 'tests/test_components.py', build]
+    if args.skip_desktop_capture: component_tests.append('--skip-desktop-capture')
+    tests = run(component_tests)
     loader_build = Path(os.environ.get('HD2_SHARED_LOADER_BUILD', ROOT.parent / 'BingusSharedLoader/build'))
     tests += run([LUA, ROOT / 'tests/test_loader.lua', build, loader_build])
     duplicate_args = [value for c in components for value in (c['module'], c['slug'])]
@@ -209,12 +213,13 @@ def main():
                         'Include': [folder]})
     report = {
         'name': 'Vanilla Plus Megapack', 'slug': 'VanillaPlusMegapack', 'revision': REVISION, 'guid': GUID,
-        'description': 'Choose any of the twelve bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v15 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
-        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v15'}],
+        'description': 'Choose any of the twelve bundled mods in this pack\'s Options menu in Arsenal or HD2MM. Requires the separate Bingus Shared Loader v16 or newer. Disable standalone copies of features you want turned off. Close the game, select your options, then Purge / Deploy. With default Arsenal priority put the loader last.',
+        'requires': [{'name': 'Bingus Shared Loader', 'guid': '612eaf70-d682-43c7-9efd-16dcc695f977', 'api': 1, 'revision': 'loader-v16'}],
         'game_exe_sha256': EXE_SHA, 'game_dll_sha256': GAME_DLL_SHA,
         'deployment_files': files, 'options': options,
         'files': {p: sha((ROOT / p).read_bytes()) for p in files.values()},
         'runtime_verified': False, 'boot_replaced': False, 'loader_bundled': False,
+        'desktop_capture_verified': not args.skip_desktop_capture,
         'components': [{k: c[k] for k in ('name', 'slug', 'revision', 'module', 'resource_sha256')} for c in components],
         'resource_sha256': {f'{key:016x}': sha(value) for key, value in sorted(resources.items())},
     }
@@ -222,7 +227,7 @@ def main():
         report.update(name='Vanilla Plus Megapack Rows', slug='VanillaPlusMegapackRows',
                       revision=ROWS_REVISION, version=VERSION, guid=ROWS_GUID,
                       install_instructions='INSTALL-ROWS.txt')
-        report['description'] = report['description'].replace(';', '.') + ' Alternate with the verified static constellation rows. Enable only one megapack variant.'
+        report['description'] = report['description'].replace(';', '.') + ' Alternate with the static constellation rows. Enable only one megapack variant.'
     release = package_release(ROOT, build, report)
     check = [sys.executable, ROOT / 'tests/test_package.py', release, build]
     if args.rows:

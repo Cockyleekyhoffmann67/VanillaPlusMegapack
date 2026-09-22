@@ -68,7 +68,7 @@ function S.build(M, api, config)
     -- the exact game structure it touched instead of to a shared blob.
     -- The two module images dominate: the mod reads them at fixed offsets, so
     -- they cannot be shrunk. The remainder covers one large scene.
-    local ARENA = 0x6800000
+    local ARENA = 0x7400000 -- Includes the larger build-25327279 game image.
     local arena = ffi.new('uint8_t[?]', ARENA)
     owners[1] = arena
     local cursor = 0
@@ -111,19 +111,19 @@ function S.build(M, api, config)
         ffi.copy(at, template, 64)
     end
 
-    local game, exe = alloc(0x2771000,'game_image'), alloc(0x2800000,'exe_image')
+    local game, exe = alloc(0x3330000,'game_image'), alloc(0x2800000,'exe_image')
     local mode = alloc(0x44,'mission_mode')
-    u(mode+8,1); u(mode+0x40,2); p(game+0x276c3d0,mode)
+    u(mode+8,1); u(mode+0x40,2); p(game+0x33266a0,mode)
 
     local total = cfg.living+cfg.ragdolls+cfg.corpses
     local span = math.max(total,1)
     local registry = alloc(0xa8,'registry')
     local generations, slots = alloc(span,'generations'), alloc(span*8,'slots')
-    p(exe+0x1a140f0,registry)
+    p(exe+0x1a100f0,registry)
     p(registry+0xa0,generations); p(registry+0x88,slots); u(registry+0x98,span)
     ffi.fill(generations,span,1)
     local actortables = alloc(span*24,'actortables')
-    p(exe+0x27c9928,actortables)
+    p(exe+0x27c5b40,actortables)
 
     -- Describe every entity first so the shared actor pool can be sized exactly.
     local descriptors, rows_needed = {}, 0
@@ -144,13 +144,13 @@ function S.build(M, api, config)
     local rows = math.max(rows_needed+1,1)
     local actor_rows, body_rows = alloc(rows*40,'actor_rows'), alloc(rows*160,'body_rows')
     -- The actor pool header is embedded at a fixed image offset, not pointed to.
-    local pool = exe+0x236db80+64*21
+    local pool = exe+0x2369b00+64*21
     region('actor_pool',pool,56)
     p(pool,actor_rows); u(pool+28,40); u(pool+36,rows); u(pool+40,0x0fffffff)
     u(pool+52,cfg.expired_pool and 0x40000000 or 0xc0000000)
     local world, vtable = alloc(64,'physics_world'), alloc(144,'physics_vtable')
-    p(exe+0x27be808+176*2,world)
-    p(world,vtable); p(vtable+136,exe+0xd11660); p(world+24,body_rows)
+    p(exe+0x27ba8a8+176*2,world)
+    p(world,vtable); p(vtable+136,exe+0xd0cfa0); p(world+24,body_rows)
 
     local managers = {}
     for _, corpse in ipairs({false,true}) do
@@ -161,7 +161,7 @@ function S.build(M, api, config)
             corpse and 'corpse_runtime' or 'ragdoll_runtime')
         local sync = alloc(math.max(count,1)*(corpse and 56 or 432),
             corpse and 'corpse_sync' or 'ragdoll_sync')
-        p(game+(corpse and 0x276c648 or 0x276c670),manager)
+        p(game+(corpse and 0x3326920 or 0x3326948),manager)
         if corpse then
             u(manager+16,count); u(manager+24,count); u(manager+28,count); p(manager+64,pointers)
         else

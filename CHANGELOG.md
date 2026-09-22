@@ -1,3 +1,11 @@
+# v26
+
+- Update both Megapacks for game build 25327279.
+- Include the updated scrollbar, forecast, cache, Arc Thrower, hover and sentry fixes.
+- Fix reinforcement placement and higher-ledge detection.
+- Tighten shallow-water dive assistance and update enemy collision handling.
+- Keep all twelve mod options and both forecast layouts.
+
 # v19
 
 - Update the bundled scrollbar, Arc Thrower, sentry, vaulting, hover-pack, collision and Armory performance fixes.

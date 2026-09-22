@@ -1,11 +1,11 @@
 local source=assert(arg[1])
 local function test(kind)
     local env=setmetatable({print=function()end,os={getenv=function()end}},{__index=_G});env._G=env
-    env.CowboyBingusDiagnostics=kind:match('^profiler_')~=nil
     env.CowboyBingusModLoader={api=1,version=kind=='old' and 8 or 9}
     local now,calls,order=0,0,{}
     env.update=function(...)order[#order+1]='game';if kind=='game_error' then error('game error') end;return 1,nil,3 end
     env.shutdown=function()return 4,nil,6 end
+    env.CowboyBingusDiagnostics=true
     local original=env.update
     local api={time=function()return now end,module=function(n)return n and 1 or 2 end,
         module_hash=function(n)return kind=='build' and 'wrong' or n==1 and 'game' or 'exe' end,
@@ -50,6 +50,7 @@ end
 for _,kind in ipairs({'normal','old','build','binding','transient','game_error','profiler_setup',
     'profiler_begin','profiler_finish','profiler_update_started','profiler_update_finished'}) do test(kind) end
 print('PASS: dependency/build/binding gates, callback order and tuples, bounded poll frequency, retry, failure isolation, duplicate loads and shutdown')
+
 -- Routine gameplay must not write diagnostics unless explicitly enabled.
 for _,diagnostics in ipairs({false,true})do
     local now,opens,profiles=0,0,0
