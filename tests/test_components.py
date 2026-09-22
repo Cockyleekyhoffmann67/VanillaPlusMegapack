@@ -55,6 +55,9 @@ def main():
     commands.append([corpse / 'tests/benchmark_synthetic.lua', corpse / 'src', corpse / 'tests'])
     commands.append([mods / 'ArcThrowerRevamped/tests/test_declaration.lua',
                      mods / 'ArcThrowerRevamped/src/arc_thrower_auto.lua'])
+    for scenario in ('clean', 'predeclared', 'game-present'):
+        commands.append([mods / 'ArcThrowerRevamped/tests/test_bindings.lua',
+                         mods / 'ArcThrowerRevamped/src/arc_thrower_auto.lua', scenario])
     for name in ['test_policy', 'test_install', 'test_images', 'test_partial_images', 'test_image_keys', 'test_v10_images', 'test_v10_policy', 'test_prewarm_recency', 'test_material_synthetic', 'test_render_refresh']:
         commands.append([mods/'ArmoryPreviewCache/tests'/(name+'.lua'),mods/'ArmoryPreviewCache'])
     # Clickable Scrollbars keeps its own suites: a detector replay, a scripted

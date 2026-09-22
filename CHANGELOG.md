@@ -1,3 +1,11 @@
+# v17
+
+- Update Arc Thrower Revamped to v1.1 in both standard and Rows packages.
+- Fix startup stopping with "kernel32 bindings unavailable" or a missing `GetModuleHandleA` declaration.
+- Exercise the first update and render callbacks with real Windows LuaJIT bindings during validation.
+- Keep the other eleven components, twelve independent options, and existing Rows layout unchanged.
+- Offline startup, integration, and package validation; live gameplay verification pending. Requires Bingus Shared Loader v15 or newer.
+
 # v16
 
 - Update Clickable Scrollbars to the in-game verified v2.6 in both standard and Rows packages.

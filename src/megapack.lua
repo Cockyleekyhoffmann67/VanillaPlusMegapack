@@ -6,7 +6,7 @@ assert(type(loader.api) == 'number' and loader.api >= 1, 'Shared loader API 1 is
 assert(type(loader.version) == 'number' and loader.version >= 16, 'Bingus Shared Loader loader-v15 is required')
 local pack = {
     name = 'Vanilla Plus Megapack',
-    revision = 'megapack-v16',
+    revision = 'megapack-v17',
     -- Available component inventory; installed choices are in loader.modules.
     modules = {
         'mods/cowboybingus/better_stratagem_bounce',

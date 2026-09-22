@@ -19,6 +19,7 @@
   "components/ArcThrowerRevamped/dependencies.json",
   "components/ArcThrowerRevamped/scripts/build.py",
   "components/ArcThrowerRevamped/src/arc_thrower_auto.lua",
+  "components/ArcThrowerRevamped/tests/test_bindings.lua",
   "components/ArcThrowerRevamped/tests/test_declaration.lua",
   "components/ArmoryPreviewCache/scripts/module.py",
   "components/ArmoryPreviewCache/src/dependencies.lua",

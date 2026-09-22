@@ -1,6 +1,6 @@
 # Bundle contract
 
-v16 updates the bundled Clickable Scrollbars to v2.6 and requires Loader v15 / API 1. v13 added it to the pack. v12 updated the bundled Armory Preview Cache to v18. v11 added [declared entry discovery](DISCOVERY_MIGRATION.md). Pinned gameplay bytecode is embedded unchanged inside plaintext entries; entry-envelope hashes change.
+v17 updates Arc Thrower Revamped to v1.1, fixing native binding declarations and function detection. The startup regression suite uses real Windows LuaJIT FFI, preserves callbacks, and rejects an unsupported synthetic image without writes. v16 updates the bundled Clickable Scrollbars to v2.6 and requires Loader v15 / API 1. v13 added it to the pack. v12 updated the bundled Armory Preview Cache to v18. v11 added [declared entry discovery](DISCOVERY_MIGRATION.md). Pinned gameplay bytecode is embedded unchanged inside plaintext entries; entry-envelope hashes change.
 
 One stable manager GUID (`876060ae-0640-4ac5-95b6-ec7c9a0567d3` for standard, `fb497df5-080b-48a5-b31d-103ccb060e1c` for Rows) exposes twelve top-level Version 1 manifest options. Each option includes only `options/<component slug>`, containing its own `9ba626afa44a3aa3.patch_0` triplet. Both Arsenal and HD2MM renumber selected archives through their normal deployment backends. There are no root-level patch files or all-in-one fallback, so an empty selection deploys no pack resources.
 

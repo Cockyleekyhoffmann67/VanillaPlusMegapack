@@ -1,12 +1,12 @@
-v16: updates Clickable Scrollbars to the in-game verified v2.6 in equipment and Career.
+v17: fixes Arc Thrower Revamped startup with native Windows bindings (v1.1).
 
 Requires Bingus Shared Loader v15 for addon discovery; API 1 is unchanged.
 
 Logs: %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs
 
-Vanilla Plus Megapack - v16
+Vanilla Plus Megapack - v17
 
-Install Vanilla-Plus-Megapack-v16.zip AND the separate Bingus-Shared-Loader-v15.zip
+Install Vanilla-Plus-Megapack-v17.zip AND the separate Bingus-Shared-Loader-v15.zip
 
 (v15 or newer / API 1). The loader is not included and mod managers do
 
@@ -24,7 +24,7 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
 3. Replace any old loader entry with Bingus Shared Loader v15 or newer.
 
-4. Import Vanilla-Plus-Megapack-v16.zip and Bingus-Shared-Loader-v15.zip and enable both.
+4. Import Vanilla-Plus-Megapack-v17.zip and Bingus-Shared-Loader-v15.zip and enable both.
 
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
 

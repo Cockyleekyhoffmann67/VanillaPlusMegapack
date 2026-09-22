@@ -281,13 +281,13 @@
   {
     "slug": "ArcThrowerRevamped",
     "name": "Arc Thrower Revamped",
-    "revision": "v1",
+    "revision": "v1.1",
     "repository": "https://github.com/CowboyBingus/ArcThrowerRevamped",
     "module": "mods/cowboybingus/arc_thrower_auto",
     "entry": "direct",
-    "resource_sha256": "40D45EECA794B633DE618652FF3C78F4DE62B0D71C4B5D10F9F2E620B520F304",
+    "resource_sha256": "A36D3360A08B9357384AFAC2DCE5111D7DE9481B49B68F63EE471A36806BD4F6",
     "source_sha256": {
-      "src/arc_thrower_auto.lua": "65AAB2FB048B3E293743F3E0C56DCA3C35CC5C169641CE6CF12C7FAFC970F216"
+      "src/arc_thrower_auto.lua": "4E7F53D4DC253FDD9CB430C158C225648040F0860D67EC27DCEEC3E7A7C7C858"
     }
   }
 ]
