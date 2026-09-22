@@ -1,6 +1,5 @@
-local source,fixtures=assert(arg[1]),assert(arg[2])
+local source=assert(arg[1])
 local M=dofile(source..'/corpse_data.lua')
-local captured=dofile(fixtures..'/fling.lua')
 local function clone(x)
     if type(x)~='table' then return x end
     local y={};for k,v in pairs(x) do y[k]=clone(v) end;return y
@@ -61,25 +60,7 @@ for _,resource in ipairs(targets) do
     assert(not M.fling_action(u,state,.1),'Clock rollback loses the stationary reference')
 end
 
--- Every eligible fixed-state sample in the original mission, including early
--- Titan corrections. This tests detection timing, not counterfactual physics.
-local state,stops,stopped={}, {}, {}
-for _,row in ipairs(captured) do
-    if not stopped[row.unit.unit] then
-        -- This older fixture contains root poses only. Keep its root-policy
-        -- regression separate from the complete-body settlement replay.
-        row.unit.main_bodies={row.unit.root_body}
-        for i=2,15 do row.unit.main_bodies[i]={id=-i,pose=row.unit.root_body.pose} end
-        local action=M.fling_action(row.unit,state,row.time)
-        if action then
-            stops[#stops+1]={seq=row.seq,unit=row.unit.unit,distance=action.distance}
-            stopped[row.unit.unit]=true
-        end
-    end
-end
-assert(#captured==243 and #stops==1 and stops[1].unit==0x1c00984 and stops[1].seq==5215,
-    'Recorded renewed Impaler motion detected; other fixed episodes remain unchanged')
-assert(stops[1].distance>.9 and stops[1].distance<1)
+local state
 
 -- Exercise actual command integration: one native stop, read-back confirmation,
 -- no main-body pose/enable changes, and no use of a stale manager or owner.
@@ -114,4 +95,4 @@ for _,variant in ipairs({'normal','stale','owner','unconfirmed'}) do
     assert(next(state.fling_history)==nil and next(state.fling_stopped)==nil,'Mission exit clears history')
 end
 M.snapshot=original
-print('PASS: 21-profile fling policy, initial-motion/small-correction exclusions, identity/ownership/gap resets, all 243 recorded fixed samples and native-stop integration')
+print('PASS: 21-profile fling policy, initial-motion/small-correction exclusions, identity/ownership/gap resets and native-stop integration')

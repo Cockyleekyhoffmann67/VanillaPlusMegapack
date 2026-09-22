@@ -1,12 +1,14 @@
-v17: fixes Arc Thrower Revamped startup with native Windows bindings (v1.1).
+v19: reduces click-related reads, routine log writes and default profiling work.
+Includes Clickable Scrollbars v2.8 and Arc Thrower Revamped v1.2.
+Offline checks pass; in-game verification is pending.
 
 Requires Bingus Shared Loader v15 for addon discovery; API 1 is unchanged.
 
 Logs: %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs
 
-Vanilla Plus Megapack Rows - v17
+Vanilla Plus Megapack Rows - v19
 
-Install Vanilla-Plus-Megapack-Rows-v17.zip AND the separate Bingus-Shared-Loader-v15.zip
+Install Vanilla-Plus-Megapack-Rows-v19.zip AND the separate Bingus-Shared-Loader-v15.zip
 
 (v15 or newer / API 1). The loader is not included and mod managers do
 
@@ -26,7 +28,7 @@ https://github.com/CowboyBingus/BingusSharedLoader/releases/latest
 
 3. Replace any old loader entry with Bingus Shared Loader v15 or newer.
 
-4. Import Vanilla-Plus-Megapack-Rows-v17.zip and Bingus-Shared-Loader-v15.zip and enable both.
+4. Import Vanilla-Plus-Megapack-Rows-v19.zip and Bingus-Shared-Loader-v15.zip and enable both.
 
 5. With Arsenal default priority, put the loader LAST (bottom of the list).
 
@@ -68,23 +70,23 @@ Included revisions:
 
 - Reinforcement Beacons Fixed v4.1
 
-- Consistent Vaulting v8.1
+- Consistent Vaulting v8.2
 
 - Shallow Water Diving v3.1
 
-- Sentry Aim Retention v1.0.8
+- Sentry Aim Retention v1.0.9
 
-- Enemy Collision Synchronized v2.9.1
+- Enemy Collision Synchronized v2.9.2
 
-- Controllable Hover Pack v1.2
+- Controllable Hover Pack v1.3
 
 - Know Your Constellation v3.13 with the verified Rows v1 layout
 
-- Armory Preview Cache v18
+- Armory Preview Cache v19
 
-- Clickable Scrollbars v2.6
+- Clickable Scrollbars v2.8
 
-- Arc Thrower Revamped v1
+- Arc Thrower Revamped v1.2
 
 Steam build 24826606 / EXE 1.8.45317.0.
 
@@ -92,21 +94,8 @@ Offline verification is not live gameplay or multiplayer validation.
 
 Check %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs/BingusSharedLoader.log for the megapack and gameplay module
 
-entries. The individual mods retain their existing log files. Enemy Collision Synchronized
+entries. Startup and error reports remain available. Routine logs and detailed collision
+profiling are disabled by default; diagnostic builds can enable CowboyBingusDiagnostics
+before addon initialization. Private logs are not included in the release.
 
-also writes %LOCALAPPDATA%/CowboyBingus/Helldivers2/Logs/EnemyCollisionSynchronized-Performance.log every ten
-
-seconds. Save a copy after a busy client mission, before launching another
-
-session. Check its companion CorpseCollisionRepair.log starts with v2.9.
-
-To update, replace the pack ZIP, then Purge / Deploy. To uninstall, disable
-
-the pack, then Purge / Deploy. Keep the loader if other dependent mods remain.
-
-No DLLs or manual game-file copying are needed.
-
-Developed with assistance from GPT-6 Astra.
-
-Logs: %LOCALAPPDATA%\CowboyBingus\Helldivers2\Logs
 Requires Bingus Shared Loader v15 or newer for this log folder.

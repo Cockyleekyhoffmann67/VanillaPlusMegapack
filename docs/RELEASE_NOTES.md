@@ -1,3 +1,17 @@
+# v19
+
+- Update the bundled scrollbar, Arc Thrower, sentry, vaulting, hover-pack, collision and Armory performance fixes.
+- Reduce click-related native reads, routine disk writes and default profiling work.
+- Preserve all twelve options and the existing Rows layout.
+- Offline regression checks cover this update; live frame-time verification remains pending.
+
+# v18
+
+- Update Clickable Scrollbars to v2.7 and Arc Thrower Revamped to v1.2 in standard and Rows.
+- Stop scrollbar screenshot scanning and routine log writes on gameplay clicks.
+- Bound Arc Thrower scanning and remove duplicate render work and verbose firing logs.
+- Preserve all twelve options and the existing Rows layout; in-game validation is pending.
+
 # v17
 
 - Update Arc Thrower Revamped to v1.1 in both standard and Rows packages.
